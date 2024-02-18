@@ -75,6 +75,13 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Header("Shotting setting")]
+        public GameObject shotPoint; //총알 발사 지점
+        public static Vector3 shotDir; //조준 방향
+        public float shotTimeout = 0.5f; //공격속도
+        public GameObject bulletPref; //총알 프리펩
+
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -90,6 +97,7 @@ namespace StarterAssets
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
+        private float shotTimeoutDelta;
 
         // animation IDs
         private int _animIDSpeed;
@@ -159,6 +167,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            Shot();
         }
 
         private void LateUpdate()
@@ -345,6 +354,28 @@ namespace StarterAssets
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
+        //플레이어 사격 함수
+        private void Shot()
+        {
+            if (_input.shot)
+            {
+                this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+            }
+
+            if (_input.shot && shotTimeoutDelta <= 0.0f)
+            {
+                Debug.Log("shot");
+                shotDir = (AimRaycast.targetPoint - shotPoint.transform.position).normalized; //정규화로 투사체 속도 통일
+                Instantiate(bulletPref, shotPoint.transform.position, shotPoint.transform.rotation);
+                shotTimeoutDelta = shotTimeout;
+            }
+
+            if (shotTimeoutDelta > 0.0f)
+            {
+                shotTimeoutDelta -= Time.deltaTime;
             }
         }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class AimRaycast : MonoBehaviour
 {
     RaycastHit hit;
+    public static Vector3 targetPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,8 @@ public class AimRaycast : MonoBehaviour
     {
         if(Physics.Raycast(transform.position, transform.forward, out hit))
         {
-            Debug.Log(hit.point);
+            //플레이어가 조준한 곳을 타겟좌표로 설정
+            targetPoint = hit.point;
         }
     }
 }
