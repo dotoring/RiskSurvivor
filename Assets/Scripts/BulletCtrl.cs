@@ -21,6 +21,11 @@ public class BulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.tag == "Monster")
+        {
+            other.GetComponent<MonsterCtrl>().Damaged(50);
+        }
+        Debug.Log("bang");
         Destroy(gameObject);
     }
 }

@@ -367,7 +367,7 @@ namespace StarterAssets
 
             if (_input.shot && shotTimeoutDelta <= 0.0f)
             {
-                Debug.Log("shot");
+                //Debug.Log("shot");
                 shotDir = (AimRaycast.targetPoint - shotPoint.transform.position).normalized; //정규화로 투사체 속도 통일
                 Instantiate(bulletPref, shotPoint.transform.position, shotPoint.transform.rotation);
                 shotTimeoutDelta = shotTimeout;

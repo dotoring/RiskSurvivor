@@ -69,12 +69,20 @@ namespace StarterAssets
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
-		}
+			if(shot == true) //사격중이라면 달리기 제한
+			{
+                sprint = false;
+            }
+            else
+            {
+				sprint = newSprintState;
+            }
+        }
 
 		public void ShotInput(bool newShotState)
 		{
 			shot = newShotState;
+			sprint = false; //사격시작 시 달리기 제한
 		}
 
 
