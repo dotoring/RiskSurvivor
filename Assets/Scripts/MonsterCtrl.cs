@@ -14,13 +14,15 @@ enum MonsterStat
 public class MonsterCtrl : MonoBehaviour
 {
     Animator animator;
+    GameObject player;
     Transform playerTr;
+    PlayerValue playerVal;
     MonsterStat monStat;
 
     [Header("Monster Status")]
     public float monHP = 100.0f;
     public float moveSpeed = 1.0f;
-    public float exp = 2.0f; //몬스터가 주는 경험치량
+    public int exp = 10; //몬스터가 주는 경험치량
 
     //몬스터 공격 관련 변수
     public float attackPower = 10.0f;
@@ -33,7 +35,9 @@ public class MonsterCtrl : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        playerTr = GameObject.Find("Player").GetComponent<Transform>();
+        player = GameObject.Find("Player");
+        playerTr = player.GetComponent<Transform>();
+        playerVal = player.GetComponent<PlayerValue>();
 
         monStat = MonsterStat.Spawn;
 
@@ -107,10 +111,11 @@ public class MonsterCtrl : MonoBehaviour
         {
             animator.SetTrigger("OnDeath"); //사망 애니메이션 재생
             monStat = MonsterStat.Death; //사망 상태로 변경
-            gameObject.GetComponentInChildren<CapsuleCollider>().enabled = false; //콜리더 비활성화
-            
-            //플레이어에게 몬스터 처치 경험치 부여
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<CapsuleCollider>().enabled = false; //콜리더 비활성화
 
+            //플레이어에게 몬스터 처치 경험치 부여
+            playerVal.GainExp(exp);
         }
     }
 

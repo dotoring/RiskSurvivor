@@ -79,7 +79,7 @@ namespace StarterAssets
         public GameObject shotPoint; //총알 발사 지점
         public static Vector3 shotDir; //조준 방향
         public float shotTimeout = 0.5f; //공격속도
-        public GameObject bulletPref; //총알 프리펩
+        public GameObject bulletPref; //총알 프리팹
 
 
         // cinemachine
@@ -202,7 +202,7 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
+            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition && GameMgr.isPaused == false)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
