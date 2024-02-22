@@ -31,7 +31,6 @@ public class MonsterCtrl : MonoBehaviour
     public float attackRange = 1.5f;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -45,7 +44,6 @@ public class MonsterCtrl : MonoBehaviour
         attackTimeoutDelta = attackTimeout;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckState();

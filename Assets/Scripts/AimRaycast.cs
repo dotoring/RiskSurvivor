@@ -7,13 +7,11 @@ public class AimRaycast : MonoBehaviour
     RaycastHit hit;
     public static Vector3 targetPoint;
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Physics.Raycast(transform.position, transform.forward, out hit))

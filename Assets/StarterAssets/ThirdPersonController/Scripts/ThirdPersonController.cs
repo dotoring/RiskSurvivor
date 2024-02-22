@@ -81,6 +81,8 @@ namespace StarterAssets
         public float shotTimeout = 0.5f; //공격속도
         public GameObject bulletPref; //총알 프리팹
 
+        //게임매니져
+        GameMgr gameMgr;
 
         // cinemachine
         private float _cinemachineTargetYaw;
@@ -143,7 +145,9 @@ namespace StarterAssets
         private void Start()
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
+
+            gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
@@ -202,7 +206,7 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition && GameMgr.isPaused == false)
+            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition && gameMgr.isPaused == false)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
