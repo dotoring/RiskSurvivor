@@ -9,35 +9,37 @@ public class PlayerValue : MonoBehaviour
     public static PlayerValue Instance; //싱글턴
 
     //레벨 관련
-    public int level;
-    public int maxExp;
-    public int curExp;
+    public int level; //레벨
+    public int maxExp; //경험치 통
+    public int curExp; //현재 경험치
 
     //체력 관련
-    public int maxHp;
-    public float curHp;
-    public float hpRegen;
-    public int hpGrowth;
+    public int maxHp; //최대 체력
+    public float curHp; //현재 체력
+    public float hpRegen; //체력 재생
+    public float hpRegenTimeout; //체력 재생 쿨타임
+    public int hpGrowth; //성장 체력
+    public float hpRegenTimeoutDelta;
 
     //방어 관련
-    public int block;
+    public int block; //방어력
 
     //공격 관련
-    public int attackDamage;
-    public float basicAttackSpeed;
-    public float attackSpeedIncreaseRate;
-    public float attackSpeed;
-    public float critChance;
-    public float critDmgRate;
+    public int attackDamage; //공격력
+    public float basicAttackSpeed; //기본 공격속도
+    public float attackSpeedIncreaseRate; //공격속도 증가율(합연산을 위한 변수)
+    public float attackSpeed; //공격 속도
+    public int critChance; //치명타 확률
+    public float critDmgRate; //치명타 배율
 
     //이동 관련
-    public float basicMoveSpeed;
-    public float MoveSpeedIncreaseRate;
-    public float moveSpeed;
-    public float sprintSpeedIncreaseRate;
-    public float sprintSpeed;
-    public float jumpHeight;
-    public int jumpCount;
+    public float basicMoveSpeed; //기본 이동속도
+    public float MoveSpeedIncreaseRate; //이동속도 증가율(합연산을 위한 변수)
+    public float moveSpeed; //이동 속도
+    public float sprintSpeedIncreaseRate; //달리기 속도 증가율(합연산을 위한 변수)
+    public float sprintSpeed; //달리기 속도
+    public float jumpHeight; //점프 높이
+    public int jumpCount; //점프 횟수
 
     [Header("UI Objects")]
     public Text levelTxt;
@@ -72,17 +74,19 @@ public class PlayerValue : MonoBehaviour
         maxHp = 500;
         curHp = maxHp;
         hpRegen = 0.5f;
+        hpRegenTimeout = 1.0f;
         hpGrowth = 10;
+        hpRegenTimeoutDelta = hpRegenTimeout;
 
         //방어 관련
         block = 0;
 
         //공격 관련
-        attackDamage = 10;
+        attackDamage = 50;
         basicAttackSpeed = 2;
         attackSpeed = basicAttackSpeed;
         attackSpeedIncreaseRate = 1.0f;
-        critChance = 0.0f;
+        critChance = 0;
         critDmgRate = 1.5f;
 
         //이동 관련
@@ -94,6 +98,7 @@ public class PlayerValue : MonoBehaviour
         jumpHeight = controller.JumpHeight;
         jumpCount = 1;
 
+
         //===============UI 초기화===================
         levelTxt.text = "Lv." + level.ToString();
         ExpBar.fillAmount = 0;
@@ -103,7 +108,8 @@ public class PlayerValue : MonoBehaviour
 
     void Update()
     {
-
+        HpRegen();
+        RefreshHp();
     }
 
     public void GainExp(int value) //경험치 획득 함수
@@ -125,11 +131,32 @@ public class PlayerValue : MonoBehaviour
         curExp = restExp; //경험치 초과량 채우기
         maxExp += 100; //필요 경험치량 증가
         ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
+
+        IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가
+    }
+
+    void HpRegen()
+    {
+        if(hpRegenTimeoutDelta <= 0.0f)
+        {
+            curHp += hpRegen;
+            if(curHp > maxHp)
+            {
+                curHp = maxHp;
+            }
+            hpRegenTimeoutDelta = hpRegenTimeout;
+        }
+
+        if(hpRegenTimeoutDelta > 0.0f)
+        {
+            hpRegenTimeoutDelta -= Time.deltaTime;
+        }
     }
 
     void RefreshHp()
     {
-        HpTxt.text = curHp.ToString() + "/" + maxHp.ToString();
+        HpTxt.text = curHp.ToString("F0") + "/" + maxHp.ToString();
+        HpBar.fillAmount = curHp / (float)maxHp;
     }
 
     //===================================================================
@@ -138,7 +165,6 @@ public class PlayerValue : MonoBehaviour
     {
         maxHp += val;
         curHp += val; //최대 체력 증가량 만큼 현재 체력도 증가
-        RefreshHp();
     }
 
     public void DecreaseMaxHp()
@@ -163,7 +189,7 @@ public class PlayerValue : MonoBehaviour
 
     }
 
-    public void IncreaseCritChance(float val)
+    public void IncreaseCritChance(int val)
     {
         critChance += val;
     }
@@ -197,5 +223,40 @@ public class PlayerValue : MonoBehaviour
     public void IncreaseJumpCount(int val)
     {
         jumpCount += val;
+    }
+
+    //=============데미지 계산================
+    public int DamageCalc() //플레이어가 주는 데미지 계산
+    {
+        float dmg = attackDamage;
+
+        if(critChance >= 100) //치명타 확률이 100%를 넘겼을 때 확정 치명타
+        {
+            dmg = attackDamage * critDmgRate;
+        }
+        else if(critChance <= 0) //치명타 확률이 0%일 때
+        {
+            dmg = attackDamage;
+        }
+        else //치명타 확률이 1%~99%일 때
+        {
+            int rand = Random.Range(1, 101); //1~100 랜덤
+            if(rand <= critChance) //치명타가 떴을 때
+            {
+                dmg = attackDamage * critDmgRate;
+            }
+            else
+            {
+                dmg = attackDamage;
+            }
+        }
+
+        Debug.Log(dmg);
+        return (int)dmg;
+    }
+
+    public void PlayerTakeDamage(int dmg) //플레이어가 받는 데미지
+    {
+        curHp -= dmg;
     }
 }

@@ -39,7 +39,7 @@ public class Inventory : MonoBehaviour
                 PlayerValue.Instance.IncreaseAttackSpeed(item.itemStat);
                 break;
             case "치명타 확률업":
-                PlayerValue.Instance.IncreaseCritChance(item.itemStat);
+                PlayerValue.Instance.IncreaseCritChance((int)item.itemStat);
                 break;
             case "이동속도 템":
                 PlayerValue.Instance.IncreaseMoveSpeed(item.itemStat);

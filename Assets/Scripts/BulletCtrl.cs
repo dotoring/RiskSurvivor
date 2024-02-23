@@ -21,9 +21,9 @@ public class BulletCtrl : MonoBehaviour
     {
         if(other.tag == "Monster")
         {
-            other.GetComponent<MonsterCtrl>().Damaged(50);
+            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc());
         }
-        Debug.Log("bang");
         Destroy(gameObject);
     }
+
 }

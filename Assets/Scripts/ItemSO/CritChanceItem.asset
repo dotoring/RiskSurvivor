@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CritChanceItem
   m_EditorClassIdentifier: 
   itemName: "\uCE58\uBA85\uD0C0 \uD655\uB960\uC5C5"
-  itemStat: 0.1
+  itemStat: 10
   itemStatDesc: "\uCE58\uBA85\uD0C0 \uD655\uB960 +10%"
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: 685497985199a4fe293bafef719c39d1, type: 3}

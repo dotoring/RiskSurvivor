@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,7 @@ public class GameMgr : MonoBehaviour
     GameObject player;
 
     public ItemSO[] items;
+    int[] temp = new int[3];
 
     public GameObject itemSelectPanel;
     public GameObject itemSelectList;
@@ -60,11 +62,25 @@ public class GameMgr : MonoBehaviour
     {
         GamePause(); //게임 일시정지
         itemSelectPanel.SetActive(true); //아이템 선택창 활성화
-        for(int i = 0; i < 3; i++) //선택 아이템 3개 띄우기
+
+        for (int i = 0; i < 3;) //중복 없이 아이템 3개 뽑기
+        {
+            int ran = Random.Range(0, items.Length);
+            if (temp.Contains(ran))
+            {
+                continue;
+            }
+            else
+            {
+                temp[i] = ran;
+                i++;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) //선택 아이템 3개 띄우기
         {
             GameObject node = Instantiate(itemSelectNode);
-            int rand = Random.Range(0, items.Length); //아이템 중 랜덤 뽑기
-            node.GetComponent<ItemSelectNode>().SetItem(items[rand]); //아이템 선택 노드에 뽑은 아이템 세팅
+            node.GetComponent<ItemSelectNode>().SetItem(items[temp[i]]); //아이템 선택 노드에 뽑은 아이템 세팅
             node.transform.SetParent(itemSelectList.transform, false); //아이템 선택 리스트의 하위 오브젝트로 설정
         }
     }
@@ -104,16 +120,16 @@ public class GameMgr : MonoBehaviour
 
             float randX = Random.Range(-50, 50);
             float randZ = Random.Range(-50, 50);
-            Vector3 randPos = new Vector3(randX, 0, randZ);
+            Vector3 randPos = new Vector3(randX, 0, randZ); //랜덤 위치
 
-            if (NavMesh.SamplePosition(randPos, out hit, 1.0f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randPos, out hit, 1.0f, NavMesh.AllAreas)) //랜덤 위치에서 가장 가까운 정상 지형 찾기
             {
                 randomPosition = hit.position;
             }
 
-            GameObject monster = Instantiate(monsterPref);
-            monster.transform.position = randomPosition;
-            yield return new WaitForSeconds(1.0f);
+            GameObject monster = Instantiate(monsterPref); //몬스터 스폰
+            monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+            yield return new WaitForSeconds(3.0f); //스폰 쿨타임
         }
     }
 }

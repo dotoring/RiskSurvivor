@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1505048980345035373, guid: a5b864fe7ab693b4ebbfb3e1502aac7e, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3360329922263324231, guid: a5b864fe7ab693b4ebbfb3e1502aac7e, type: 3}
       propertyPath: m_RootOrder
@@ -1498,6 +1498,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7677890964665032087, guid: dfe81af08cc57394489d52c5ab1a3316, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfe81af08cc57394489d52c5ab1a3316, type: 3}
 --- !u!114 &1437748274
@@ -1556,6 +1560,7 @@ MonoBehaviour:
   inventoryItemList: {fileID: 2144800917}
   inventoryItemNode: {fileID: 967647488325317337, guid: a8d20c62329578443a3a8b8a4b874cfd, type: 3}
   navMeshSurface: {fileID: 794699318}
+  isPaused: 0
 --- !u!4 &1454535296
 Transform:
   m_ObjectHideFlags: 0
@@ -3487,7 +3492,7 @@ MonoBehaviour:
   LockCameraPosition: 0
   shotPoint: {fileID: 361128369}
   shotTimeout: 0.5
-  bulletPref: {fileID: 7033504411571312352, guid: f15aa554cc69d6b47b9df49df8af5573, type: 3}
+  bulletPref: {fileID: 4972876606688661061, guid: 7e62fd6e2d4d3eb4c8604d0ae92535db, type: 3}
 --- !u!143 &4416926083184077769
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4324,9 +4329,10 @@ MonoBehaviour:
   curExp: 0
   maxHp: 0
   curHp: 0
-  basicHpRegen: 0
   hpRegen: 0
+  hpRegenTimeout: 0
   hpGrowth: 0
+  hpRegenTimeoutDelta: 0
   block: 0
   attackDamage: 0
   basicAttackSpeed: 0
@@ -4337,7 +4343,7 @@ MonoBehaviour:
   basicMoveSpeed: 0
   MoveSpeedIncreaseRate: 0
   moveSpeed: 0
-  SprintSpeedIncreaseRate: 0
+  sprintSpeedIncreaseRate: 0
   sprintSpeed: 0
   jumpHeight: 0
   jumpCount: 0

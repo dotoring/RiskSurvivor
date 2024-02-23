@@ -110,7 +110,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 153
     - serializedVersion: 16
       name: AttackRight_Trestor_S
       takeName: AttackRight_Trestor_S
@@ -135,11 +135,25 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.39361703
+        functionName: ActivateAttackHitbox
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 0e5fd72cef6380b45b04f0dd7afb910b, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.54787236
+        functionName: DeactivateAttackHitbox
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 0e5fd72cef6380b45b04f0dd7afb910b, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 189
     - serializedVersion: 16
       name: Death_Trestor_S
       takeName: Death_Trestor_S
