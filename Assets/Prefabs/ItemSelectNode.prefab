@@ -292,14 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d27e67bde4fd52449fa491df5d79a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-  - {fileID: 11400000, guid: 01837e1459afcc64caf69a3a3a8aca28, type: 2}
-  - {fileID: 11400000, guid: 51765d85c03beae40890837e8ff1985e, type: 2}
-  - {fileID: 11400000, guid: 95d5402fc67a6e240a4d12f56a614e3e, type: 2}
-  - {fileID: 11400000, guid: f33889ec329e16b45a295c8ceaf91039, type: 2}
-  - {fileID: 11400000, guid: f69d2da48f4f9dc4eb0b2c90cb1c6214, type: 2}
-  - {fileID: 11400000, guid: d214e966a8b4a9e4484cca6fb9ca75d7, type: 2}
-  - {fileID: 11400000, guid: 0c2f8e67e3b68f44d9118cf69f02391e, type: 2}
+  nodeItem: {fileID: 0}
   itemIcon: {fileID: 3222371532259227756}
   itemName: {fileID: 4236974297876298884}
   itemStat: {fileID: 4236974296107347464}

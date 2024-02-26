@@ -12,4 +12,5 @@ public class ItemSO : ScriptableObject
     public Sprite itemIcon; //아이템 아이콘
 
     public int quantity; //아이템 갯수
+    public GameObject itemPrefab; //아이템 프리팹
 }

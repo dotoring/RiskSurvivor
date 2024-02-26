@@ -16,5 +16,5 @@ MonoBehaviour:
   itemStat: 0.1
   itemStatDesc: "\uB2EC\uB9AC\uAE30 \uC18D\uB3C4 +10%"
   itemDescription: "\uD64D\uB2E4\uB2E5"
-  itemIcon: {fileID: 21300000, guid: ae1788943277b4eea8c8373be2f1a9bd, type: 3}
+  itemIcon: {fileID: 21300000, guid: b7f1e51792a994d81a06bf1069c7204c, type: 3}
   quantity: 2

@@ -50,6 +50,9 @@ public class PlayerValue : MonoBehaviour
     ThirdPersonController controller;
     GameMgr gameMgr;
 
+    //임시용
+    ItemFunction itemFunction;
+
     private void Awake()
     {
         //싱글턴 설정
@@ -63,6 +66,7 @@ public class PlayerValue : MonoBehaviour
     {
         controller = GetComponent<ThirdPersonController>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        itemFunction = GetComponent<ItemFunction>();
 
         //============게임 시작시 스탯 초기화============
         //레벨 관련
@@ -129,7 +133,7 @@ public class PlayerValue : MonoBehaviour
         level++; //레벨 증가
         levelTxt.text = "Lv." + level.ToString(); //레벨 텍스트 변경
         curExp = restExp; //경험치 초과량 채우기
-        maxExp += 100; //필요 경험치량 증가
+        //maxExp += 100; //필요 경험치량 증가
         ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
 
         IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가
@@ -258,5 +262,16 @@ public class PlayerValue : MonoBehaviour
     public void PlayerTakeDamage(int dmg) //플레이어가 받는 데미지
     {
         curHp -= dmg;
+    }
+
+    //==================기능 아이템=====================
+    public void Satellite(GameObject prefab, int val)
+    {
+        itemFunction.GenerateSatellite(prefab, val);
+    }
+
+    public void Metdolee(GameObject prefab)
+    {
+        itemFunction.GenerateMetdolee(prefab);
     }
 }

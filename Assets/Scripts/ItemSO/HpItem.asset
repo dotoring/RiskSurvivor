@@ -16,5 +16,5 @@ MonoBehaviour:
   itemStat: 50
   itemStatDesc: "\uCCB4\uB825 +50"
   itemDescription: 
-  itemIcon: {fileID: 21300000, guid: 16251c994c59d4480967baf341a074e6, type: 3}
+  itemIcon: {fileID: 21300000, guid: 814820117179148bcb3a3ddbe9dbfe31, type: 3}
   quantity: 0

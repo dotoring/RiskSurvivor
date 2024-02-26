@@ -16,6 +16,7 @@ public class MonsterCtrl : MonoBehaviour
     Animator animator;
     GameObject player;
     Transform playerTr;
+    GameMgr gameMgr;
     MonsterStat monStat;
 
     [Header("Monster Status")]
@@ -37,6 +38,7 @@ public class MonsterCtrl : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player");
         playerTr = player.GetComponent<Transform>();
+        gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
 
         monStat = MonsterStat.Spawn;
 
@@ -55,13 +57,14 @@ public class MonsterCtrl : MonoBehaviour
     //몬스터의 상태 확인 및 변경 함수
     void CheckState()
     {
-        float distance = Vector3.Distance(playerTr.position, transform.position); //플레이어와 몬스터 사이의 거리
+        Vector3 dis = playerTr.position - transform.position;
+        float distance = Vector3.SqrMagnitude(dis); //플레이어와 몬스터 사이의 거리 제곱
 
-        if(monStat == MonsterStat.Death)
+        if (monStat == MonsterStat.Death)
         {
             return;
         }
-        else if (distance < attackRange) //플레이어가 공격 사거리 안에 들어오면 공격
+        else if (distance < attackRange * attackRange) //플레이어가 공격 사거리 안에 들어오면 공격
         {
             monStat = MonsterStat.Attack;
         }
@@ -109,10 +112,13 @@ public class MonsterCtrl : MonoBehaviour
             animator.SetTrigger("OnDeath"); //사망 애니메이션 재생
             monStat = MonsterStat.Death; //사망 상태로 변경
             gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+
             gameObject.GetComponent<CapsuleCollider>().enabled = false; //콜리더 비활성화
 
             //플레이어에게 몬스터 처치 경험치 부여
             PlayerValue.Instance.GainExp(exp);
+            gameMgr.monstersTr.Remove(transform); //몬스터들 위치 리스트에서 제거
         }
     }
 

@@ -7,7 +7,6 @@ using UnityEngine.AI;
 public class GameMgr : MonoBehaviour
 {
     public GameObject monsterPref;
-    GameObject player;
 
     public ItemSO[] items;
     int[] temp = new int[3];
@@ -23,6 +22,8 @@ public class GameMgr : MonoBehaviour
 
     public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
 
+    public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
+
     void Start()
     {
         Application.targetFrameRate = 60; //실행 프레임 속도 60프레임으로 고정
@@ -31,7 +32,6 @@ public class GameMgr : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; //커서 고정
         Cursor.visible = false; //커서 숨김
 
-        player = GameObject.Find("Player");
         navMeshSurface.BuildNavMesh(); //NavMesh 빌드
 
         StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
@@ -129,6 +129,7 @@ public class GameMgr : MonoBehaviour
 
             GameObject monster = Instantiate(monsterPref); //몬스터 스폰
             monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+            monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
             yield return new WaitForSeconds(3.0f); //스폰 쿨타임
         }
     }

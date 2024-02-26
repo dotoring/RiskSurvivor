@@ -50,6 +50,12 @@ public class Inventory : MonoBehaviour
             case "점프 추가 템":
                 PlayerValue.Instance.IncreaseJumpCount((int)item.itemStat);
                 break;
+            case "위성":
+                PlayerValue.Instance.Satellite(item.itemPrefab, item.quantity);
+                break;
+            case "멧돌이":
+                PlayerValue.Instance.Metdolee(item.itemPrefab);
+                break;
         }
     }
 }

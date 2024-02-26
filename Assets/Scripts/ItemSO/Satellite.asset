@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 068436e757d0a744c94bb42e32977e4b, type: 3}
-  m_Name: CritChanceItem
+  m_Name: Satellite
   m_EditorClassIdentifier: 
-  itemName: "\uCE58\uBA85\uD0C0 \uD655\uB960\uC5C5"
-  itemStat: 10
-  itemStatDesc: "\uCE58\uBA85\uD0C0 \uD655\uB960 +10%"
-  itemDescription: 
-  itemIcon: {fileID: 21300000, guid: 7d9bb97e33bfe441aa26bb8eb2e47023, type: 3}
-  quantity: 1
+  itemName: "\uC704\uC131"
+  itemStat: 0
+  itemStatDesc: "\uAC2F\uC218 +1"
+  itemDescription: "\uBE59\uAE00\uBE59\uAE00 \uB3D5\uB2C8\uB2E4"
+  itemIcon: {fileID: 21300000, guid: a7824fd2a3a1d4569b239f37ce014d38, type: 3}
+  quantity: 2
+  itemPrefab: {fileID: 1545646171373042080, guid: f62624dc4ef420144a0b022dffe94be3, type: 3}
