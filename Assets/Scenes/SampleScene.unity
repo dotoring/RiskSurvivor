@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 375
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -1552,10 +1552,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95d5402fc67a6e240a4d12f56a614e3e, type: 2}
   - {fileID: 11400000, guid: f33889ec329e16b45a295c8ceaf91039, type: 2}
   - {fileID: 11400000, guid: f69d2da48f4f9dc4eb0b2c90cb1c6214, type: 2}
-  - {fileID: 11400000, guid: d214e966a8b4a9e4484cca6fb9ca75d7, type: 2}
-  - {fileID: 11400000, guid: 0c2f8e67e3b68f44d9118cf69f02391e, type: 2}
-  - {fileID: 11400000, guid: 2d96bd5be59b7524983d9139e4ae770e, type: 2}
   - {fileID: 11400000, guid: fb3f45674e986f04187bf0803cbf3d05, type: 2}
+  - {fileID: 11400000, guid: e5ac535fab532a645ad2a608908bfdb4, type: 2}
+  - {fileID: 11400000, guid: d214e966a8b4a9e4484cca6fb9ca75d7, type: 2}
+  - {fileID: 11400000, guid: 2d96bd5be59b7524983d9139e4ae770e, type: 2}
+  - {fileID: 11400000, guid: 0c2f8e67e3b68f44d9118cf69f02391e, type: 2}
   itemSelectPanel: {fileID: 2041496278}
   itemSelectList: {fileID: 2668297786431917565}
   itemSelectNode: {fileID: 241885664027979608, guid: 81486f2a1dd9da843a402a4eb9f67d11, type: 3}
@@ -4412,9 +4413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ec6fab488025dd45a4c626e1af4aaa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  satellitePref: {fileID: 1545646171373042080, guid: f62624dc4ef420144a0b022dffe94be3, type: 3}
   satelliteRadius: 3
-  metdoleePref: {fileID: 1021989927023727912, guid: e8ae50b714413864ba2b72a40de8da2c, type: 3}
 --- !u!4 &6983258930126689242
 Transform:
   m_ObjectHideFlags: 0

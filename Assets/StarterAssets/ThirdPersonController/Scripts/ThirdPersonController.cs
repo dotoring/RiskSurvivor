@@ -168,15 +168,21 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
-            Shot();
+            if(gameMgr.isPaused == false) //게임 진행중에만 작동
+            {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+                Shot();
+            }
         }
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (gameMgr.isPaused == false) //게임 진행중에만 작동
+            {
+                CameraRotation();
+            }
         }
 
         private void AssignAnimationIDs()
@@ -206,7 +212,7 @@ namespace StarterAssets
         private void CameraRotation()
         {
             // if there is an input and camera position is not fixed
-            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition && gameMgr.isPaused == false)
+            if (_input.look.sqrMagnitude >= _threshold && !LockCameraPosition)
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;

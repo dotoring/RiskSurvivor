@@ -274,4 +274,9 @@ public class PlayerValue : MonoBehaviour
     {
         itemFunction.GenerateMetdolee(prefab);
     }
+
+    public void Missile(GameObject prefab, int quantity)
+    {
+        itemFunction.GenerateMissile(prefab, quantity);
+    }
 }

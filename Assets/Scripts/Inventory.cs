@@ -56,6 +56,9 @@ public class Inventory : MonoBehaviour
             case "멧돌이":
                 PlayerValue.Instance.Metdolee(item.itemPrefab);
                 break;
+            case "미사일":
+                PlayerValue.Instance.Missile(item.itemPrefab, item.quantity);
+                break;
         }
     }
 }

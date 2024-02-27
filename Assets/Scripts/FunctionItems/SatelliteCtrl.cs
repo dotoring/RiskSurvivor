@@ -5,20 +5,19 @@ using UnityEngine;
 
 public class SatelliteCtrl : MonoBehaviour
 {
-    ItemFunction itemFunction;
-    public Transform playerTr;
-    public float spinSpeed;
+    Transform playerTr;
+
+    public int damage; //데미지
+    public float spinSpeed; //회전 속도
 
     void Start()
     {
-        itemFunction = GameObject.Find("Player").GetComponent<ItemFunction>();
         playerTr = GameObject.Find("PlayerTransform").transform;
     }
 
     void Update()
     {
-        Vector3 newPos = transform.position = playerTr.position + (transform.position - playerTr.position).normalized * itemFunction.satelliteRadius;
-        newPos.y = transform.position.y;
+        //플레이어의 위치를 중심으로 y축으로만 회전
         transform.RotateAround(playerTr.position, Vector3.up, spinSpeed * Time.deltaTime);
     }
 
@@ -26,7 +25,7 @@ public class SatelliteCtrl : MonoBehaviour
     {
         if (other.tag == "Monster")
         {
-            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc());
+            other.GetComponent<MonsterCtrl>().Damaged(damage);
         }
     }
 }

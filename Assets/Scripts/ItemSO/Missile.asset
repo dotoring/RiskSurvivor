@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068436e757d0a744c94bb42e32977e4b, type: 3}
+  m_Name: Missile
+  m_EditorClassIdentifier: 
+  itemName: "\uBBF8\uC0AC\uC77C"
+  itemStat: 0
+  itemStatDesc: "\uBC1C\uC0AC \uAC2F\uC218 +1"
+  itemDescription: "5\uCD08\uB9C8\uB2E4 \uBC1C\uC0AC\uD569\uB2C8\uB2E4"
+  itemIcon: {fileID: 0}
+  quantity: 0
+  itemPrefab: {fileID: 692686532195022502, guid: 2363d8746284bc2449dfcb099ccd59c9, type: 3}
