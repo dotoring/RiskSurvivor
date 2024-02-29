@@ -9,9 +9,9 @@ public class MetdoleeCtrl : FunctionItemClass
     GameObject player;
     Rigidbody rb;
 
-    public int damage = 30; //데미지
-    public float trackingRange = 10f; //추적 범위
-    public float moveSpeed = 1f; //이동 속도
+    public int damage; //데미지
+    public float trackingRange; //추적 범위
+    public float moveSpeed; //이동 속도
     public float bounceForce; //충돌 후 튕겨나오는 힘
 
     // Start is called before the first frame update
@@ -56,10 +56,11 @@ public class MetdoleeCtrl : FunctionItemClass
         float sqrDistance = playerDistance.sqrMagnitude;
         if (sqrDistance > 30.0f * 30.0f)
         {
+            rb.isKinematic = true;
             float randX = Random.Range(0, 3.0f);
             float randZ = Random.Range(0, 3.0f);
-
             transform.position = player.transform.position + new Vector3(randX, 0.5f, randZ);
+            rb.isKinematic = false;
         }
     }
 
@@ -73,7 +74,7 @@ public class MetdoleeCtrl : FunctionItemClass
             // 물체를 튕겨나오는 방향으로 힘을 가함
             rb.AddForce(-collisionDirection.normalized * bounceForce, ForceMode.Impulse);
 
-            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(50); //몬스터에게 피해주기
+            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(damage); //몬스터에게 피해주기
         }
     }
 }

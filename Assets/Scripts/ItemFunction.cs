@@ -13,7 +13,7 @@ public class ItemFunction : MonoBehaviour
     Vector3 genPosition;
 
     //위성
-    float satelliteRadius; //공전 반지름
+    float satelliteRadius = 3.0f; //공전 반지름
 
     //미사일
     IEnumerator missileCoroutine = null;

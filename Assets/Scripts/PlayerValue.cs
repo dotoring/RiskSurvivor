@@ -75,7 +75,7 @@ public class PlayerValue : MonoBehaviour
         curExp = 0;
         
         //체력 관련
-        maxHp = 500;
+        maxHp = 200;
         curHp = maxHp;
         hpRegen = 0.5f;
         hpRegenTimeout = 1.0f;
@@ -86,7 +86,7 @@ public class PlayerValue : MonoBehaviour
         block = 0;
 
         //공격 관련
-        attackDamage = 50;
+        attackDamage = 20;
         basicAttackSpeed = 2;
         attackSpeed = basicAttackSpeed;
         attackSpeedIncreaseRate = 1.0f;
@@ -133,7 +133,7 @@ public class PlayerValue : MonoBehaviour
         level++; //레벨 증가
         levelTxt.text = "Lv." + level.ToString(); //레벨 텍스트 변경
         curExp = restExp; //경험치 초과량 채우기
-        //maxExp += 100; //필요 경험치량 증가
+        maxExp += 50; //필요 경험치량 증가
         ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
 
         IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가
@@ -255,7 +255,6 @@ public class PlayerValue : MonoBehaviour
             }
         }
 
-        Debug.Log(dmg);
         return (int)dmg;
     }
 

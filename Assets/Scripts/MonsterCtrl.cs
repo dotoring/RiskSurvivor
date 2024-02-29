@@ -20,7 +20,8 @@ public class MonsterCtrl : MonoBehaviour
     MonsterStat monStat;
 
     [Header("Monster Status")]
-    public float monHP = 100.0f; //몬스터 체력
+    public float monMaxHP = 100.0f; //몬스터 최대 체력
+    public float monCurHP; //몬스터 체력
     public float moveSpeed = 1.0f; //몬스터 이동속도
     public int exp = 10; //몬스터가 주는 경험치량
 
@@ -40,10 +41,22 @@ public class MonsterCtrl : MonoBehaviour
         playerTr = player.GetComponent<Transform>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
 
+        monCurHP = monMaxHP;
         monStat = MonsterStat.Spawn;
 
         //공격 재사용 대기 시간 초기화
         attackTimeoutDelta = attackTimeout;
+    }
+
+    private void OnEnable()
+    {
+        monCurHP = monMaxHP;
+        monStat = MonsterStat.Spawn;
+        attackTimeoutDelta = attackTimeout;
+
+        gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
+        gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
+        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
     }
 
     void Update()
@@ -107,25 +120,33 @@ public class MonsterCtrl : MonoBehaviour
     //몬스터 사망 함수
     void Death()
     {
-        if(monHP <= 0.0f && monStat != MonsterStat.Death)
+        if(monCurHP <= 0.0f && monStat != MonsterStat.Death)
         {
             animator.SetTrigger("OnDeath"); //사망 애니메이션 재생
             monStat = MonsterStat.Death; //사망 상태로 변경
-            gameObject.GetComponent<Rigidbody>().useGravity = false;
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
-
+            gameObject.GetComponent<Rigidbody>().useGravity = false; //중력 비활성화
+            gameObject.GetComponent<Rigidbody>().isKinematic = true; //외부 물리력 비활성화
             gameObject.GetComponent<CapsuleCollider>().enabled = false; //콜리더 비활성화
 
             //플레이어에게 몬스터 처치 경험치 부여
             PlayerValue.Instance.GainExp(exp);
             gameMgr.monstersTr.Remove(transform); //몬스터들 위치 리스트에서 제거
+
+            StartCoroutine(Disable());
         }
+    }
+
+    IEnumerator Disable()
+    {
+        yield return new WaitForSeconds(5.0f);
+        gameObject.SetActive(false);
+        yield return null;
     }
 
     //몬스터가 피해를 받는 함수
     public void Damaged(int val)
     {
-        monHP -= val;
+        monCurHP -= val;
     }
 
     public void ActivateAttackHitbox() //공격 모션 시작시 호출될 함수

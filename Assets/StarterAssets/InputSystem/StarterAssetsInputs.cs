@@ -75,7 +75,7 @@ namespace StarterAssets
             }
             else
             {
-				sprint = newSprintState;
+				sprint = !sprint;
             }
         }
 

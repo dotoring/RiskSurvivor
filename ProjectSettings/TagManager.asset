@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - Monster
+  - MapSensor
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Player
   - Bullet
   - Monster
-  - 
+  - MapSensor
   - 
   - 
   - 

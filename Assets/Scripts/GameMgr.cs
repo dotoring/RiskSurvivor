@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
+    public float playTime;
+    public Text timeText;
+
     public GameObject monsterPref;
 
     public ItemSO[] items;
@@ -22,7 +26,11 @@ public class GameMgr : MonoBehaviour
 
     public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
 
+    public GameObject player;
     public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
+
+    //오브젝트 풀
+    public List<GameObject> monsterPool = new List<GameObject>(); //몬스터 풀
 
     void Start()
     {
@@ -32,14 +40,26 @@ public class GameMgr : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; //커서 고정
         Cursor.visible = false; //커서 숨김
 
-        navMeshSurface.BuildNavMesh(); //NavMesh 빌드
+        player = GameObject.Find("Player");
 
-        StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
+        playTime = 0;
+
+        //navMeshSurface.BuildNavMesh(); //NavMesh 빌드
+
+        //StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
     }
 
     void Update()
     {
+        playTime += Time.deltaTime;
+        Clock();
+    }
 
+    void Clock()
+    {
+        int minutes = (int)playTime / 60;
+        int seconds = (int)playTime % 60;
+        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void GamePause() //게임 일시정지 함수
@@ -115,22 +135,43 @@ public class GameMgr : MonoBehaviour
     {
         while(true)
         {
-            NavMeshHit hit;
-            Vector3 randomPosition = Vector3.zero;
-
-            float randX = Random.Range(-50, 50);
-            float randZ = Random.Range(-50, 50);
-            Vector3 randPos = new Vector3(randX, 0, randZ); //랜덤 위치
-
-            if (NavMesh.SamplePosition(randPos, out hit, 1.0f, NavMesh.AllAreas)) //랜덤 위치에서 가장 가까운 정상 지형 찾기
+            int spawnCount = 3 + ((int)playTime / 60);
+            for (int i = 0; i < spawnCount; i++)
             {
-                randomPosition = hit.position;
-            }
+                NavMeshHit hit;
+                Vector3 randomPosition = Vector3.zero;
+                //플레이어 반경 30이내의 랜덤위치 설정
+                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
 
-            GameObject monster = Instantiate(monsterPref); //몬스터 스폰
-            monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
-            monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
-            yield return new WaitForSeconds(3.0f); //스폰 쿨타임
+                //랜덤 위치에서 가장 가까운 정상 지형 찾기
+                if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
+                {
+                    randomPosition = hit.position;
+                }
+
+                bool poolAvailable = false;
+                //몬스터 오브젝트 풀에서 가져오기
+                foreach (GameObject monsterGO in monsterPool)
+                {
+                    if (!monsterGO.activeSelf) //비활성화 몬스터라면
+                    {
+                        monsterGO.SetActive(true);
+                        monsterGO.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                        monstersTr.Add(monsterGO.transform); //몬스터 위치 리스트에 추가
+                        poolAvailable = true;
+                        break;
+                    }
+                }
+                //몬스터 풀에 자원이 없으면 추가 생성
+                if (!poolAvailable)
+                {
+                    GameObject monster = Instantiate(monsterPref); //몬스터 스폰
+                    monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                    monsterPool.Add(monster);
+                    monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
+                }
+            }
+            yield return new WaitForSeconds(8.0f); //스폰 쿨타임
         }
     }
 }
