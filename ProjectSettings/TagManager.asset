@@ -11,14 +11,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostFx
   - Water
   - UI
   - Player
   - Bullet
   - Monster
   - MapSensor
-  - PostFx
+  - MonsterBullet
   - 
   - 
   - 

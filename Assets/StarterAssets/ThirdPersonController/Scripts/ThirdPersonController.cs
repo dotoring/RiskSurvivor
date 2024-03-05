@@ -76,7 +76,7 @@ namespace StarterAssets
         public bool LockCameraPosition = false;
 
         [Header("Shotting setting")]
-        public GameObject shotPoint; //총알 발사 지점
+        public Transform shotPoint; //총알 발사 지점
         public static Vector3 shotDir; //조준 방향
         public float shotTimeout = 0.5f; //공격속도
         public GameObject bulletPref; //총알 프리팹
@@ -377,8 +377,8 @@ namespace StarterAssets
 
             if (_input.shot && shotTimeoutDelta <= 0.0f)
             {
-                shotDir = (AimRaycast.targetPoint - shotPoint.transform.position).normalized; //정규화로 투사체 속도 통일
-                Instantiate(bulletPref, shotPoint.transform.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
+                shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
+                Instantiate(bulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
                 shotTimeoutDelta = shotTimeout;
             }
 

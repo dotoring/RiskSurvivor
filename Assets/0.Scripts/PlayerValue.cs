@@ -258,7 +258,7 @@ public class PlayerValue : MonoBehaviour
         return (int)dmg;
     }
 
-    public void PlayerTakeDamage(int dmg) //플레이어가 받는 데미지
+    public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지
     {
         curHp -= dmg;
     }

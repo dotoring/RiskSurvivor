@@ -13,33 +13,64 @@ public class MissileCtrl : FunctionItemClass
 
     public float delayTime; // 미사일 발사 후 추적 딜레이시간
 
+    public ParticleSystem explosionEffect;
+    public GameObject model;
+
     // Start is called before the first frame update
     void Start()
     {
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        StartCoroutine(Tracking());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(delayTime > 0)
+        //if(delayTime > 0)
+        //{
+        //    delayTime -= Time.deltaTime;
+        //    transform.Translate(Vector3.up * moveSpeed * Time.deltaTime, Space.World);
+        //}
+        //else
+        //{
+        //    //가장 가까운 몬스터 찾기
+        //    closestMonster = GetClosestMonster(trackingRange);
+        //    //가장 가까운 몬스터 추적하기
+        //    if (closestMonster != null)
+        //    {
+        //        TrackingObejct(closestMonster, moveSpeed);
+        //    }
+        //    else //추적할 몬스터가 없다면 움직이던대로 움직이기
+        //    {
+        //        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+        //    }
+        //}
+    }
+
+    IEnumerator Tracking()
+    {
+        while(true)
         {
-            delayTime -= Time.deltaTime;
-            transform.Translate(Vector3.up * moveSpeed * Time.deltaTime, Space.World);
-        }
-        else
-        {
-            //가장 가까운 몬스터 찾기
-            closestMonster = GetClosestMonster(trackingRange);
-            //가장 가까운 몬스터 추적하기
-            if (closestMonster != null)
+            if (delayTime > 0)
             {
-                TrackingObejct(closestMonster, moveSpeed);
+                delayTime -= Time.deltaTime;
+                transform.Translate(Vector3.up * moveSpeed * Time.deltaTime, Space.World);
             }
-            else //추적할 몬스터가 없다면 움직이던대로 움직이기
+            else
             {
-                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                //가장 가까운 몬스터 찾기
+                closestMonster = GetClosestMonster(trackingRange);
+                //가장 가까운 몬스터 추적하기
+                if (closestMonster != null)
+                {
+                    TrackingObejct(closestMonster, moveSpeed);
+                }
+                else //추적할 몬스터가 없다면 움직이던대로 움직이기
+                {
+                    transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+                }
             }
+            yield return null;
         }
     }
 
@@ -57,12 +88,24 @@ public class MissileCtrl : FunctionItemClass
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 
+    IEnumerator Impact()
+    {
+        explosionEffect.Play();
+        GetComponent<Collider>().enabled = false;
+        model.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(gameObject);
+        yield break;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Monster")
+        StopCoroutine(Tracking());
+        StartCoroutine(Impact());
+        if (other.tag == "Monster")
         {
+            Debug.Log("bomb");
             other.GetComponent<MonsterCtrl>().Damaged(damage);
         }
-        Destroy(gameObject);
     }
 }

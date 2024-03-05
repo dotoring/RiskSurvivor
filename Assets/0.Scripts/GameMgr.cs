@@ -7,11 +7,15 @@ using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
 {
+    public NavMeshSurface[] navMeshSurface;
+
     public float playTime;
     public Text timeText;
+    GameObject player;
+    public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
 
-    public GameObject monsterPref;
 
+    [Header("Item")]
     public ItemSO[] items;
     int[] temp = new int[3];
 
@@ -22,15 +26,13 @@ public class GameMgr : MonoBehaviour
     public GameObject inventoryItemList;
     public GameObject inventoryItemNode;
 
-    public NavMeshSurface[] navMeshSurface;
-
-    public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
-
-    public GameObject player;
+    [Header("Monster")]
+    public GameObject smallMonsterPref;
+    public GameObject mediumMonsterPref;
     public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
-
     //오브젝트 풀
-    public List<GameObject> monsterPool = new List<GameObject>(); //몬스터 풀
+    public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
+    public List<GameObject> mediumMonsterPool = new List<GameObject>(); //몬스터 풀
 
     private void Awake()
     {
@@ -51,12 +53,8 @@ public class GameMgr : MonoBehaviour
 
         playTime = 0;
 
-        //foreach(NavMeshSurface surface in navMeshSurface)
-        //{
-        //    surface.BuildNavMesh(); //NavMesh 빌드
-        //}
-
         StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
+        StartCoroutine(MediumMonsterSpawn());
     }
 
     void Update()
@@ -161,7 +159,7 @@ public class GameMgr : MonoBehaviour
 
                 bool poolAvailable = false;
                 //몬스터 오브젝트 풀에서 가져오기
-                foreach (GameObject monsterGO in monsterPool)
+                foreach (GameObject monsterGO in smallMonsterPool)
                 {
                     if (!monsterGO.activeSelf) //비활성화 몬스터라면
                     {
@@ -175,13 +173,58 @@ public class GameMgr : MonoBehaviour
                 //몬스터 풀에 자원이 없으면 추가 생성
                 if (!poolAvailable)
                 {
-                    GameObject monster = Instantiate(monsterPref); //몬스터 스폰
+                    GameObject monster = Instantiate(smallMonsterPref); //몬스터 스폰
                     monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
-                    monsterPool.Add(monster);
+                    smallMonsterPool.Add(monster);
                     monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
                 }
             }
             yield return new WaitForSeconds(8.0f); //스폰 쿨타임
+        }
+    }
+
+    IEnumerator MediumMonsterSpawn() //몬스터 스폰 코루틴함수
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(25.0f); //스폰 쿨타임
+
+            int spawnCount = 1 + ((int)playTime / 60);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                NavMeshHit hit;
+                Vector3 randomPosition = Vector3.zero;
+                //플레이어 반경 30이내의 랜덤위치 설정
+                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
+
+                //랜덤 위치에서 가장 가까운 정상 지형 찾기
+                if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
+                {
+                    randomPosition = hit.position;
+                }
+
+                bool poolAvailable = false;
+                //몬스터 오브젝트 풀에서 가져오기
+                foreach (GameObject monsterGO in mediumMonsterPool)
+                {
+                    if (!monsterGO.activeSelf) //비활성화 몬스터라면
+                    {
+                        monsterGO.SetActive(true);
+                        monsterGO.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                        monstersTr.Add(monsterGO.transform); //몬스터 위치 리스트에 추가
+                        poolAvailable = true;
+                        break;
+                    }
+                }
+                //몬스터 풀에 자원이 없으면 추가 생성
+                if (!poolAvailable)
+                {
+                    GameObject monster = Instantiate(mediumMonsterPref); //몬스터 스폰
+                    monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                    mediumMonsterPool.Add(monster);
+                    monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
+                }
+            }
         }
     }
 }
