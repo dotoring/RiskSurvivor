@@ -14,44 +14,21 @@ public class MissileCtrl : FunctionItemClass
     public float delayTime; // 미사일 발사 후 추적 딜레이시간
 
     public ParticleSystem explosionEffect;
+    public AudioSource explosionSound;
     public GameObject model;
 
     // Start is called before the first frame update
     void Start()
     {
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        StartCoroutine(Tracking());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if(delayTime > 0)
-        //{
-        //    delayTime -= Time.deltaTime;
-        //    transform.Translate(Vector3.up * moveSpeed * Time.deltaTime, Space.World);
-        //}
-        //else
-        //{
-        //    //가장 가까운 몬스터 찾기
-        //    closestMonster = GetClosestMonster(trackingRange);
-        //    //가장 가까운 몬스터 추적하기
-        //    if (closestMonster != null)
-        //    {
-        //        TrackingObejct(closestMonster, moveSpeed);
-        //    }
-        //    else //추적할 몬스터가 없다면 움직이던대로 움직이기
-        //    {
-        //        transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        //    }
-        //}
+        StartCoroutine("Tracking");
     }
 
     IEnumerator Tracking()
     {
         while(true)
         {
-            if (delayTime > 0)
+            if (delayTime > 0) //첫 딜레이 시간 동안 위로만 이동
             {
                 delayTime -= Time.deltaTime;
                 transform.Translate(Vector3.up * moveSpeed * Time.deltaTime, Space.World);
@@ -90,21 +67,21 @@ public class MissileCtrl : FunctionItemClass
 
     IEnumerator Impact()
     {
-        explosionEffect.Play();
-        GetComponent<Collider>().enabled = false;
-        model.SetActive(false);
+        explosionEffect.Play(); //폭발 이펙트 재생
+        explosionSound.Play(); //폭발 사운드 재생
+        GetComponent<Collider>().enabled = false; //콜리더 비활성화
+        model.SetActive(false); //모델링 비활성화
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        Destroy(gameObject); //0.5초 후 삭제
         yield break;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        StopCoroutine(Tracking());
-        StartCoroutine(Impact());
+        StopCoroutine("Tracking"); //추적 중지
+        StartCoroutine(Impact()); //폭발
         if (other.tag == "Monster")
         {
-            Debug.Log("bomb");
             other.GetComponent<MonsterCtrl>().Damaged(damage);
         }
     }

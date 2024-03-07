@@ -416,14 +416,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8cd95fb5bd48a41b88b68eb4a2110e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monMaxHP: 80
+  monMaxHP: 50
   monCurHP: 0
   moveSpeed: 4
-  exp: 10
+  exp: 15
   attackPower: 10
   attackTimeout: 1.5
   attackTimeoutDelta: 0
   attackRange: 1
+  shootTimeout: 0
+  shootTimeoutDelta: 0
+  shootRange: 0
+  waitTimeout: 0
+  waitTimeoutDelta: 0
   monStat: 0
 --- !u!1 &3862466646201957567
 GameObject:

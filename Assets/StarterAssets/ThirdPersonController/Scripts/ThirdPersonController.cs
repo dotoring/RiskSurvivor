@@ -78,7 +78,7 @@ namespace StarterAssets
         [Header("Shotting setting")]
         public Transform shotPoint; //총알 발사 지점
         public static Vector3 shotDir; //조준 방향
-        public float shotTimeout = 0.5f; //공격속도
+        public float shotTimeout; //공격속도
         public GameObject bulletPref; //총알 프리팹
 
         //게임매니져

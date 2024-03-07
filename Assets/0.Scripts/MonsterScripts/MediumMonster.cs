@@ -9,6 +9,7 @@ public class MediumMonster : Monster
     public GameObject chargeEffect;
     public Transform monsterShotPoint;
     public float bulletSpeed;
+    Vector3 target;
 
     public override void Init()
     {
@@ -82,7 +83,11 @@ public class MediumMonster : Monster
         if(monStat == MonsterStat.RangeAttack && shootTimeoutDelta <= 0.0f)
         {
             shootTimeoutDelta = shootTimeout; //공격 대기시간 초기화
-            StartCoroutine(Shooting(playerTr, animator));
+            target = playerTr.position; //목표점 지정
+            target.y += 1.0f; //플레이어 목표점 키에 맞춰 수정
+            animator.SetBool("IsMove", false); //움직임 정지
+            animator.SetBool("IsWait", false); //대기 애니메이션 정지
+            animator.SetTrigger("OnShoot"); //공격 애니메이션 재생
             waitTimeoutDelta = waitTimeout; //대기 시간 시작
         }
 
@@ -92,23 +97,19 @@ public class MediumMonster : Monster
         }
     }
 
-    IEnumerator Shooting(Transform playerTr, Animator animator)
+    public void ChargingStart() //원거리 공격 충전 이펙트(애니메이션 이벤트)
     {
-        animator.SetBool("IsMove", false); //움직임 정지
-        animator.SetBool("IsWait", false); //대기 애니메이션 정지
-        animator.SetTrigger("OnShoot"); //공격 애니메이션 재생
         chargeEffect.SetActive(true);
-        yield return new WaitForSeconds(0.8f);
+    }
 
+    public void Shooting() //사격 함수(애니메이션 이벤트)
+    {
         chargeEffect.SetActive(false);
-        Vector3 target = playerTr.position;
-        target.y += 1.0f; //플레이어 목표점 수정
         Vector3 shotDir = (target - monsterShotPoint.position).normalized; //발사 목표지점 설정
         //총알 생성
         GameObject bullet = Instantiate(bulletPref, monsterShotPoint.position, Quaternion.LookRotation(Vector3.forward));
         bullet.GetComponent<MonsterBulletCtrl>().damage = attackPower; //데미지 설정
         bullet.GetComponent<Rigidbody>().AddForce(shotDir * bulletSpeed); //총알 발사
-        yield break;
     }
 
     public override void Move(Transform playerTr, Animator animator)

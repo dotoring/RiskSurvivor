@@ -9,6 +9,7 @@ public class SatelliteCtrl : MonoBehaviour
 
     public int damage; //데미지
     public float spinSpeed; //회전 속도
+    public AudioSource hitSound; //타격 사운드
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class SatelliteCtrl : MonoBehaviour
     {
         if (other.tag == "Monster")
         {
+            hitSound.Play();
             other.GetComponent<MonsterCtrl>().Damaged(damage);
         }
     }

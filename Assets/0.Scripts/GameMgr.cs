@@ -189,7 +189,7 @@ public class GameMgr : MonoBehaviour
         {
             yield return new WaitForSeconds(25.0f); //스폰 쿨타임
 
-            int spawnCount = 1 + ((int)playTime / 60);
+            int spawnCount = 1 + ((int)playTime / 120);
             for (int i = 0; i < spawnCount; i++)
             {
                 NavMeshHit hit;

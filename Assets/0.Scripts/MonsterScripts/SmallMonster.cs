@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class SmallMonster : Monster
 {
+    bool isAttack = false;
     public override void Init()
     {
         monCurHP = monMaxHP; //몬스터 체력
         attackTimeoutDelta = attackTimeout; //공격 재사용 대기 시간 초기화
+        isAttack = false;
 
         monStat = MonsterStat.Spawn;
     }
@@ -46,9 +48,19 @@ public override void CheckState(Transform playerTr)
         }
     }
 
+    public void StartAttack() //애니메이션 이벤트
+    {
+        isAttack = true;
+    }
+
+    public void FinishAttack() //애니메이션 이벤트
+    {
+        isAttack = false;
+    }
+
     public override void Move(Transform playerTr, Animator animator)
     {
-        if (monStat == MonsterStat.Move)
+        if (monStat == MonsterStat.Move && !isAttack) //공격하는 동안에 이동x
         {
             animator.SetBool("IsMove", true); //움직이는 애니메이션 재생
             transform.LookAt(playerTr); //플레이어가 있는 방향 바라보기
@@ -65,11 +77,12 @@ public override void CheckState(Transform playerTr)
         base.Death(animator, gameMgr);
     }
 
-    public override void Respawn()
+    public override void Respawn() //몬스터 풀에서 다시 스폰될때 함수
     {
         monCurHP = monMaxHP;
         monStat = MonsterStat.Spawn;
         attackTimeoutDelta = attackTimeout;
+        isAttack = false;
 
         gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
         gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화

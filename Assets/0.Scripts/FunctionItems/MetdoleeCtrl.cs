@@ -14,6 +14,7 @@ public class MetdoleeCtrl : FunctionItemClass
     public float moveSpeed; //이동 속도
     public float bounceForce; //충돌 후 튕겨나오는 힘
     public ParticleSystem impactEffect;
+    public AudioSource impactSound;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +71,7 @@ public class MetdoleeCtrl : FunctionItemClass
         if(collision.gameObject.tag == "Monster")
         {
             impactEffect.Play();
+            impactSound.Play();
             // 충돌한 물체의 방향을 구함
             Vector3 collisionDirection = collision.contacts[0].point - transform.position;
 

@@ -535,10 +535,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d263ab40011694749804945dbdf398ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monMaxHP: 250
+  monMaxHP: 200
   monCurHP: 0
   moveSpeed: 3
-  exp: 30
+  exp: 50
   attackPower: 15
   attackTimeout: 2.5
   attackTimeoutDelta: 0
