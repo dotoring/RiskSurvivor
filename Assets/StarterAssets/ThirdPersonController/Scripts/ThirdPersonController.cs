@@ -241,6 +241,10 @@ namespace StarterAssets
             // if there is no input, set the target speed to 0
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
+            Vector3 moveDir = _input.move.normalized;
+            _animator.SetFloat("xDir", moveDir.x);
+            _animator.SetFloat("zDir", moveDir.y);
+
             // a reference to the players current horizontal velocity
             float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
@@ -370,8 +374,14 @@ namespace StarterAssets
         //플레이어 사격 함수
         private void Shot()
         {
+            if(!_input.shot)
+            {
+                _animator.SetBool("Shoot", false);
+
+            }
             if (_input.shot)
             {
+                _animator.SetBool("Shoot", true);
                 this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
             }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameMgr : MonoBehaviour
@@ -12,8 +13,16 @@ public class GameMgr : MonoBehaviour
     public float playTime;
     public Text timeText;
     GameObject player;
-    public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
 
+    [Header("Pause")]
+    public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
+    public GameObject pausePanel;
+    public Button continueBtn;
+    public Button menuBtn;
+    public GameObject gameoverPanel;
+    public Text resultText;
+    public Button restartBtn;
+    public Button menuBtn2;
 
     [Header("Item")]
     public ItemSO[] items;
@@ -33,6 +42,7 @@ public class GameMgr : MonoBehaviour
     //오브젝트 풀
     public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
     public List<GameObject> mediumMonsterPool = new List<GameObject>(); //몬스터 풀
+    public Inventory inventory;
 
     private void Awake()
     {
@@ -46,6 +56,7 @@ public class GameMgr : MonoBehaviour
         Application.targetFrameRate = 60; //실행 프레임 속도 60프레임으로 고정
         QualitySettings.vSyncCount = 0; //모니터 주사율 고정
 
+        Time.timeScale = 1; //인게임 시간 흐르게
         Cursor.lockState = CursorLockMode.Locked; //커서 고정
         Cursor.visible = false; //커서 숨김
 
@@ -55,12 +66,51 @@ public class GameMgr : MonoBehaviour
 
         StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
         StartCoroutine(MediumMonsterSpawn());
+
+        continueBtn.onClick.AddListener(() =>
+        {
+            pausePanel.SetActive(false);
+            GamePlay();
+        });
+        menuBtn.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("MainMenuScene");
+        });
+
+        restartBtn.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("PlayScene");
+        });
+        menuBtn2.onClick.AddListener(() =>
+        {
+            SceneManager.LoadScene("MainMenuScene");
+        });
     }
 
     void Update()
     {
         playTime += Time.deltaTime;
         Clock();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GamePause();
+            pausePanel.SetActive(true);
+        }
+
+        if(playTime >= 60*10)
+        {
+            GamePause();
+            resultText.text = "이김";
+            gameoverPanel.SetActive(true);
+        }
+
+        if(PlayerValue.Instance.curHp <= 0)
+        {
+            GamePause();
+            resultText.text = "죽음";
+            gameoverPanel.SetActive(true);
+        }
     }
 
     void Clock()
@@ -80,7 +130,7 @@ public class GameMgr : MonoBehaviour
 
     public void GamePlay() //게임 재진행 함수
     {
-        Time.timeScale = 1; //인게임 시작 다시 흐르게
+        Time.timeScale = 1; //인게임 시간 다시 흐르게
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -131,7 +181,7 @@ public class GameMgr : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach(ItemSO item in Inventory.itemList) //보유 아이템 리스트에 오브젝트들 다시 생성
+        foreach(ItemSO item in inventory.itemList) //보유 아이템 리스트에 오브젝트들 다시 생성
         {
             GameObject node = Instantiate(inventoryItemNode);
             node.GetComponent<InventoryItemNode>().SetItem(item);

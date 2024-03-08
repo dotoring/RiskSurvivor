@@ -11,6 +11,8 @@ public class MonsterCtrl : MonoBehaviour
     GameMgr gameMgr;
 
     public Collider attackHitBox;
+    public ParticleSystem attackEffect;
+    public AudioSource attackSound;
 
     public Monster mon;
 
@@ -43,6 +45,8 @@ public class MonsterCtrl : MonoBehaviour
     public void ActivateAttackHitbox() //공격 모션 시작시 호출될 함수
     {
         attackHitBox.enabled = true; //공격 판정 범위 활성화
+        attackEffect.Play();
+        attackSound.Play();
     }
 
     public void DeactivateAttackHitbox() //공격 모션이 끝날 때 호출될 함수

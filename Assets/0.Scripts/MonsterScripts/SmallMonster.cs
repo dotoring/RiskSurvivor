@@ -6,6 +6,7 @@ using UnityEngine;
 public class SmallMonster : Monster
 {
     bool isAttack = false;
+
     public override void Init()
     {
         monCurHP = monMaxHP; //몬스터 체력

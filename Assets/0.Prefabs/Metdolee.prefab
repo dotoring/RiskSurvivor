@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7771696396953940093}
   - component: {fileID: 992950432249906907}
   - component: {fileID: 8089011941708496263}
-  - component: {fileID: 6327937591970688547}
   m_Layer: 0
   m_Name: Spikes
   m_TagString: Untagged
@@ -4892,22 +4891,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &6327937591970688547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 174647428164225914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa5c1e37409a9344a344c0468db383d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabSound: {fileID: 1297775994297274, guid: 48e851666c5ae0a43b16388f2e78939b, type: 3}
-  destroyWhenDone: 1
-  soundPrefabIsChild: 0
-  pitchRandomMultiplier: 1.1
 --- !u!1 &1021989927023727912
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,7 +5021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3476ce03dafc3ee41863f2383bd0d679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 15
+  damage: 8
   trackingRange: 30
   moveSpeed: 5
   bounceForce: 13
@@ -10064,7 +10047,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1ac313793b8d7ef47b219daa39bca823, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.35
+  m_Volume: 0.1
   m_Pitch: 1.5
   Loop: 0
   Mute: 0

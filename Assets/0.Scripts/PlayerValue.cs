@@ -134,7 +134,7 @@ public class PlayerValue : MonoBehaviour
         level++; //레벨 증가
         levelTxt.text = "Lv." + level.ToString(); //레벨 텍스트 변경
         curExp = restExp; //경험치 초과량 채우기
-        maxExp += 50; //필요 경험치량 증가
+        maxExp += 20; //필요 경험치량 증가
         ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
 
         IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가

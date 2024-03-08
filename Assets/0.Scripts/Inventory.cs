@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
-    public static List<ItemSO> itemList = new List<ItemSO>(); //플레이어가 보유하는 아이템 리스트
+    public List<ItemSO> itemList = new List<ItemSO>(); //플레이어가 보유하는 아이템 리스트
 
-    public static void AddItem(ItemSO item) //인벤토리에 아이템 추가함수
+    public void AddItem(ItemSO item) //인벤토리에 아이템 추가함수
     {
         foreach(ItemSO existingItem in itemList) //인벤토리에 존재하는 아이템인지 확인
         {
@@ -25,7 +24,7 @@ public class Inventory : MonoBehaviour
         ApplyItemEffects(item);
     }
 
-    static void ApplyItemEffects(ItemSO item)
+    void ApplyItemEffects(ItemSO item)
     {
         switch(item.itemName)
         {

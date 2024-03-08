@@ -9,6 +9,7 @@ public class ItemSelectNode : MonoBehaviour
 
     Button btn;
     GameMgr gameMgr;
+    Inventory inventory;
 
     //아이템 변수들
     public ItemSO nodeItem;
@@ -21,11 +22,12 @@ public class ItemSelectNode : MonoBehaviour
     {
         btn = GetComponent<Button>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        inventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         //노드 클릭시 이벤트
         btn.onClick.AddListener(() =>
         {
-            Inventory.AddItem(nodeItem); //인벤토리에 아이템 추가
+            inventory.AddItem(nodeItem); //인벤토리에 아이템 추가
             gameMgr.ItemSelectPopDown(); //아이템 선택창 비활성화
             gameMgr.GamePlay(); //게임 다시진행
         });
