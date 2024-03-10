@@ -64,8 +64,8 @@ public class GameMgr : MonoBehaviour
 
         playTime = 0;
 
-        StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
-        StartCoroutine(MediumMonsterSpawn());
+        //StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
+        //StartCoroutine(MediumMonsterSpawn());
 
         continueBtn.onClick.AddListener(() =>
         {

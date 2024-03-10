@@ -41,6 +41,7 @@ public abstract class Monster : MonoBehaviour
     public abstract void CheckState(Transform playerTr);
     public abstract void Move(Transform playerTr, Animator animator);
     public abstract void Attack(Animator animator);
+    public abstract void Shoot(Transform playerTr, Animator animator);
     public virtual void Death(Animator animator, GameMgr gameMgr)
     {
         if (monCurHP <= 0.0f && monStat != MonsterStat.Death)

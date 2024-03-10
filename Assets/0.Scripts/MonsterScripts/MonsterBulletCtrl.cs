@@ -7,6 +7,7 @@ public class MonsterBulletCtrl : MonoBehaviour
 {
     public float bulletLifeTime = 10.0f; //총알 지속 시간
     public float damage;
+    public GameObject impactEffect;
 
     void Start()
     {
@@ -23,10 +24,14 @@ public class MonsterBulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (impactEffect != null)
         {
-            PlayerValue.Instance.PlayerTakeDamage(damage);
+            Debug.Log("test");
+            GameObject go = Instantiate(impactEffect, transform.position, Quaternion.identity);
+            go.GetComponent<CheckPlayerInArea>().damage = damage;
+            Destroy(go, 2.0f);
         }
+
         Destroy(gameObject);
     }
 }

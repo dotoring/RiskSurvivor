@@ -97,4 +97,9 @@ public override void CheckState(Transform playerTr)
         Attack(animator);
         Death(animator, gameMgr);
     }
+
+    public override void Shoot(Transform playerTr, Animator animator)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -44,14 +44,26 @@ public class MonsterCtrl : MonoBehaviour
 
     public void ActivateAttackHitbox() //공격 모션 시작시 호출될 함수
     {
-        attackHitBox.enabled = true; //공격 판정 범위 활성화
-        attackEffect.Play();
-        attackSound.Play();
+        if(attackHitBox != null)
+        {
+            attackHitBox.enabled = true; //공격 판정 범위 활성화
+        }
+        if (attackEffect != null)
+        {
+            attackEffect.Play(); //공격 이펙트 재생
+        }
+        if (attackSound != null)
+        {
+            attackSound.Play(); //공격 사운드 재생
+        }
     }
 
     public void DeactivateAttackHitbox() //공격 모션이 끝날 때 호출될 함수
     {
-        attackHitBox.enabled = false; //공격 판정 범위 비활성화
+        if(attackHitBox != null)
+        {
+            attackHitBox.enabled = false; //공격 판정 범위 비활성화
+        }
     }
 
     private void OnTriggerEnter(Collider other) //공격 판정 범위에 콜리더가 들어왔을 때

@@ -78,7 +78,7 @@ public class MediumMonster : Monster
         }
     }
 
-    public void Shoot(Transform playerTr, Animator animator)
+    public override void Shoot(Transform playerTr, Animator animator)
     {
         if(monStat == MonsterStat.RangeAttack && shootTimeoutDelta <= 0.0f)
         {
