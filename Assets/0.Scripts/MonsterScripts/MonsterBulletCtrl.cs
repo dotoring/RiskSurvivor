@@ -26,7 +26,6 @@ public class MonsterBulletCtrl : MonoBehaviour
     {
         if (impactEffect != null)
         {
-            Debug.Log("test");
             GameObject go = Instantiate(impactEffect, transform.position, Quaternion.identity);
             go.GetComponent<CheckPlayerInArea>().damage = damage;
             Destroy(go, 2.0f);

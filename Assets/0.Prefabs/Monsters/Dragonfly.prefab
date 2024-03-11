@@ -340,11 +340,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ddc41946b9b9047b7d4701cbf1df1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monMaxHP: 10
+  monMaxHP: 30
   monCurHP: 0
   moveSpeed: 2.5
-  exp: 5
-  attackPower: 10
+  exp: 15
+  attackPower: 15
   attackTimeout: 0
   attackTimeoutDelta: 0
   attackRange: 0

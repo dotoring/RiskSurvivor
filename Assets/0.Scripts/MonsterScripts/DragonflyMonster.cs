@@ -28,7 +28,7 @@ public class DragonflyMonster : Monster
 
         gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
         gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
-        //gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
+        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
     }
 
     public override void CheckState(Transform playerTr)

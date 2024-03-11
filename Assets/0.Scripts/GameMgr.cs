@@ -38,10 +38,12 @@ public class GameMgr : MonoBehaviour
     [Header("Monster")]
     public GameObject smallMonsterPref;
     public GameObject mediumMonsterPref;
+    public GameObject flyMonsterPref;
     public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
     //오브젝트 풀
     public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
     public List<GameObject> mediumMonsterPool = new List<GameObject>(); //몬스터 풀
+    public List<GameObject> flyMonsterPool = new List<GameObject>(); //몬스터 풀
     public Inventory inventory;
 
     private void Awake()
@@ -60,12 +62,14 @@ public class GameMgr : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; //커서 고정
         Cursor.visible = false; //커서 숨김
 
-        player = GameObject.Find("Player");
+        pausePanel.SetActive(false);
 
+        player = GameObject.Find("Player");
         playTime = 0;
 
-        //StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
-        //StartCoroutine(MediumMonsterSpawn());
+        StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
+        StartCoroutine(MediumMonsterSpawn());
+        StartCoroutine(FlyMonsterSpawn());
 
         continueBtn.onClick.AddListener(() =>
         {
@@ -105,7 +109,7 @@ public class GameMgr : MonoBehaviour
             gameoverPanel.SetActive(true);
         }
 
-        if(PlayerValue.Instance.curHp <= 0)
+        if (PlayerValue.Instance.curHp <= 0)
         {
             GamePause();
             resultText.text = "죽음";
@@ -272,6 +276,53 @@ public class GameMgr : MonoBehaviour
                     GameObject monster = Instantiate(mediumMonsterPref); //몬스터 스폰
                     monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
                     mediumMonsterPool.Add(monster);
+                    monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
+                }
+            }
+        }
+    }
+
+    IEnumerator FlyMonsterSpawn() //몬스터 스폰 코루틴함수
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(10.0f); //스폰 쿨타임
+
+            int spawnCount = 2 + ((int)playTime / 120);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                NavMeshHit hit;
+                Vector3 randomPosition = Vector3.zero;
+                //플레이어 반경 30이내의 랜덤위치 설정
+                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
+
+                //랜덤 위치에서 가장 가까운 정상 지형 찾기
+                if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
+                {
+                    randomPosition = hit.position;
+                }
+
+                randomPosition.y += Random.Range(1.0f, 4.0f);
+
+                bool poolAvailable = false;
+                //몬스터 오브젝트 풀에서 가져오기
+                foreach (GameObject monsterGO in flyMonsterPool)
+                {
+                    if (!monsterGO.activeSelf) //비활성화 몬스터라면
+                    {
+                        monsterGO.SetActive(true);
+                        monsterGO.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                        monstersTr.Add(monsterGO.transform); //몬스터 위치 리스트에 추가
+                        poolAvailable = true;
+                        break;
+                    }
+                }
+                //몬스터 풀에 자원이 없으면 추가 생성
+                if (!poolAvailable)
+                {
+                    GameObject monster = Instantiate(flyMonsterPref); //몬스터 스폰
+                    monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+                    flyMonsterPool.Add(monster);
                     monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
                 }
             }
