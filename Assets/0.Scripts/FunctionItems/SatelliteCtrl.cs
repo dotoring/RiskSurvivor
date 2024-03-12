@@ -7,7 +7,7 @@ public class SatelliteCtrl : MonoBehaviour
 {
     Transform playerTr;
 
-    public int damage; //데미지
+    public float damage; //데미지
     public float spinSpeed; //회전 속도
     public AudioSource hitSound; //타격 사운드
 
@@ -27,7 +27,9 @@ public class SatelliteCtrl : MonoBehaviour
         if (other.tag == "Monster")
         {
             hitSound.Play();
-            other.GetComponent<MonsterCtrl>().Damaged(damage);
+            float dmg = damage + ((damage * 0.2f) * PlayerValue.Instance.level);
+            Debug.Log("sat : " + dmg);
+            other.GetComponent<MonsterCtrl>().Damaged(dmg);
         }
     }
 }

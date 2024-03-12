@@ -13058,15 +13058,16 @@ MonoBehaviour:
   level: 0
   maxExp: 80
   curExp: 0
-  maxHp: 200
+  maxHp: 120
   curHp: 0
   hpRegen: 0.5
   hpRegenTimeout: 0
-  hpGrowth: 10
+  hpGrowth: 36
   hpRegenTimeoutDelta: 0
   block: 0
   attackDamage: 12
-  basicAttackSpeed: 2.5
+  attackDamageGrowth: 2.4
+  basicAttackSpeed: 3
   attackSpeedIncreaseRate: 0
   attackSpeed: 0
   critChance: 0

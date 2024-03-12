@@ -13,22 +13,14 @@ public class DragonflyMonster : Monster
 
     public override void Init()
     {
-        monCurHP = monMaxHP; //몬스터 체력
+        base.Init();
         shootTimeoutDelta = 1.0f; //원거리 공격 재사용 대기 시간 초기화
-
-        monStat = MonsterStat.Spawn;
     }
 
     public override void Respawn()
     {
-        monCurHP = monMaxHP;
-        monStat = MonsterStat.Spawn;
+        base.Respawn();
         shootTimeoutDelta = 1.0f; //원거리 공격 재사용 대기 시간 초기화
-
-
-        gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
-        gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
-        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
     }
 
     public override void CheckState(Transform playerTr)

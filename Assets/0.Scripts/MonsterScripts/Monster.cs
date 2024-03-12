@@ -21,7 +21,7 @@ public abstract class Monster : MonoBehaviour
     public int exp; //몬스터가 주는 경험치량
 
     //몬스터 공격 관련 변수
-    public int attackPower; //몬스터 공격력
+    public float attackPower; //몬스터 공격력
     public float attackTimeout; //몬스터 공격 주기
     [HideInInspector] public float attackTimeoutDelta;
     public float attackRange; //몬스터 공격 사거리
@@ -36,7 +36,14 @@ public abstract class Monster : MonoBehaviour
     public MonsterStat monStat;
 
 
-    public abstract void Init();
+    public virtual void Init()
+    {
+        GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        monMaxHP =  monMaxHP + ((monMaxHP * 0.3f) * (gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
+        monCurHP = monMaxHP;
+        attackPower = attackPower + ((attackPower * 0.2f) * (gameMgr.playTime / 60));
+        monStat = MonsterStat.Spawn;
+    }
 
     public abstract void CheckState(Transform playerTr);
     public abstract void Move(Transform playerTr, Animator animator);
@@ -59,7 +66,18 @@ public abstract class Monster : MonoBehaviour
             StartCoroutine(Disable());
         }
     }
-    public abstract void Respawn();
+    public virtual void Respawn()
+    {
+        GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        monMaxHP = monMaxHP + ((monMaxHP * 0.3f) * (gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
+        monCurHP = monMaxHP;
+        attackPower = attackPower + ((attackPower * 0.2f) * (gameMgr.playTime / 180));
+        monStat = MonsterStat.Spawn;
+
+        gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
+        gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
+        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
+    }
 
     IEnumerator Disable()
     {

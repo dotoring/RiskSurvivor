@@ -9,11 +9,9 @@ public class SmallMonster : Monster
 
     public override void Init()
     {
-        monCurHP = monMaxHP; //몬스터 체력
+        base.Init();
         attackTimeoutDelta = attackTimeout; //공격 재사용 대기 시간 초기화
         isAttack = false;
-
-        monStat = MonsterStat.Spawn;
     }
 
 public override void CheckState(Transform playerTr)
@@ -80,14 +78,9 @@ public override void CheckState(Transform playerTr)
 
     public override void Respawn() //몬스터 풀에서 다시 스폰될때 함수
     {
-        monCurHP = monMaxHP;
-        monStat = MonsterStat.Spawn;
+        base.Respawn();
         attackTimeoutDelta = attackTimeout;
         isAttack = false;
-
-        gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
-        gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
-        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
     }
 
     public override void Action(Transform playerTr, Animator animator, GameMgr gameMgr)

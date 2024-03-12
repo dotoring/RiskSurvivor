@@ -25,7 +25,8 @@ public class PlayerValue : MonoBehaviour
     public int block; //방어력
 
     //공격 관련
-    public int attackDamage; //공격력
+    public float attackDamage; //공격력
+    public float attackDamageGrowth; //성장 공격력
     public float basicAttackSpeed; //기본 공격속도
     [HideInInspector] public float attackSpeedIncreaseRate; //공격속도 증가율(합연산을 위한 변수)
     [HideInInspector] public float attackSpeed; //공격 속도
@@ -138,6 +139,7 @@ public class PlayerValue : MonoBehaviour
         ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
 
         IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가
+        IncreaseAttackDamage(attackDamageGrowth); //성장공격력만큼 공격력 증가
     }
 
     void HpRegen()
@@ -180,6 +182,11 @@ public class PlayerValue : MonoBehaviour
     public void IncreaseHpRegen(float val) //체력 재생 증가
     {
         hpRegen += val;
+    }
+
+    public void IncreaseAttackDamage(float val) //공격력 증가
+    {
+        attackDamage += val;
     }
 
     public void IncreaseAttackSpeed(float val) //공격 속도 증가
@@ -231,7 +238,7 @@ public class PlayerValue : MonoBehaviour
     }
 
     //=============데미지 계산================
-    public int DamageCalc() //플레이어가 주는 데미지 계산
+    public float DamageCalc() //플레이어가 주는 데미지 계산
     {
         float dmg = attackDamage;
 
@@ -256,7 +263,7 @@ public class PlayerValue : MonoBehaviour
             }
         }
 
-        return (int)dmg;
+        return dmg;
     }
 
     public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지

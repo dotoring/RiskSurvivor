@@ -37,7 +37,7 @@ public class MonsterCtrl : MonoBehaviour
     }
 
     //몬스터가 피해를 받는 함수
-    public void Damaged(int val)
+    public void Damaged(float val)
     {
         mon.monCurHP -= val;
     }

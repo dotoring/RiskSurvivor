@@ -420,7 +420,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af8cd95fb5bd48a41b88b68eb4a2110e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monMaxHP: 50
+  monMaxHP: 60
   monCurHP: 0
   moveSpeed: 4.3
   exp: 15

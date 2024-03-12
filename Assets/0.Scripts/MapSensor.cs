@@ -8,7 +8,6 @@ public class MapSensor : MonoBehaviour
     {
         if(other.tag == "MapSensor")
         {
-            Debug.Log("in");
             MapCtrl.flag = true;
         }
     }

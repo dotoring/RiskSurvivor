@@ -13,25 +13,18 @@ public class MediumMonster : Monster
 
     public override void Init()
     {
-        monCurHP = monMaxHP; //몬스터 체력
+        base.Init();
         attackTimeoutDelta = 0.5f; //공격 재사용 대기 시간 초기화
         shootTimeoutDelta = 1.0f; //원거리 공격 재사용 대기 시간 초기화
         waitTimeoutDelta = 0.0f;
-
-        monStat = MonsterStat.Spawn;
     }
 
     public override void Respawn()
     {
-        monCurHP = monMaxHP;
-        monStat = MonsterStat.Spawn; //스폰상태로 변경
+        base.Respawn();
         attackTimeoutDelta = 0.5f; //공격 재사용 대기 시간 초기화
         shootTimeoutDelta = 1.0f; //원거리 공격 재사용 대기 시간 초기화
         waitTimeoutDelta = 0.0f;
-
-        gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
-        gameObject.GetComponent<Rigidbody>().isKinematic = false; //외부 물리력 활성화
-        gameObject.GetComponent<CapsuleCollider>().enabled = true; //콜리더 활성화
     }
 
     public override void CheckState(Transform playerTr)

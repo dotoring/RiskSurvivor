@@ -9,7 +9,7 @@ public class MetdoleeCtrl : FunctionItemClass
     GameObject player;
     Rigidbody rb;
 
-    public int damage; //데미지
+    public float damage; //데미지
     public float trackingRange; //추적 범위
     public float moveSpeed; //이동 속도
     public float bounceForce; //충돌 후 튕겨나오는 힘
@@ -78,7 +78,10 @@ public class MetdoleeCtrl : FunctionItemClass
             // 물체를 튕겨나오는 방향으로 힘을 가함
             rb.AddForce(-collisionDirection.normalized * bounceForce, ForceMode.Impulse);
 
-            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(damage); //몬스터에게 피해주기
+            float dmg = damage + ((damage * 0.2f) * PlayerValue.Instance.level);
+            Debug.Log("met : " + dmg);
+
+            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(dmg); //몬스터에게 피해주기
         }
     }
 }

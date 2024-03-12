@@ -241,7 +241,7 @@ public class GameMgr : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(25.0f); //스폰 쿨타임
+            yield return new WaitForSeconds(35.0f); //스폰 쿨타임
 
             int spawnCount = 1 + ((int)playTime / 120);
             for (int i = 0; i < spawnCount; i++)
@@ -286,7 +286,7 @@ public class GameMgr : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10.0f); //스폰 쿨타임
+            yield return new WaitForSeconds(15.0f); //스폰 쿨타임
 
             int spawnCount = 2 + ((int)playTime / 120);
             for (int i = 0; i < spawnCount; i++)
