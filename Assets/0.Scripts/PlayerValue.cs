@@ -53,7 +53,6 @@ public class PlayerValue : MonoBehaviour
 
     //임시용
     ItemFunction itemFunction;
-    StarterAssetsInputs starterAssetsInputs;
 
     private void Awake()
     {
@@ -69,7 +68,6 @@ public class PlayerValue : MonoBehaviour
         controller = GetComponent<ThirdPersonController>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         itemFunction = GetComponent<ItemFunction>();
-        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
 
         //============게임 시작시 스탯 초기화============
         //레벨 관련
@@ -287,5 +285,10 @@ public class PlayerValue : MonoBehaviour
     public void Missile(GameObject prefab, int quantity)
     {
         itemFunction.GenerateMissile(prefab, quantity);
+    }
+
+    public void SprintMushroom(int val, int quantity)
+    {
+        itemFunction.ExeSprintMushroom(val, quantity);
     }
 }

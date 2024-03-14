@@ -17,4 +17,5 @@ MonoBehaviour:
   itemStatDesc: "\uCD08\uB2F9 \uC7AC\uB825\uC7AC\uC0DD +0.5"
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: f649c3166229440c88381809584e4d57, type: 3}
-  quantity: 1
+  quantity: 0
+  itemPrefab: {fileID: 0}

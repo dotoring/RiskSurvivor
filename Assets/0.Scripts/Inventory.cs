@@ -46,9 +46,6 @@ public class Inventory : MonoBehaviour
             case "´Þ¸®±â¼Óµµ ÅÛ":
                 PlayerValue.Instance.IncreaseSprintSpeed(item.itemStat);
                 break;
-            case "Áú»Õ¹ö¼¸":
-                PlayerValue.Instance.IncreaseJumpCount((int)item.itemStat);
-                break;
             case "À§¼º":
                 PlayerValue.Instance.Satellite(item.itemPrefab, item.quantity);
                 break;
@@ -57,6 +54,9 @@ public class Inventory : MonoBehaviour
                 break;
             case "¹Ì»çÀÏ":
                 PlayerValue.Instance.Missile(item.itemPrefab, item.quantity);
+                break;
+            case "Áú»Õ¹ö¼¸":
+                PlayerValue.Instance.SprintMushroom((int)item.itemStat, item.quantity);
                 break;
         }
     }

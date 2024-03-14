@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,27 +10,35 @@ public class ItemFunction : MonoBehaviour
 {
     GameObject PlayerOnlyTransform;
     GameObject player;
+    StarterAssetsInputs starterAssetsInputs;
 
     Vector3 genPosition;
 
     //위성
     float satelliteRadius = 3.0f; //공전 반지름
+    GameObject satelliteGroup;
 
     //미사일
     IEnumerator missileCoroutine = null;
+
+    //질뿜버섯
+    IEnumerator mushroomCoroutine = null;
+    public ParticleSystem healingAura;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player");
         PlayerOnlyTransform = GameObject.Find("PlayerTransform");
+        satelliteGroup = GameObject.Find("SatelliteGroup");
+        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
     }
 
     //위성
     public void GenerateSatellite(GameObject prefab, int quantity)
     {
         //원래 있던 위성들 전부 제거
-        foreach (Transform child in PlayerOnlyTransform.transform)
+        foreach (Transform child in satelliteGroup.transform)
         {
             Destroy(child.gameObject);
         }
@@ -44,12 +53,12 @@ public class ItemFunction : MonoBehaviour
             float angle = i * angleStep;
 
             // 오브젝트의 위치 계산
-            genPosition = PlayerOnlyTransform.transform.position + Quaternion.Euler(0f, angle, 0f) * Vector3.forward * satelliteRadius;
+            genPosition = satelliteGroup.transform.position + Quaternion.Euler(0f, angle, 0f) * Vector3.forward * satelliteRadius;
             genPosition.y += 1.1f;
 
             // 오브젝트 생성 및 위치 설정
             GameObject obj = Instantiate(prefab, genPosition, Quaternion.identity);
-            obj.transform.SetParent(PlayerOnlyTransform.transform); // 부모 설정
+            obj.transform.SetParent(satelliteGroup.transform); // 부모 설정
         }
     }
 
@@ -88,6 +97,39 @@ public class ItemFunction : MonoBehaviour
             }
 
             yield return new WaitForSeconds(5.0f); //미사일 발사 쿨타임
+        }
+    }
+
+    //질뿜버섯
+    public void ExeSprintMushroom(int val, int quantity)
+    {
+        if (mushroomCoroutine != null) //실행중인 질뿜버섯 코루틴이 있으면 종료
+        {
+            StopCoroutine(mushroomCoroutine);
+        }
+        mushroomCoroutine = SprintMushroomCoroutine(val, quantity); //질뿜버섯 코루틴 갯수 변경
+        StartCoroutine(mushroomCoroutine); //질뿜버섯 코루틴 실행
+    }
+    public IEnumerator SprintMushroomCoroutine(int val, int quantity)
+    {
+        while(true)
+        {
+            if (starterAssetsInputs.sprint) //달리는 중에만
+            {
+                healingAura.Play();
+                PlayerValue.Instance.curHp += val * quantity; //3만큼 체력 회복
+                                                            //현제 체력이 최대체력보다 많아지면 최대체력으로 제한
+                if (PlayerValue.Instance.curHp > PlayerValue.Instance.maxHp)
+                {
+                    PlayerValue.Instance.curHp = PlayerValue.Instance.maxHp;
+                }
+            }
+            else
+            {
+                healingAura.Stop();
+            }
+            //1초당으로
+            yield return new WaitForSeconds(1.0f);
         }
     }
 }

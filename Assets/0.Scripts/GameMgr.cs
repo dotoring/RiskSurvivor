@@ -67,7 +67,7 @@ public class GameMgr : MonoBehaviour
         player = GameObject.Find("Player");
         playTime = 0;
 
-        StartCoroutine(MonsterSpawn()); //몬스터 스폰 코루틴 시작
+        StartCoroutine(SmallMonsterSpawn()); //몬스터 스폰 코루틴 시작
         StartCoroutine(MediumMonsterSpawn());
         StartCoroutine(FlyMonsterSpawn());
 
@@ -196,11 +196,11 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    IEnumerator MonsterSpawn() //몬스터 스폰 코루틴함수
+    IEnumerator SmallMonsterSpawn() //몬스터 스폰 코루틴함수
     {
         while(true)
         {
-            int spawnCount = 3 + ((int)playTime / 60);
+            int spawnCount = 3 + ((int)playTime / 90);
             for (int i = 0; i < spawnCount; i++)
             {
                 NavMeshHit hit;
@@ -246,7 +246,7 @@ public class GameMgr : MonoBehaviour
         {
             yield return new WaitForSeconds(35.0f); //스폰 쿨타임
 
-            int spawnCount = 1 + ((int)playTime / 120);
+            int spawnCount = 1 + ((int)playTime / 150);
             for (int i = 0; i < spawnCount; i++)
             {
                 NavMeshHit hit;

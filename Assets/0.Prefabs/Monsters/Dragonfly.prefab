@@ -545,7 +545,7 @@ MonoBehaviour:
   attackTimeout: 0
   attackTimeoutDelta: 0
   attackRange: 0
-  shootTimeout: 2
+  shootTimeout: 5
   shootTimeoutDelta: 0
   shootRange: 20
   waitTimeout: 0

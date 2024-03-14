@@ -79,6 +79,7 @@ MonoBehaviour:
   bulletLifeTime: 10
   damage: 0
   impactEffect: {fileID: 5009151592086437075, guid: 5beb15e65c96660498398514255900f2, type: 3}
+  bulletType: 1
 --- !u!1001 &4757185252851714821
 PrefabInstance:
   m_ObjectHideFlags: 0
