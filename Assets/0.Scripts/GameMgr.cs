@@ -74,7 +74,10 @@ public class GameMgr : MonoBehaviour
         continueBtn.onClick.AddListener(() =>
         {
             pausePanel.SetActive(false);
-            GamePlay();
+            if(!itemSelectPanel.activeSelf) //아이템 선택 중이 아니면
+            {
+                GamePlay();
+            }
         });
         menuBtn.onClick.AddListener(() =>
         {

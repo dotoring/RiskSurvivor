@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour
             case "달리기속도 템":
                 PlayerValue.Instance.IncreaseSprintSpeed(item.itemStat);
                 break;
-            case "점프 추가 템":
+            case "질뿜버섯":
                 PlayerValue.Instance.IncreaseJumpCount((int)item.itemStat);
                 break;
             case "위성":

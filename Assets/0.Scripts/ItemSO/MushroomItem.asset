@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 068436e757d0a744c94bb42e32977e4b, type: 3}
-  m_Name: JumpItem
+  m_Name: MushroomItem
   m_EditorClassIdentifier: 
-  itemName: "\uC810\uD504 \uCD94\uAC00 \uD15C"
-  itemStat: 1
-  itemStatDesc: "\uC810\uD504 \uD69F\uC218 +1"
-  itemDescription: 
+  itemName: "\uC9C8\uBFDC\uBC84\uC12F"
+  itemStat: 3
+  itemStatDesc: "\uB2EC\uB9AC\uB294 \uB3D9\uC548 \uCCB4\uB825\uD68C\uBCF5 +3"
+  itemDescription: "\uADF8\uB54C \uADF8\uACF3 \uADF8\uB9DB"
   itemIcon: {fileID: 21300000, guid: 24921a047274a43818da47f8c7b4cc93, type: 3}
   quantity: 0
+  itemPrefab: {fileID: 0}

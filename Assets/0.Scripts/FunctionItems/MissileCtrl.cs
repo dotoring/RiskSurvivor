@@ -23,7 +23,7 @@ public class MissileCtrl : FunctionItemClass
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         StartCoroutine("Tracking");
 
-        damage += PlayerValue.Instance.level * (damage * 0.2f);
+        damage += ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
     }
 
     IEnumerator Tracking()

@@ -15,6 +15,7 @@ public enum MonsterStat
 
 public abstract class Monster : MonoBehaviour
 {
+    public float monBasicMaxHP; //몬스터 최대 체력
     public float monMaxHP; //몬스터 최대 체력
     [HideInInspector] public float monCurHP; //몬스터 체력
     public float moveSpeed; //몬스터 이동속도
@@ -39,7 +40,7 @@ public abstract class Monster : MonoBehaviour
     public virtual void Init()
     {
         GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        monMaxHP =  monMaxHP + ((monMaxHP * 0.3f) * (gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
+        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
         monCurHP = monMaxHP;
         attackPower = attackPower + ((attackPower * 0.2f) * (gameMgr.playTime / 60));
         monStat = MonsterStat.Spawn;
@@ -69,7 +70,7 @@ public abstract class Monster : MonoBehaviour
     public virtual void Respawn()
     {
         GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        monMaxHP = monMaxHP + ((monMaxHP * 0.3f) * (gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
+        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
         monCurHP = monMaxHP;
         attackPower = attackPower + ((attackPower * 0.2f) * (gameMgr.playTime / 180));
         monStat = MonsterStat.Spawn;

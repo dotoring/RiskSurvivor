@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterCtrl : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class MonsterCtrl : MonoBehaviour
     public Collider attackHitBox;
     public ParticleSystem attackEffect;
     public AudioSource attackSound;
+    public Text dmgTextPref;
+    public Canvas monCanvas;
+    public GameObject HpUI;
+    public Image HpBar;
 
     public Monster mon;
 
@@ -22,6 +27,7 @@ public class MonsterCtrl : MonoBehaviour
         player = GameObject.Find("Player");
         playerTr = player.GetComponent<Transform>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        monCanvas = GetComponentInChildren<Canvas>();
 
         mon.Init();
     }
@@ -34,12 +40,26 @@ public class MonsterCtrl : MonoBehaviour
     void Update()
     {
         mon.Action(playerTr, animator, gameMgr);
+        if(mon.monStat == MonsterStat.Death)
+        {
+            HpUI.SetActive(false);
+        }
+        Vector3 monPos = transform.position;
+        monPos.y = 0;
+        Vector3 camPos = Camera.main.transform.position;
+        camPos.y = 0;
+        float distance = Vector3.Distance(monPos, camPos);
+        monCanvas.transform.localScale = Vector3.one * (distance / 10f); // 10은 임의의 값으로 조절 가능
     }
 
     //몬스터가 피해를 받는 함수
     public void Damaged(float val)
     {
+        HpUI.SetActive(true);
+        //Text clone = Instantiate(dmgTextPref, dmgCanvas.transform);
+        //Destroy(clone, 2.0f);
         mon.monCurHP -= val;
+        HpBar.fillAmount = mon.monCurHP / mon.monMaxHP;
     }
 
     public void ActivateAttackHitbox() //공격 모션 시작시 호출될 함수

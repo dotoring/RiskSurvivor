@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SatelliteCtrl : MonoBehaviour
+public class SatelliteCtrl : FunctionItemClass
 {
     Transform playerTr;
 
@@ -13,6 +13,7 @@ public class SatelliteCtrl : MonoBehaviour
 
     void Start()
     {
+        gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         playerTr = GameObject.Find("PlayerTransform").transform;
     }
 
@@ -27,7 +28,7 @@ public class SatelliteCtrl : MonoBehaviour
         if (other.tag == "Monster")
         {
             hitSound.Play();
-            float dmg = damage + ((damage * 0.2f) * PlayerValue.Instance.level);
+            float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
             Debug.Log("sat : " + dmg);
             other.GetComponent<MonsterCtrl>().Damaged(dmg);
         }
