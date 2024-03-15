@@ -677,7 +677,7 @@ MonoBehaviour:
   bulletPref: {fileID: 911288151763775245, guid: 92f70aa1a445e6c4a8ce55613d37c10b, type: 3}
   chargeEffect: {fileID: 8179053961586034962}
   monsterShotPoint: {fileID: 111526312084868456}
-  bulletSpeed: 800
+  bulletSpeed: 1500
 --- !u!82 &6964377270915683966
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1485,7 +1485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6057284846289827977
 RectTransform:
   m_ObjectHideFlags: 0

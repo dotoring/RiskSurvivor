@@ -13,6 +13,8 @@ namespace StarterAssets
 		public bool jump;
 		public bool sprint;
 		public bool shot;
+		public bool skill;
+		public bool moveSkill;
 
         [Header("Movement Settings")]
 		public bool analogMovement;
@@ -49,10 +51,20 @@ namespace StarterAssets
 		{
 			ShotInput(value.isPressed);
 		}
+
+        public void OnSkill(InputValue value)
+        {
+            SkillInput(value.isPressed);
+        }
+
+        public void OnMoveSkill(InputValue value)
+        {
+            MoveSkillInput(value.isPressed);
+        }
 #endif
 
 
-		public void MoveInput(Vector2 newMoveDirection)
+        public void MoveInput(Vector2 newMoveDirection)
 		{
 			move = newMoveDirection;
 		} 
@@ -82,8 +94,18 @@ namespace StarterAssets
 		public void ShotInput(bool newShotState)
 		{
 			shot = newShotState;
-			sprint = false; //사격시작 시 달리기 제한
+			sprint = false; //사격동안 달리기 제한
 		}
+
+        public void SkillInput(bool newSkillState)
+        {
+            skill = newSkillState;
+        }
+
+        public void MoveSkillInput(bool newMoveSkillState)
+        {
+            moveSkill = newMoveSkillState;
+        }
 
 
         private void OnApplicationFocus(bool hasFocus)

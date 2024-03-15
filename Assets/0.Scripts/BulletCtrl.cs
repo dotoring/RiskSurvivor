@@ -42,7 +42,7 @@ public class BulletCtrl : MonoBehaviour
 
         if (collision.gameObject.tag == "Monster")
         {
-            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc()); //몬스터에게 피해주기
+            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc(1.0f)); //몬스터에게 피해주기
         }
         Destroy(gameObject);
     }

@@ -238,9 +238,9 @@ public class PlayerValue : MonoBehaviour
     }
 
     //=============데미지 계산================
-    public float DamageCalc() //플레이어가 주는 데미지 계산
+    public float DamageCalc(float rate) //플레이어가 주는 데미지 계산
     {
-        float dmg = attackDamage;
+        float dmg = attackDamage * rate;
 
         if(critChance >= 100) //치명타 확률이 100%를 넘겼을 때 확정 치명타
         {

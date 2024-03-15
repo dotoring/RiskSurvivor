@@ -1,6 +1,8 @@
-﻿ using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 #endif
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -81,6 +83,15 @@ namespace StarterAssets
         public float shotTimeout; //공격속도
         public GameObject bulletPref; //총알 프리팹
 
+        [Header("Skills setting")]
+        public float moveSkillCooltime; //이동 스킬 쿨타임
+        public Image moveSkillImage;
+        public ParticleSystem dashEffect;
+
+        public float skillCooltime;
+        public Image skillImage;
+        public GameObject skillBulletPref;
+
         //게임매니져
         GameMgr gameMgr;
 
@@ -95,11 +106,14 @@ namespace StarterAssets
         private float _rotationVelocity;
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
+        private bool isDash = false;
 
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
         private float shotTimeoutDelta;
+        private float moveSkillTimeoutDelta;
+        private float skillTimeoutDelta;
 
         // animation IDs
         private int _animIDSpeed;
@@ -174,6 +188,8 @@ namespace StarterAssets
                 GroundedCheck();
                 Move();
                 Shot();
+                Skill();
+                MoveSkill();
             }
         }
 
@@ -232,73 +248,76 @@ namespace StarterAssets
 
         private void Move()
         {
-            // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-
-            // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
-
-            // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is no input, set the target speed to 0
-            if (_input.move == Vector2.zero) targetSpeed = 0.0f;
-
-            Vector3 moveDir = _input.move.normalized;
-            _animator.SetFloat("xDir", moveDir.x);
-            _animator.SetFloat("zDir", moveDir.y);
-
-            // a reference to the players current horizontal velocity
-            float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
-
-            float speedOffset = 0.1f;
-            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-
-            // accelerate or decelerate to target speed
-            if (currentHorizontalSpeed < targetSpeed - speedOffset ||
-                currentHorizontalSpeed > targetSpeed + speedOffset)
+            if(isDash == false) //대쉬 중일 때 못 움직이도록
             {
-                // creates curved result rather than a linear one giving a more organic speed change
-                // note T in Lerp is clamped, so we don't need to clamp our speed
-                _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
-                    Time.deltaTime * SpeedChangeRate);
+                // set target speed based on move speed, sprint speed and if sprint is pressed
+                float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
-                // round speed to 3 decimal places
-                _speed = Mathf.Round(_speed * 1000f) / 1000f;
-            }
-            else
-            {
-                _speed = targetSpeed;
-            }
+                // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
-            _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
-            if (_animationBlend < 0.01f) _animationBlend = 0f;
+                // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+                // if there is no input, set the target speed to 0
+                if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
-            // normalise input direction
-            Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+                Vector3 moveDir = _input.move.normalized;
+                _animator.SetFloat("xDir", moveDir.x);
+                _animator.SetFloat("zDir", moveDir.y);
 
-            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
-            if (_input.move != Vector2.zero)
-            {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                    RotationSmoothTime);
+                // a reference to the players current horizontal velocity
+                float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
-                // rotate to face input direction relative to camera position
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-            }
+                float speedOffset = 0.1f;
+                float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+
+                // accelerate or decelerate to target speed
+                if (currentHorizontalSpeed < targetSpeed - speedOffset ||
+                    currentHorizontalSpeed > targetSpeed + speedOffset)
+                {
+                    // creates curved result rather than a linear one giving a more organic speed change
+                    // note T in Lerp is clamped, so we don't need to clamp our speed
+                    _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
+                        Time.deltaTime * SpeedChangeRate);
+
+                    // round speed to 3 decimal places
+                    _speed = Mathf.Round(_speed * 1000f) / 1000f;
+                }
+                else
+                {
+                    _speed = targetSpeed;
+                }
+
+                _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
+                if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+                // normalise input direction
+                Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
+
+                // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
+                // if there is a move input rotate player when the player is moving
+                if (_input.move != Vector2.zero)
+                {
+                    _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
+                                      _mainCamera.transform.eulerAngles.y;
+                    float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                        RotationSmoothTime);
+
+                    // rotate to face input direction relative to camera position
+                    transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+                }
 
 
-            Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+                Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-            // move the player
-            _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
-                             new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+                // move the player
+                _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
+                                 new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 
-            // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                // update animator if using character
+                if (_hasAnimator)
+                {
+                    _animator.SetFloat(_animIDSpeed, _animationBlend);
+                    _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+                }
             }
         }
 
@@ -382,7 +401,9 @@ namespace StarterAssets
             if (_input.shot)
             {
                 _animator.SetBool("Shoot", true);
-                this.transform.eulerAngles = new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+                //사격 방향 바라보기
+                this.transform.eulerAngles = 
+                    new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
             }
 
             if (_input.shot && shotTimeoutDelta <= 0.0f)
@@ -396,6 +417,65 @@ namespace StarterAssets
             {
                 shotTimeoutDelta -= Time.deltaTime;
             }
+        }
+
+        private void Skill()
+        {
+            if (_input.skill && skillTimeoutDelta <= 0.0f)
+            {
+                _animator.SetBool("Shoot", true); //사격 애니메이션 재생
+                //사격 방향 바라보기
+                this.transform.eulerAngles = 
+                    new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+
+                shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
+                Instantiate(skillBulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
+                skillTimeoutDelta = skillCooltime;
+                _input.skill = false; //스킬 입력 끄기
+                _input.sprint = false; //달리기 끄기
+            }
+
+            if(skillTimeoutDelta > 0.0f)
+            {
+                _input.skill = false; //스킬 입력 끄기
+                skillImage.fillAmount = (skillCooltime - skillTimeoutDelta) / skillCooltime;
+                skillTimeoutDelta -= Time.deltaTime;
+            }
+        }
+
+        private void MoveSkill()
+        {
+            //쿨타임이 지나고 이동 스킬 입력이 들어왔을 때
+            if (_input.moveSkill && moveSkillTimeoutDelta <= 0.0f)
+            {
+                StartCoroutine(Dash()); //대쉬 코루틴 시작
+                _input.moveSkill = false; //이동 스킬 입력 끄기
+                moveSkillTimeoutDelta = moveSkillCooltime; //쿨타임 시작
+                _input.sprint = true; //달리기 켜기
+            }
+
+            if(moveSkillTimeoutDelta > 0.0f) //쿨타임 돌리기
+            {
+                _input.moveSkill = false; //이동 스킬 입력 끄기
+                moveSkillImage.fillAmount = (moveSkillCooltime - moveSkillTimeoutDelta)/moveSkillCooltime;
+                moveSkillTimeoutDelta -= Time.deltaTime;
+            }
+        }
+
+        IEnumerator Dash()
+        {
+            isDash = true; //대쉬 중 이동불가를 위한 변수
+            dashEffect.Play(); //대쉬 이펙트 재생
+            float startTime = Time.time; //시작시간
+            //대쉬로 이동할 방향 지정
+            Vector3 dashDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+            while (Time.time < startTime + 0.3f) //0.3초 동안
+            {
+                //30의 속도로 이동
+                _controller.Move(dashDirection * 30.0f * Time.deltaTime);
+                yield return null;
+            }
+            isDash = false;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

@@ -29,7 +29,6 @@ public class SatelliteCtrl : FunctionItemClass
         {
             hitSound.Play();
             float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
-            Debug.Log("sat : " + dmg);
             other.GetComponent<MonsterCtrl>().Damaged(dmg);
         }
     }

@@ -79,7 +79,6 @@ public class MetdoleeCtrl : FunctionItemClass
             rb.AddForce(-collisionDirection.normalized * bounceForce, ForceMode.Impulse);
 
             float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime/60));
-            Debug.Log("met : " + dmg);
             collision.gameObject.GetComponent<MonsterCtrl>().Damaged(dmg); //몬스터에게 피해주기
         }
     }
