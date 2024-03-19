@@ -107,7 +107,6 @@ public class MediumMonster : Monster
 
     public override void Move(Transform playerTr, Animator animator)
     {
-        transform.LookAt(playerTr); //플레이어가 있는 방향 항상 바라보기
 
         if (monStat == MonsterStat.Move)
         {
@@ -139,6 +138,11 @@ public class MediumMonster : Monster
 
     public override void Action(Transform playerTr, Animator animator, GameMgr gameMgr)
     {
+        if(monStat != MonsterStat.Death)
+        {
+            transform.LookAt(playerTr); //플레이어가 있는 방향 항상 바라보기
+        }
+
         CheckState(playerTr);
         Move(playerTr, animator);
         Wait(animator);

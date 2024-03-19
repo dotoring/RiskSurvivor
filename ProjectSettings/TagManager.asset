@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - Monster
   - MapSensor
+  - PickUpItem
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - MapSensor
   - MonsterBullet
   - ForRaycast
-  - 
+  - PickUpItem
   - 
   - 
   - 

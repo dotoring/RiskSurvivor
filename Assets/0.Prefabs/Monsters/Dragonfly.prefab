@@ -452,11 +452,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5312411681474807219}
+  - component: {fileID: 2258931880207114182}
+  - component: {fileID: 2258931880207114181}
   - component: {fileID: 2258931880207114185}
   - component: {fileID: 2258931880207114183}
   - component: {fileID: 2258931880207114184}
-  - component: {fileID: 2258931880207114182}
-  - component: {fileID: 2258931880207114181}
   m_Layer: 8
   m_Name: Dragonfly
   m_TagString: Monster
@@ -483,6 +483,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2258931880207114182
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4824106080319659785}
+  serializedVersion: 2
+  m_Mass: 30
+  m_Drag: 10
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &2258931880207114181
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4824106080319659785}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.05
+  m_Direction: 2
+  m_Center: {x: 0, y: 1.05, z: 0.25}
 --- !u!95 &2258931880207114185
 Animator:
   serializedVersion: 5
@@ -496,7 +526,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5ded4d2c7020ec049b2ad3d69a96a4dc, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -540,7 +570,8 @@ MonoBehaviour:
   monMaxHP: 35
   monCurHP: 0
   moveSpeed: 2.5
-  exp: 15
+  expGemPref: {fileID: 5449664282746907615, guid: 891458ed47d3a1d4f8f0d287f4d75a28, type: 3}
+  basicAttackPower: 15
   attackPower: 15
   attackTimeout: 0
   attackTimeoutDelta: 0
@@ -554,36 +585,6 @@ MonoBehaviour:
   bulletPref: {fileID: 7232395230282326410, guid: 94a29aa8bfe01364db883ffadf4ad244, type: 3}
   monsterShotPoint: {fileID: 7061414340260305717}
   bulletSpeed: 500
---- !u!54 &2258931880207114182
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4824106080319659785}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!136 &2258931880207114181
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4824106080319659785}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.4
-  m_Height: 1.05
-  m_Direction: 2
-  m_Center: {x: 0, y: 1.05, z: 0.25}
 --- !u!1 &5778116149066608818
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,13 @@ public class DragonflyMonster : Monster
     {
         base.Respawn();
         shootTimeoutDelta = 1.0f; //원거리 공격 재사용 대기 시간 초기화
+        GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    public override void Death(Animator animator, GameMgr gameMgr)
+    {
+        animator.SetBool("IsWait", false); //대기 애니메이션 정지
+        base.Death(animator, gameMgr);
     }
 
     public override void CheckState(Transform playerTr)
@@ -48,7 +55,10 @@ public class DragonflyMonster : Monster
 
     public override void Move(Transform playerTr, Animator animator)
     {
-        transform.LookAt(playerTr); //플레이어가 있는 방향 바라보기
+        if(monStat != MonsterStat.Death)
+        {
+            transform.LookAt(playerTr); //플레이어가 있는 방향 바라보기
+        }
 
         if (monStat == MonsterStat.Move) //공격하는 동안에 이동x
         {

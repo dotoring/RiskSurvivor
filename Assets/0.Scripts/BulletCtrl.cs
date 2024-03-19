@@ -30,6 +30,7 @@ public class BulletCtrl : MonoBehaviour
     {
         ContactPoint contact = collision.contacts[0];
         Vector3 impactPoint = contact.point;
+        //타격 이펙트 풀링
         foreach(GameObject effect in poolMgr.bulletObjectPool)
         {
             if(effect.activeSelf == false)
