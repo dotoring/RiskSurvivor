@@ -24,8 +24,8 @@ public class MonsterCtrl : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-        player = GameObject.Find("Player");
-        playerTr = player.GetComponent<Transform>();
+        //player = GameObject.Find("Player");
+        playerTr = GameObject.Find("PlayerTransform").GetComponent<Transform>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         monCanvas = GetComponentInChildren<Canvas>();
 

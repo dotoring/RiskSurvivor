@@ -15,7 +15,7 @@ public class PlayerValue : MonoBehaviour
 
     //체력 관련
     public int maxHp; //최대 체력
-    [HideInInspector] public float curHp; //현재 체력
+    public float curHp; //현재 체력
     public float hpRegen; //체력 재생
     [HideInInspector] public float hpRegenTimeout; //체력 재생 쿨타임
     public int hpGrowth; //성장 체력

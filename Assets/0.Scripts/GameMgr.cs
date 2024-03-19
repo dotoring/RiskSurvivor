@@ -13,6 +13,8 @@ public class GameMgr : MonoBehaviour
     public float playTime;
     public Text timeText;
     GameObject player;
+    public GameObject playerRagdoll;
+    bool isGameOver = false;
 
     [Header("Pause")]
     public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
@@ -96,10 +98,13 @@ public class GameMgr : MonoBehaviour
 
     void Update()
     {
-        playTime += Time.deltaTime;
+        if(!isGameOver)
+        {
+            playTime += Time.deltaTime;
+        }
         Clock();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !isGameOver)
         {
             GamePause();
             pausePanel.SetActive(true);
@@ -112,11 +117,10 @@ public class GameMgr : MonoBehaviour
             gameoverPanel.SetActive(true);
         }
 
-        if (PlayerValue.Instance.curHp <= 0)
+        if (PlayerValue.Instance.curHp <= 0 && !isGameOver)
         {
-            GamePause();
-            resultText.text = "죽음";
-            gameoverPanel.SetActive(true);
+            isGameOver = true;
+            StartCoroutine(GameOver());
         }
     }
 
@@ -141,6 +145,25 @@ public class GameMgr : MonoBehaviour
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    IEnumerator GameOver()
+    {
+        //UI변화를 위해 한프레임 기다리기
+        yield return new WaitForSeconds(0.02f);
+
+        //플레이어 랙돌 생성
+        Instantiate(playerRagdoll, player.transform.position, player.transform.rotation);
+        //기존 플레이어 비활성화
+        player.SetActive(false);
+        
+        //3초 뒤 게임오버 화면 띄우기
+        yield return new WaitForSeconds(3.0f);
+        GamePause();
+        resultText.text = "죽음";
+        gameoverPanel.SetActive(true);
+
+        yield break;
     }
 
     public void ItemSelectPopUp() //아이템 선택창 팝업 함수
