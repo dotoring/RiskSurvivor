@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068436e757d0a744c94bb42e32977e4b, type: 3}
+  m_Name: BackupMagazine
+  m_EditorClassIdentifier: 
+  itemName: "\uBCF4\uC870\uD0C4\uCC3D"
+  itemStat: 1
+  itemStatDesc: "\uBCF4\uC870\uACF5\uACA9 +1"
+  itemDescription: "\uBCF4\uC870\uC2A4\uD0AC\uC758 \uD69F\uC218\uB97C \uB298\uB824\uC90D\uB2C8\uB2E4"
+  itemIcon: {fileID: 0}
+  quantity: 0
+  itemPrefab: {fileID: 0}

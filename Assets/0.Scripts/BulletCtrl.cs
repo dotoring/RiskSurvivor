@@ -41,6 +41,7 @@ public class BulletCtrl : MonoBehaviour
             }
         }
 
+        //충돌 대상이 몬스터면 피해주기
         if (collision.gameObject.tag == "Monster")
         {
             collision.gameObject.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc(1.0f)); //몬스터에게 피해주기

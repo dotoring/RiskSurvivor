@@ -1,3 +1,4 @@
+using Micosmo.SensorToolkit;
 using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,15 +43,22 @@ public class PlayerValue : MonoBehaviour
     public float jumpHeight; //점프 높이
     public int jumpCount; //점프 횟수
 
+    //스킬 관련
+    public int skillMaxCount;
+    public int skillCount;
+
     [Header("UI Objects")]
     public Text levelTxt;
     public Image ExpBar;
     public Text HpTxt;
     public Image HpBar;
+    public Text SkillCountText;
 
     ThirdPersonController controller;
     GameMgr gameMgr;
 
+    RangeSensor pickupSensor; //필드아이템 감지센서
+    
     //임시용
     ItemFunction itemFunction;
 
@@ -68,6 +76,7 @@ public class PlayerValue : MonoBehaviour
         controller = GetComponent<ThirdPersonController>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         itemFunction = GetComponent<ItemFunction>();
+        pickupSensor = GetComponentInChildren<RangeSensor>();
 
         //============게임 시작시 스탯 초기화============
         //레벨 관련
@@ -116,13 +125,22 @@ public class PlayerValue : MonoBehaviour
     {
         HpRegen();
         RefreshHp();
+
+        if(skillMaxCount > 1)
+        {
+            SkillCountText.text = skillCount.ToString();
+            SkillCountText.gameObject.SetActive(true);
+        }
     }
 
     public void GainExp(int value) //경험치 획득 함수
     {
         curExp += value; //경험치 추가
-        ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
-        if(curExp >= maxExp) //경험치가 최대 경험치를 넘으면(레벨업)
+        if(ExpBar != null)
+        {
+            ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
+        }
+        if (curExp >= maxExp) //경험치가 최대 경험치를 넘으면(레벨업)
         {
             int restExp = curExp - maxExp; //경험치 초과량 저장
             LevelUp(restExp);
@@ -237,8 +255,19 @@ public class PlayerValue : MonoBehaviour
         jumpCount += val;
     }
 
+    public void IncreasePickUpRange(int val)
+    {
+        pickupSensor.Sphere.Radius += val;
+    }
+
+    public void IncreaseSkillCount(int val)
+    {
+        skillCount += val;
+        skillMaxCount += val;
+    }
+
     //=============데미지 계산================
-    public float DamageCalc(float rate) //플레이어가 주는 데미지 계산
+    public float DamageCalc(float rate) //플레이어가 주는 데미지 계산(배율)
     {
         float dmg = attackDamage * rate;
 
@@ -269,6 +298,15 @@ public class PlayerValue : MonoBehaviour
     public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지
     {
         curHp -= dmg;
+    }
+
+    public void Heal(float val) //체력 회복 함수
+    {
+        curHp += val;
+        if(curHp > maxHp)
+        {
+            curHp = maxHp;
+        }
     }
 
     //==================기능 아이템=====================

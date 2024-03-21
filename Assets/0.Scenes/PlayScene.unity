@@ -4501,6 +4501,102 @@ MonoBehaviour:
   m_VoxelSize: 0.23333333
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &963043000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 963043001}
+  - component: {fileID: 963043004}
+  - component: {fileID: 963043003}
+  - component: {fileID: 963043002}
+  m_Layer: 5
+  m_Name: CountText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &963043001
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963043000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1763465195}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 50, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &963043002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963043000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 3, y: 2}
+  m_UseGraphicAlpha: 1
+--- !u!114 &963043003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963043000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 1
+--- !u!222 &963043004
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963043000}
+  m_CullTransparentMesh: 1
 --- !u!1 &967072447
 GameObject:
   m_ObjectHideFlags: 0
@@ -6105,7 +6201,6 @@ MonoBehaviour:
   playTime: 0
   timeText: {fileID: 372232235}
   playerRagdoll: {fileID: 1997727217310795417, guid: 21907abc6c29c294393ab7c52804c138, type: 3}
-  dyingSound: {fileID: 1454535299}
   isPaused: 0
   pausePanel: {fileID: 840847510}
   continueBtn: {fileID: 3001719527154022856}
@@ -6125,6 +6220,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2d96bd5be59b7524983d9139e4ae770e, type: 2}
   - {fileID: 11400000, guid: 0c2f8e67e3b68f44d9118cf69f02391e, type: 2}
   - {fileID: 11400000, guid: f69d2da48f4f9dc4eb0b2c90cb1c6214, type: 2}
+  - {fileID: 11400000, guid: a29bb475ff994564695f2c27f815727d, type: 2}
+  - {fileID: 11400000, guid: b4282c7abce6d8840bbd09a29fe9b506, type: 2}
   itemSelectPanel: {fileID: 2041496278}
   itemSelectList: {fileID: 2668297786431917565}
   itemSelectNode: {fileID: 241885664027979608, guid: 81486f2a1dd9da843a402a4eb9f67d11, type: 3}
@@ -7789,6 +7886,7 @@ RectTransform:
   m_Children:
   - {fileID: 764004397}
   - {fileID: 1669933404}
+  - {fileID: 963043001}
   m_Father: {fileID: 648490582}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12831,7 +12929,7 @@ MonoBehaviour:
   shotPoint: {fileID: 361128370}
   shotTimeout: 0.5
   bulletPref: {fileID: 7195796590063014065, guid: 8c7114d2156765844ae19b22a6d0a41c, type: 3}
-  moveSkillCooltime: 0
+  moveSkillCooltime: 5
   moveSkillImage: {fileID: 1065990356}
   dashEffect: {fileID: 1487006003}
   skillCooltime: 8
@@ -13948,10 +14046,13 @@ MonoBehaviour:
   sprintSpeed: 0
   jumpHeight: 0
   jumpCount: 0
+  skillMaxCount: 1
+  skillCount: 0
   levelTxt: {fileID: 160760194}
   ExpBar: {fileID: 1469091821}
   HpTxt: {fileID: 182676112}
   HpBar: {fileID: 53042577}
+  SkillCountText: {fileID: 963043003}
 --- !u!114 &6982812148096674565
 MonoBehaviour:
   m_ObjectHideFlags: 0

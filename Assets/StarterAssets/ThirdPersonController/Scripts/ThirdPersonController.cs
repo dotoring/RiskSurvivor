@@ -398,19 +398,22 @@ namespace StarterAssets
                 _animator.SetBool("Shoot", false);
 
             }
-            if (_input.shot)
+            if (isDash == false) //대쉬 중 사격중지
             {
-                _animator.SetBool("Shoot", true);
-                //사격 방향 바라보기
-                this.transform.eulerAngles = 
-                    new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
-            }
+                if (_input.shot)
+                {
+                    _animator.SetBool("Shoot", true);
+                    //사격 방향 바라보기
+                    this.transform.eulerAngles =
+                        new Vector3(transform.eulerAngles.x, _mainCamera.transform.eulerAngles.y, transform.eulerAngles.z);
+                }
 
-            if (_input.shot && shotTimeoutDelta <= 0.0f)
-            {
-                shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
-                Instantiate(bulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
-                shotTimeoutDelta = shotTimeout;
+                if (_input.shot && shotTimeoutDelta <= 0.0f)
+                {
+                    shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
+                    Instantiate(bulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
+                    shotTimeoutDelta = shotTimeout;
+                }
             }
 
             if (shotTimeoutDelta > 0.0f)
@@ -421,8 +424,9 @@ namespace StarterAssets
 
         private void Skill()
         {
-            if (_input.skill && skillTimeoutDelta <= 0.0f)
+            if (_input.skill && PlayerValue.Instance.skillCount > 0)
             {
+                PlayerValue.Instance.skillCount--;
                 _animator.SetBool("Shoot", true); //사격 애니메이션 재생
                 //사격 방향 바라보기
                 this.transform.eulerAngles = 
@@ -430,7 +434,7 @@ namespace StarterAssets
 
                 shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
                 Instantiate(skillBulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
-                skillTimeoutDelta = skillCooltime;
+                //skillTimeoutDelta = skillCooltime;
                 _input.skill = false; //스킬 입력 끄기
                 _input.sprint = false; //달리기 끄기
             }
@@ -438,8 +442,17 @@ namespace StarterAssets
             if(skillTimeoutDelta > 0.0f)
             {
                 _input.skill = false; //스킬 입력 끄기
-                skillImage.fillAmount = (skillCooltime - skillTimeoutDelta) / skillCooltime;
-                skillTimeoutDelta -= Time.deltaTime;
+                if (PlayerValue.Instance.skillCount < PlayerValue.Instance.skillMaxCount)
+                {
+                    skillImage.fillAmount = (skillCooltime - skillTimeoutDelta) / skillCooltime;
+                    skillTimeoutDelta -= Time.deltaTime;
+                }
+            }
+
+            if(skillTimeoutDelta <= 0.0f)
+            {
+                PlayerValue.Instance.skillCount++;
+                skillTimeoutDelta = skillCooltime;
             }
         }
 
@@ -469,6 +482,9 @@ namespace StarterAssets
             float startTime = Time.time; //시작시간
             //대쉬로 이동할 방향 지정
             Vector3 dashDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+            //대쉬 방향 바라보기
+            transform.rotation = Quaternion.Euler(0.0f, _targetRotation, 0.0f);
+
             while (Time.time < startTime + 0.3f) //0.3초 동안
             {
                 //30의 속도로 이동

@@ -58,6 +58,12 @@ public class Inventory : MonoBehaviour
             case "Áú»Õ¹ö¼¸":
                 PlayerValue.Instance.SprintMushroom((int)item.itemStat, item.quantity);
                 break;
+            case "ÀÚ¼®¹ÝÁö":
+                PlayerValue.Instance.IncreasePickUpRange((int)item.itemStat);
+                break;
+            case "º¸Á¶ÅºÃ¢":
+                PlayerValue.Instance.IncreaseSkillCount((int)item.itemStat);
+                break;
         }
     }
 }
