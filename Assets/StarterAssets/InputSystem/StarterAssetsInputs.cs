@@ -87,7 +87,7 @@ namespace StarterAssets
             }
             else
             {
-				sprint = !sprint;
+                sprint = !sprint;
             }
         }
 

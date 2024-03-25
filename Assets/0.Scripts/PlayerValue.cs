@@ -53,6 +53,7 @@ public class PlayerValue : MonoBehaviour
     public Text HpTxt;
     public Image HpBar;
     public Text SkillCountText;
+    public GameObject damageEffect;
 
     ThirdPersonController controller;
     GameMgr gameMgr;
@@ -297,7 +298,15 @@ public class PlayerValue : MonoBehaviour
 
     public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지
     {
+        StartCoroutine(DamageEffectOn());
         curHp -= dmg;
+    }
+
+    IEnumerator DamageEffectOn() //데미지 이펙트 키는 함수
+    {
+        damageEffect.SetActive(true);
+        yield return new WaitForSeconds(0.1f); //0.1초 동안만
+        damageEffect.SetActive(false);
     }
 
     public void Heal(float val) //체력 회복 함수

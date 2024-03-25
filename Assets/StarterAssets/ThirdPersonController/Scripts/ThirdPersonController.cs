@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -94,6 +95,10 @@ namespace StarterAssets
 
         //게임매니져
         GameMgr gameMgr;
+        public CinemachineVirtualCamera virtualCamera;
+        public CinemachineComponentBase componentBase;
+        bool cameraZoom;
+        public GameObject sprintEffect;
 
         // cinemachine
         private float _cinemachineTargetYaw;
@@ -161,6 +166,7 @@ namespace StarterAssets
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
 
             gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+            componentBase = virtualCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
 
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
@@ -248,7 +254,30 @@ namespace StarterAssets
 
         private void Move()
         {
-            if(isDash == false) //대쉬 중일 때 못 움직이도록
+            if(_input.sprint) //달리기 중이면 카메라 줌 아웃
+            {
+                if (componentBase is Cinemachine3rdPersonFollow)
+                {
+                    sprintEffect.SetActive(true); //달리기 화면 이펙트 켜기
+                    if ((componentBase as Cinemachine3rdPersonFollow).CameraDistance < 8)
+                    {
+                        (componentBase as Cinemachine3rdPersonFollow).CameraDistance += 0.2f;
+                    }
+                }
+            }
+            if(!_input.sprint) //달리기 중이 아니면 카메라 줌 인
+            {
+                if (componentBase is Cinemachine3rdPersonFollow)
+                {
+                    sprintEffect.SetActive(false); //달리기 화면 이펙트 끄기
+                    if ((componentBase as Cinemachine3rdPersonFollow).CameraDistance > 6)
+                    {
+                        (componentBase as Cinemachine3rdPersonFollow).CameraDistance -= 0.2f;
+                    }
+                }
+            }
+
+            if (isDash == false) //대쉬 중일 때 못 움직이도록
             {
                 // set target speed based on move speed, sprint speed and if sprint is pressed
                 float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
@@ -257,7 +286,11 @@ namespace StarterAssets
 
                 // note: Vector2's == operator uses approximation so is not floating point error prone, and is cheaper than magnitude
                 // if there is no input, set the target speed to 0
-                if (_input.move == Vector2.zero) targetSpeed = 0.0f;
+                if (_input.move == Vector2.zero)
+                {
+                    _input.sprint = false;
+                    targetSpeed = 0.0f;
+                }
 
                 Vector3 moveDir = _input.move.normalized;
                 _animator.SetFloat("xDir", moveDir.x);
