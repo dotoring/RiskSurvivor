@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 6815332474345658378}
   - component: {fileID: 5248647149768186565}
   - component: {fileID: 5244357063064829228}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonsterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1139,7 +1139,7 @@ GameObject:
   - component: {fileID: 640858180756773627}
   - component: {fileID: 2632348744808135062}
   - component: {fileID: 4411696770836858184}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 7187725696753464586}
   - component: {fileID: 5917832508290499310}
   - component: {fileID: 7834784428808425941}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1480,7 +1480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6057284846289827977}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,9 +1710,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -150
       objectReference: {fileID: 0}
+    - target: {fileID: 8495697557453595600, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8792079695798041162, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
       propertyPath: m_Name
       value: SlashSmallGold
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792079695798041162, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9019632345126977707, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
       propertyPath: playOnAwake
@@ -1742,12 +1750,20 @@ PrefabInstance:
       value: ChargeSphere2Red
       objectReference: {fileID: 0}
     - target: {fileID: 147199183070441786, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 147199183070441786, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3420991510947955694, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4073559425297970926, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4592821945960700000, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
       propertyPath: m_Materials.Array.size
@@ -1796,6 +1812,10 @@ PrefabInstance:
     - target: {fileID: 6303353958507388664, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7094390412936295945, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49c2c958c5858fd4da569a2179cbd8fb, type: 3}

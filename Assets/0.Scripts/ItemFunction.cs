@@ -25,6 +25,9 @@ public class ItemFunction : MonoBehaviour
     IEnumerator mushroomCoroutine = null;
     public ParticleSystem healingAura;
 
+    //불길
+    IEnumerator fireRoadCoroutine = null;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -130,6 +133,28 @@ public class ItemFunction : MonoBehaviour
             }
             //1초당으로
             yield return new WaitForSeconds(1.0f);
+        }
+    }
+
+    public void GenFireRoad(GameObject pref, int quantiry)
+    {
+        if(fireRoadCoroutine != null)
+        {
+            StopCoroutine(fireRoadCoroutine);
+        }
+        fireRoadCoroutine = FireRoadGenCoroutine(pref, quantiry);
+        StartCoroutine(fireRoadCoroutine);
+    }
+    public IEnumerator FireRoadGenCoroutine(GameObject pref, int quantity)
+    {
+        while(true)
+        {
+            if(starterAssetsInputs.sprint)
+            {
+                GameObject fr = Instantiate(pref, PlayerOnlyTransform.transform.position, Quaternion.identity);
+                fr.GetComponent<FireRoadCtrl>().damage *=  1.0f + (float)(0.3 * quantity);
+            }
+            yield return new WaitForSeconds(0.3f);
         }
     }
 }

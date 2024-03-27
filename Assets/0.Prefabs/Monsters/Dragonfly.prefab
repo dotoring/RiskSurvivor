@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2106058615943773772}
   - component: {fileID: 1974450180188041599}
   - component: {fileID: 2085036074805873740}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonsterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 2038269788564756530}
   - component: {fileID: 7939559640811940480}
   - component: {fileID: 2890469915565985707}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -658,7 +658,7 @@ GameObject:
   - component: {fileID: 1537007797948018429}
   - component: {fileID: 1190369300354663598}
   - component: {fileID: 5957597813899459211}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -829,7 +829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5446844547816517331}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}

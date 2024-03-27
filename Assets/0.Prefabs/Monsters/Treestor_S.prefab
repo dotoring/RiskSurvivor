@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 3167439717651738163}
   - component: {fileID: 5130141972138773034}
   - component: {fileID: 7772261583371377669}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -685,7 +685,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6876979357493665088}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: HP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +982,7 @@ GameObject:
   - component: {fileID: 1102148602244849111}
   - component: {fileID: 2231909403838518661}
   - component: {fileID: 7052921165840844647}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonsterCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1255,7 +1255,7 @@ GameObject:
   - component: {fileID: 1839228896127778480}
   - component: {fileID: 3535097068961173354}
   - component: {fileID: 6547715452681485462}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: MonHPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1651,9 +1651,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -60
       objectReference: {fileID: 0}
+    - target: {fileID: 8495697557453595600, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8792079695798041162, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
       propertyPath: m_Name
       value: SlashSmallGold
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792079695798041162, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9019632345126977707, guid: 7923e37648055d34abc4f9ce4dfbbba0, type: 3}
       propertyPath: playOnAwake

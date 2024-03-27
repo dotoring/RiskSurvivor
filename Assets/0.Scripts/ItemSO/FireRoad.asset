@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068436e757d0a744c94bb42e32977e4b, type: 3}
+  m_Name: FireRoad
+  m_EditorClassIdentifier: 
+  itemName: "\uBD88\uAE38"
+  itemStat: 0
+  itemStatDesc: "\uB2EC\uB9AC\uAE30 \uC2DC \uC9C0\uBA74\uC744 \uBD88\uD0DC\uC6C1\uB2C8\uB2E4"
+  itemDescription: 
+  itemIcon: {fileID: 0}
+  quantity: 1
+  itemPrefab: {fileID: 5109143172312601744, guid: 10772fe33d761ab4faa109f268d64bf1, type: 3}

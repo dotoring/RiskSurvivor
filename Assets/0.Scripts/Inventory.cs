@@ -64,6 +64,9 @@ public class Inventory : MonoBehaviour
             case "보조탄창":
                 PlayerValue.Instance.IncreaseSkillCount((int)item.itemStat);
                 break;
+            case "불길":
+                PlayerValue.Instance.FireRoad(item.itemPrefab, item.quantity);
+                break;
         }
     }
 }

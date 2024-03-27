@@ -73,11 +73,13 @@ public class MediumMonster : Monster
 
     public override void Shoot(Transform playerTr, Animator animator)
     {
-        if(monStat == MonsterStat.RangeAttack && shootTimeoutDelta <= 0.0f)
+        target = playerTr.position; //목표점 지정
+        target.y += 1.0f; //플레이어 목표점 키에 맞춰 수정
+
+        if (monStat == MonsterStat.RangeAttack && shootTimeoutDelta <= 0.0f)
         {
             shootTimeoutDelta = shootTimeout; //공격 대기시간 초기화
-            target = playerTr.position; //목표점 지정
-            target.y += 1.0f; //플레이어 목표점 키에 맞춰 수정
+
             animator.SetBool("IsMove", false); //움직임 정지
             animator.SetBool("IsWait", false); //대기 애니메이션 정지
             animator.SetTrigger("OnShoot"); //공격 애니메이션 재생

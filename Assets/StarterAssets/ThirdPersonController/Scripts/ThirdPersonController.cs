@@ -258,10 +258,13 @@ namespace StarterAssets
             {
                 if (componentBase is Cinemachine3rdPersonFollow)
                 {
-                    sprintEffect.SetActive(true); //달리기 화면 이펙트 켜기
                     if ((componentBase as Cinemachine3rdPersonFollow).CameraDistance < 8)
                     {
                         (componentBase as Cinemachine3rdPersonFollow).CameraDistance += 0.2f;
+                    }
+                    else //줌 끝나면
+                    {
+                        sprintEffect.SetActive(true); //달리기 화면 이펙트 켜기
                     }
                 }
             }

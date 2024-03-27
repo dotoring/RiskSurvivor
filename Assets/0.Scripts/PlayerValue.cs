@@ -62,6 +62,7 @@ public class PlayerValue : MonoBehaviour
     
     //юс╫ц©К
     ItemFunction itemFunction;
+    public GameObject pref;
 
     private void Awake()
     {
@@ -120,6 +121,7 @@ public class PlayerValue : MonoBehaviour
         ExpBar.fillAmount = 0;
         HpBar.fillAmount = 1;
         HpTxt.text = curHp.ToString() + "/" + maxHp.ToString();
+
     }
 
     void Update()
@@ -337,5 +339,10 @@ public class PlayerValue : MonoBehaviour
     public void SprintMushroom(int val, int quantity)
     {
         itemFunction.ExeSprintMushroom(val, quantity);
+    }
+
+    public void FireRoad(GameObject pref, int quantity)
+    {
+        itemFunction.GenFireRoad(pref, quantity);
     }
 }
