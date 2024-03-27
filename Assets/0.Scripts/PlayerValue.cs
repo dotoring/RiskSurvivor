@@ -47,6 +47,10 @@ public class PlayerValue : MonoBehaviour
     public int skillMaxCount;
     public int skillCount;
 
+    [Header("Items")]
+    public int leechingSeed;
+    public int vampiricTooth;
+
     [Header("UI Objects")]
     public Text levelTxt;
     public Image ExpBar;
@@ -62,7 +66,6 @@ public class PlayerValue : MonoBehaviour
     
     //임시용
     ItemFunction itemFunction;
-    public GameObject pref;
 
     private void Awake()
     {
@@ -269,6 +272,16 @@ public class PlayerValue : MonoBehaviour
         skillMaxCount += val;
     }
 
+    public void SetLeechingSeed(int val)
+    {
+        leechingSeed = val;
+    }
+
+    public void SetVampiricTooth(int val)
+    {
+        vampiricTooth = val;
+    }
+
     //=============데미지 계산================
     public float DamageCalc(float rate) //플레이어가 주는 데미지 계산(배율)
     {
@@ -277,6 +290,7 @@ public class PlayerValue : MonoBehaviour
         if(critChance >= 100) //치명타 확률이 100%를 넘겼을 때 확정 치명타
         {
             dmg = attackDamage * critDmgRate;
+            Heal(vampiricTooth*5); //치명타시 흡혈 아이템 적용
         }
         else if(critChance <= 0) //치명타 확률이 0%일 때
         {
@@ -288,6 +302,7 @@ public class PlayerValue : MonoBehaviour
             if(rand <= critChance) //치명타가 떴을 때
             {
                 dmg = attackDamage * critDmgRate;
+                Heal(vampiricTooth*5); //치명타시 흡혈 아이템 적용
             }
             else
             {
@@ -295,6 +310,7 @@ public class PlayerValue : MonoBehaviour
             }
         }
 
+        Heal(leechingSeed);
         return dmg;
     }
 

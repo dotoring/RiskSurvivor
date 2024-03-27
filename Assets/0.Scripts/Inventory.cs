@@ -67,6 +67,12 @@ public class Inventory : MonoBehaviour
             case "ºÒ±æ":
                 PlayerValue.Instance.FireRoad(item.itemPrefab, item.quantity);
                 break;
+            case "ÈíÇ÷¾¾¾Ñ":
+                PlayerValue.Instance.SetLeechingSeed(item.quantity);
+                break;
+            case "ÈíÇ÷ÀÌ»¡":
+                PlayerValue.Instance.SetVampiricTooth(item.quantity);
+                break;
         }
     }
 }
