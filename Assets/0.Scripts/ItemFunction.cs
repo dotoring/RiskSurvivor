@@ -27,6 +27,7 @@ public class ItemFunction : MonoBehaviour
 
     //불길
     IEnumerator fireRoadCoroutine = null;
+    public List<GameObject> fireEffectPool = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -138,10 +139,12 @@ public class ItemFunction : MonoBehaviour
 
     public void GenFireRoad(GameObject pref, int quantiry)
     {
+        //진행 중이던 코루틴이 있다면 중지
         if(fireRoadCoroutine != null)
         {
             StopCoroutine(fireRoadCoroutine);
         }
+        //새 코루틴 진행
         fireRoadCoroutine = FireRoadGenCoroutine(pref, quantiry);
         StartCoroutine(fireRoadCoroutine);
     }
@@ -151,8 +154,19 @@ public class ItemFunction : MonoBehaviour
         {
             if(starterAssetsInputs.sprint)
             {
-                GameObject fr = Instantiate(pref, PlayerOnlyTransform.transform.position, Quaternion.identity);
-                fr.GetComponent<FireRoadCtrl>().damage *=  1.0f + (float)(0.3 * quantity);
+                //오브젝트 풀링
+                foreach (GameObject fireGO in fireEffectPool)
+                {
+                    if (!fireGO.activeSelf) //비활성화 오브젝트 찾기
+                    {
+                        fireGO.SetActive(true);
+                        //갯수 초기화
+                        fireGO.GetComponent<FireRoadCtrl>().quantity = quantity;
+                        //위치 조정
+                        fireGO.transform.position = PlayerOnlyTransform.transform.position;
+                        break;
+                    }
+                }
             }
             yield return new WaitForSeconds(0.3f);
         }

@@ -5,24 +5,30 @@ using UnityEngine;
 public class FireRoadCtrl : FunctionItemClass
 {
     public float damage; //데미지
-    public float lifeTime;
+    public int quantity;
+    public float lifeTime; //지속시간
+    float lifeTimeDelta;
 
-    // Start is called before the first frame update
     void Start()
     {
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        lifeTimeDelta = lifeTime;
+    }
+
     void Update()
     {
-        if(lifeTime <= 0)
+        if(lifeTimeDelta <= 0) //지속시간이 끝나면 제거
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
         }
         else
         {
-            lifeTime -= Time.deltaTime;
+            lifeTimeDelta -= Time.deltaTime;
         }
     }
 
@@ -30,7 +36,11 @@ public class FireRoadCtrl : FunctionItemClass
     {
         if (other.tag == "Monster")
         {
+            //시간에 따른 데미지 증가
             float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
+            //갯수에 따른 데미지 증가
+            dmg *= 1.0f + (0.3f * quantity);
+            //지속피해 주기
             other.GetComponent<MonsterCtrl>().Damaged(dmg * Time.deltaTime);
         }
     }

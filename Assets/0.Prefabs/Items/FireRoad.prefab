@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3863453580044781851}
   - component: {fileID: 3985046525089061337}
   - component: {fileID: 3983441711997137375}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4902,7 +4902,7 @@ GameObject:
   - component: {fileID: 3855698924348141275}
   - component: {fileID: 3977360522478706421}
   - component: {fileID: 3983460220834278289}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9780,7 +9780,7 @@ GameObject:
   - component: {fileID: 3862979993906595547}
   - component: {fileID: 3984983203777046543}
   - component: {fileID: 3983973904747363513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireRising
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14658,7 +14658,7 @@ GameObject:
   - component: {fileID: 3863395896898345803}
   - component: {fileID: 3985020271304431905}
   - component: {fileID: 3983931552691307833}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireSmallRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19539,7 +19539,7 @@ GameObject:
   - component: {fileID: 5109143172312601747}
   - component: {fileID: 5109143172312601746}
   - component: {fileID: 5109143172312601745}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireRoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19554,7 +19554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5109143172312601744}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.008, y: 0, z: -2.004}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19588,4 +19588,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  quantity: 0
   lifeTime: 3
