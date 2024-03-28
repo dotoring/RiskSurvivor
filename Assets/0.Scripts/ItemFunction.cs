@@ -29,6 +29,10 @@ public class ItemFunction : MonoBehaviour
     IEnumerator fireRoadCoroutine = null;
     public List<GameObject> fireEffectPool = new List<GameObject>();
 
+    //집중
+    IEnumerator FocusCoroutine = null;
+    public ParticleSystem powerUpAura;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,7 +88,7 @@ public class ItemFunction : MonoBehaviour
         missileCoroutine = LaunchingMissile(prefab, quantity); //미사일 발사 코루틴 갯수 변경
         StartCoroutine(missileCoroutine); //미사일 발사 코루틴 실행
     }
-    public IEnumerator LaunchingMissile(GameObject prefab, int quantity)
+    IEnumerator LaunchingMissile(GameObject prefab, int quantity)
     {
         while (true)
         {
@@ -114,7 +118,7 @@ public class ItemFunction : MonoBehaviour
         mushroomCoroutine = SprintMushroomCoroutine(val, quantity); //질뿜버섯 코루틴 갯수 변경
         StartCoroutine(mushroomCoroutine); //질뿜버섯 코루틴 실행
     }
-    public IEnumerator SprintMushroomCoroutine(int val, int quantity)
+    IEnumerator SprintMushroomCoroutine(int val, int quantity)
     {
         while(true)
         {
@@ -137,7 +141,8 @@ public class ItemFunction : MonoBehaviour
         }
     }
 
-    public void GenFireRoad(GameObject pref, int quantiry)
+    //불길
+    public void GenFireRoad(GameObject pref, int quantity)
     {
         //진행 중이던 코루틴이 있다면 중지
         if(fireRoadCoroutine != null)
@@ -145,10 +150,10 @@ public class ItemFunction : MonoBehaviour
             StopCoroutine(fireRoadCoroutine);
         }
         //새 코루틴 진행
-        fireRoadCoroutine = FireRoadGenCoroutine(pref, quantiry);
+        fireRoadCoroutine = FireRoadGenCoroutine(pref, quantity);
         StartCoroutine(fireRoadCoroutine);
     }
-    public IEnumerator FireRoadGenCoroutine(GameObject pref, int quantity)
+    IEnumerator FireRoadGenCoroutine(GameObject pref, int quantity)
     {
         while(true)
         {
@@ -169,6 +174,49 @@ public class ItemFunction : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    //집중
+    public void FocusOn(float val, int quantity)
+    {
+        //진행 중이던 코루틴이 있다면 중지
+        if (FocusCoroutine != null)
+        {
+            StopCoroutine(FocusCoroutine);
+        }
+        //새 코루틴 진행
+        FocusCoroutine = FocusingCoroutine(val, quantity);
+        StartCoroutine(FocusCoroutine);
+    }
+    IEnumerator FocusingCoroutine(float val, int quantity)
+    {
+        float bonusRate = quantity * val; //갯수에 따른 피해증가량 계산
+        bool flag = false; //피해증가 1번만 적용하기 위한 플래그
+        while (true)
+        {
+            if (starterAssetsInputs.move == Vector2.zero) //움직이지 않으면
+            {
+                yield return new WaitForSeconds(0.5f);
+                powerUpAura.Play(); //피해 증가 이펙트 재생
+                if(flag == false)
+                {
+                    //피해 증가
+                    PlayerValue.Instance.IncreaseDamageBonus(bonusRate);
+                    flag = true;
+                }
+            }
+            else //움직이면
+            {
+                powerUpAura.Stop(); //피해 증가 이펙트 중지
+                if(flag == true)
+                {
+                    //증가 수치만큼 피해 감소
+                    PlayerValue.Instance.DecreaseDamageBonus(bonusRate);
+                    flag = false;
+                }
+            }
+            yield return null;
         }
     }
 }

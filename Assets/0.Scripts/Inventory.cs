@@ -73,6 +73,12 @@ public class Inventory : MonoBehaviour
             case "ÈíÇ÷ÀÌ»¡":
                 PlayerValue.Instance.SetVampiricTooth(item.quantity);
                 break;
+            case "ÁýÁß":
+                PlayerValue.Instance.FocusOn(item.itemStat, item.quantity);
+                break;
+            case "·°Å°¼¦":
+                PlayerValue.Instance.LuckyShot(item.itemStat, item.quantity);
+                break;
         }
     }
 }

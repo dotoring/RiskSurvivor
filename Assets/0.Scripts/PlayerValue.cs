@@ -24,10 +24,13 @@ public class PlayerValue : MonoBehaviour
 
     //방어 관련
     public int block; //방어력
+    public int maxBarrier; //최대 보호막
+    public float curBarrier; //현재 보호막
 
     //공격 관련
     public float attackDamage; //공격력
     public float attackDamageGrowth; //성장 공격력
+    public float attackDamageBonusRate; //공격력 추가 배율
     public float basicAttackSpeed; //기본 공격속도
     [HideInInspector] public float attackSpeedIncreaseRate; //공격속도 증가율(합연산을 위한 변수)
     [HideInInspector] public float attackSpeed; //공격 속도
@@ -50,13 +53,15 @@ public class PlayerValue : MonoBehaviour
     [Header("Items")]
     public int leechingSeed;
     public int vampiricTooth;
+    public float luckyShotRate;
 
     [Header("UI Objects")]
     public Text levelTxt;
-    public Image ExpBar;
-    public Text HpTxt;
-    public Image HpBar;
-    public Text SkillCountText;
+    public Image expBar;
+    public Text hpTxt;
+    public Image hpBar;
+    public Image barrierBar;
+    public Text skillCountText;
     public GameObject damageEffect;
 
     ThirdPersonController controller;
@@ -121,30 +126,30 @@ public class PlayerValue : MonoBehaviour
 
         //===============UI 초기화===================
         levelTxt.text = "Lv." + level.ToString();
-        ExpBar.fillAmount = 0;
-        HpBar.fillAmount = 1;
-        HpTxt.text = curHp.ToString() + "/" + maxHp.ToString();
+        expBar.fillAmount = 0;
+        hpBar.fillAmount = 1;
+        hpTxt.text = curHp.ToString() + "/" + maxHp.ToString();
 
     }
 
     void Update()
     {
         HpRegen();
-        RefreshHp();
+        RefreshHpBar();
 
         if(skillMaxCount > 1)
         {
-            SkillCountText.text = skillCount.ToString();
-            SkillCountText.gameObject.SetActive(true);
+            skillCountText.text = skillCount.ToString();
+            skillCountText.gameObject.SetActive(true);
         }
     }
 
     public void GainExp(int value) //경험치 획득 함수
     {
         curExp += value; //경험치 추가
-        if(ExpBar != null)
+        if(expBar != null)
         {
-            ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
+            expBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
         }
         if (curExp >= maxExp) //경험치가 최대 경험치를 넘으면(레벨업)
         {
@@ -160,7 +165,7 @@ public class PlayerValue : MonoBehaviour
         levelTxt.text = "Lv." + level.ToString(); //레벨 텍스트 변경
         curExp = restExp; //경험치 초과량 채우기
         maxExp += 20; //필요 경험치량 증가
-        ExpBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
+        expBar.fillAmount = (float)curExp / (float)maxExp; //경험치바의 게이지 변경
 
         IncreaseMaxHp(hpGrowth); //성장체력만큼 체력 증가
         IncreaseAttackDamage(attackDamageGrowth); //성장공격력만큼 공격력 증가
@@ -184,10 +189,10 @@ public class PlayerValue : MonoBehaviour
         }
     }
 
-    void RefreshHp()
+    void RefreshHpBar()
     {
-        HpTxt.text = curHp.ToString("F0") + "/" + maxHp.ToString();
-        HpBar.fillAmount = curHp / (float)maxHp;
+        hpTxt.text = curHp.ToString("F0") + "/" + maxHp.ToString();
+        hpBar.fillAmount = curHp / (float)maxHp;
     }
 
     //===================================================================
@@ -211,6 +216,16 @@ public class PlayerValue : MonoBehaviour
     public void IncreaseAttackDamage(float val) //공격력 증가
     {
         attackDamage += val;
+    }
+
+    public void IncreaseDamageBonus(float val) //공격력 퍼센트 증가
+    {
+        attackDamageBonusRate += val;
+    }
+
+    public void DecreaseDamageBonus(float val) //공격력 퍼센트 감소
+    {
+        attackDamageBonusRate -= val;
     }
 
     public void IncreaseAttackSpeed(float val) //공격 속도 증가
@@ -285,28 +300,28 @@ public class PlayerValue : MonoBehaviour
     //=============데미지 계산================
     public float DamageCalc(float rate) //플레이어가 주는 데미지 계산(배율)
     {
-        float dmg = attackDamage * rate;
+        float dmg = (attackDamage + (attackDamage * attackDamageBonusRate)) * rate;
 
         if(critChance >= 100) //치명타 확률이 100%를 넘겼을 때 확정 치명타
         {
-            dmg = attackDamage * critDmgRate;
+            dmg = dmg * critDmgRate;
             Heal(vampiricTooth*5); //치명타시 흡혈 아이템 적용
         }
         else if(critChance <= 0) //치명타 확률이 0%일 때
         {
-            dmg = attackDamage;
+            dmg = dmg;
         }
         else //치명타 확률이 1%~99%일 때
         {
             int rand = Random.Range(1, 101); //1~100 랜덤
             if(rand <= critChance) //치명타가 떴을 때
             {
-                dmg = attackDamage * critDmgRate;
+                dmg = dmg * critDmgRate;
                 Heal(vampiricTooth*5); //치명타시 흡혈 아이템 적용
             }
             else
             {
-                dmg = attackDamage;
+                dmg = dmg;
             }
         }
 
@@ -317,7 +332,7 @@ public class PlayerValue : MonoBehaviour
     public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지
     {
         StartCoroutine(DamageEffectOn());
-        curHp -= dmg;
+            curHp -= dmg;
     }
 
     IEnumerator DamageEffectOn() //데미지 이펙트 키는 함수
@@ -360,5 +375,23 @@ public class PlayerValue : MonoBehaviour
     public void FireRoad(GameObject pref, int quantity)
     {
         itemFunction.GenFireRoad(pref, quantity);
+    }
+
+    public void FocusOn(float val, int quantity)
+    {
+        itemFunction.FocusOn(val, quantity);
+    }
+
+    public void LuckyShot(float val, int quantity)
+    {
+        if(quantity == 1)
+        {
+            luckyShotRate = val;
+        }
+        else if(quantity >= 2)
+        {
+            //곱연산
+            luckyShotRate = 1 - 1 / (1 + (val * quantity));
+        }
     }
 }

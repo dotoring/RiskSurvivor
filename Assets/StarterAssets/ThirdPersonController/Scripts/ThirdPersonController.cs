@@ -448,6 +448,11 @@ namespace StarterAssets
                 {
                     shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
                     Instantiate(bulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
+                    if(PlayerValue.Instance.luckyShotRate > 0.0f) //럭키샷 확률이 있다면
+                    {
+                        //럭키샷 확률 계산 및 발동
+                        StartCoroutine(LuckyShot());
+                    }
                     shotTimeoutDelta = shotTimeout;
                 }
             }
@@ -456,6 +461,18 @@ namespace StarterAssets
             {
                 shotTimeoutDelta -= Time.deltaTime;
             }
+        }
+
+        IEnumerator LuckyShot()
+        {
+            float rand = Random.Range(0.0f, 1.0f);
+            if(rand < PlayerValue.Instance.luckyShotRate) //확률 적중 시 추가 발사
+            {
+                yield return new WaitForSeconds(0.1f);
+                shotDir = (AimRaycast.targetPoint - shotPoint.position).normalized; //정규화로 투사체 속도 통일
+                Instantiate(bulletPref, shotPoint.position, Quaternion.LookRotation(shotDir)); //사격방향으로 총알 회전
+            }
+            yield break;
         }
 
         private void Skill()
