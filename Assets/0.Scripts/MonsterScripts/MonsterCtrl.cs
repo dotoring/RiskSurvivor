@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class MonsterCtrl : MonoBehaviour
 {
-    Animator animator;
-    GameObject player;
-    Transform playerTr;
-    GameMgr gameMgr;
+    public Animator animator;
+    public GameObject player;
+    public Transform playerTr;
+    public GameMgr gameMgr;
 
     public Collider attackHitBox;
     public ParticleSystem attackEffect;
@@ -44,12 +44,17 @@ public class MonsterCtrl : MonoBehaviour
         {
             HpUI.SetActive(false);
         }
+
+        //UI가 항상 일정 크기로 보이게 해주기
         Vector3 monPos = transform.position;
         monPos.y = 0;
         Vector3 camPos = Camera.main.transform.position;
         camPos.y = 0;
         float distance = Vector3.Distance(monPos, camPos);
-        monCanvas.transform.localScale = Vector3.one * (distance / 10f); // 10은 임의의 값으로 조절 가능
+        if(monCanvas != null)
+        {
+            monCanvas.transform.localScale = Vector3.one * (distance / 10f); // 10은 임의의 값으로 조절 가능
+        }
     }
 
     //몬스터가 피해를 받는 함수

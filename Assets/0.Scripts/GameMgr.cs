@@ -41,6 +41,7 @@ public class GameMgr : MonoBehaviour
     public GameObject smallMonsterPref;
     public GameObject mediumMonsterPref;
     public GameObject flyMonsterPref;
+    public GameObject GhostGroupPref;
     public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
     //오브젝트 풀
     public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
@@ -72,6 +73,7 @@ public class GameMgr : MonoBehaviour
         StartCoroutine(SmallMonsterSpawn()); //몬스터 스폰 코루틴 시작
         StartCoroutine(MediumMonsterSpawn());
         StartCoroutine(FlyMonsterSpawn());
+        StartCoroutine(GhostGroupSpawn());
 
         continueBtn.onClick.AddListener(() =>
         {
@@ -219,7 +221,7 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    IEnumerator SmallMonsterSpawn() //몬스터 스폰 코루틴함수
+    IEnumerator SmallMonsterSpawn() //소형 몬스터 스폰 코루틴함수
     {
         while(true)
         {
@@ -229,7 +231,7 @@ public class GameMgr : MonoBehaviour
                 NavMeshHit hit;
                 Vector3 randomPosition = Vector3.zero;
                 //플레이어 반경 30이내의 랜덤위치 설정
-                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
+                Vector3 randPos = Random.insideUnitSphere * 100.0f;
 
                 //랜덤 위치에서 가장 가까운 정상 지형 찾기
                 if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
@@ -263,7 +265,7 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    IEnumerator MediumMonsterSpawn() //몬스터 스폰 코루틴함수
+    IEnumerator MediumMonsterSpawn() //중형 몬스터 스폰 코루틴함수
     {
         while (true)
         {
@@ -275,7 +277,7 @@ public class GameMgr : MonoBehaviour
                 NavMeshHit hit;
                 Vector3 randomPosition = Vector3.zero;
                 //플레이어 반경 30이내의 랜덤위치 설정
-                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
+                Vector3 randPos = Random.insideUnitSphere * 100.0f;
 
                 //랜덤 위치에서 가장 가까운 정상 지형 찾기
                 if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
@@ -308,7 +310,7 @@ public class GameMgr : MonoBehaviour
         }
     }
 
-    IEnumerator FlyMonsterSpawn() //몬스터 스폰 코루틴함수
+    IEnumerator FlyMonsterSpawn() //공중 몬스터 스폰 코루틴함수
     {
         while (true)
         {
@@ -320,7 +322,7 @@ public class GameMgr : MonoBehaviour
                 NavMeshHit hit;
                 Vector3 randomPosition = Vector3.zero;
                 //플레이어 반경 30이내의 랜덤위치 설정
-                Vector3 randPos = player.transform.position + Random.insideUnitSphere * 50.0f;
+                Vector3 randPos = Random.insideUnitSphere * 100.0f;
 
                 //랜덤 위치에서 가장 가까운 정상 지형 찾기
                 if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
@@ -352,6 +354,45 @@ public class GameMgr : MonoBehaviour
                     monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
                 }
             }
+        }
+    }
+
+    IEnumerator GhostGroupSpawn()
+    {
+        yield return new WaitForSeconds(30.0f); //첫 스폰 쿨타임
+
+        while (true)
+        {
+            int spawnCount = 1 + ((int)playTime / 240);
+            for (int i = 0; i < spawnCount; i++)
+            {
+                Vector3 spawnPos;
+
+                //스폰 위치 설정 중앙제외 8방향중 한곳으로
+                int[] x = { -1, 0, 1 };
+                int[] z = { -1, 0, 1 };
+                while(true)
+                {
+                    int randX = Random.Range(0, x.Length);
+                    int randZ = Random.Range(0, z.Length);
+                    if(randX == 1 && randZ == 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        spawnPos = new Vector3(x[randX], 0, z[randZ]);
+                        break;
+                    }
+                }
+                //맵 밖에서 스폰되도록 맵 크기만큼 곱하기
+                spawnPos = spawnPos.normalized * 125;
+
+                GameObject monster = Instantiate(GhostGroupPref);
+                monster.transform.position = spawnPos;
+            }
+
+            yield return new WaitForSeconds(60.0f); //스폰 쿨타임
         }
     }
 }
