@@ -19541,7 +19541,7 @@ GameObject:
   - component: {fileID: 5109143172312601745}
   m_Layer: 7
   m_Name: FireRoad
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

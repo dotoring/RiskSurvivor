@@ -2,21 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GhostMonster : Monster
+public class DestroyableProjectile : Monster
 {
+    public GameObject impactEffect;
+
     public override void Action(Transform playerTr, Animator animator, GameMgr gameMgr)
     {
         Death(animator, gameMgr);
-    }
-
-    public override void Death(Animator animator, GameMgr gameMgr)
-    {
-        if (monCurHP <= 0.0f && monStat != MonsterStat.Death)
-        {
-            //경험치 보석 생성
-            Instantiate(expGemPref, transform.position, Quaternion.identity);
-            Destroy(gameObject);
-        }
     }
 
     public override void Attack(Animator animator)
@@ -39,11 +31,23 @@ public class GhostMonster : Monster
         throw new System.NotImplementedException();
     }
 
-    private void OnTriggerEnter(Collider other) //공격 판정 범위에 콜리더가 들어왔을 때
+    public override void Death(Animator animator, GameMgr gameMgr)
     {
-        if (other.tag == "Player") //플레이어면 데미지 주기
+        if (monCurHP <= 0.0f && monStat != MonsterStat.Death)
         {
-            PlayerValue.Instance.PlayerTakeDamage(attackPower);
+            monStat = MonsterStat.Death; //사망 상태로 변경
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player" || other.tag == "Untagged") //충돌체가 플레이어의 발사체가 아닐경우
+        {
+            GameObject go = Instantiate(impactEffect, transform.position, Quaternion.identity);
+            go.GetComponent<CheckPlayerInArea>().damage = attackPower*4.0f;
+            Destroy(go, 2.0f);
+            Destroy(gameObject);
         }
     }
 }

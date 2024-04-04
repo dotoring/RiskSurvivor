@@ -95,4 +95,12 @@ public override void CheckState(Transform playerTr)
     {
         throw new System.NotImplementedException();
     }
+
+    private void OnTriggerEnter(Collider other) //공격 판정 범위에 콜리더가 들어왔을 때
+    {
+        if (other.tag == "Player") //플레이어면 데미지 주기
+        {
+            PlayerValue.Instance.PlayerTakeDamage(attackPower);
+        }
+    }
 }

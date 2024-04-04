@@ -11,7 +11,6 @@ public class SkillBulletCtrl : MonoBehaviour
 
     void Start()
     {
-        GameObject go = GameObject.Find("EffectPool");
         GetComponent<Rigidbody>().AddForce(ThirdPersonController.shotDir * bulletSpeed);
         StartCoroutine(LifeTime());
     }
@@ -26,10 +25,27 @@ public class SkillBulletCtrl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Monster")
+        if (other.tag == "Monster") //몬스터 충돌시
         {
-            hitSound.Play();
-            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc(1.5f));
+            if(other.GetComponent<MonsterCtrl>() != null) //부위 단일 개체일 경우
+            {
+                hitSound.Play();
+                //150% 데미지
+                other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.DamageCalc(1.5f));
+            }
+            if(other.GetComponent<MonsterColliderParts>() != null) //부위별로 충돌체가 있는 경우
+            {
+                //해당 몬스터의 부위를 통해 몬스터컨트롤 가져오기
+                MonsterCtrl mc = other.GetComponent<MonsterColliderParts>().monsterCtrl;
+                if(!mc.damageApplied)
+                {
+                    hitSound.Play();
+                    //150%데미지
+                    mc.Damaged(PlayerValue.Instance.DamageCalc(1.5f));
+                    //중복 피해 방지 플래그
+                    mc.damageApplied = true;
+                }
+            }
         }
     }
 }

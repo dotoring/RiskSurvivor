@@ -6,10 +6,9 @@ using UnityEngine.UI;
 
 public class MonsterCtrl : MonoBehaviour
 {
-    public Animator animator;
-    public GameObject player;
-    public Transform playerTr;
-    public GameMgr gameMgr;
+    Animator animator;
+    Transform playerTr;
+    GameMgr gameMgr;
 
     public Collider attackHitBox;
     public ParticleSystem attackEffect;
@@ -21,10 +20,11 @@ public class MonsterCtrl : MonoBehaviour
 
     public Monster mon;
 
+    public bool damageApplied = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
-        //player = GameObject.Find("Player");
         playerTr = GameObject.Find("PlayerTransform").GetComponent<Transform>();
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         monCanvas = GetComponentInChildren<Canvas>();
@@ -54,6 +54,12 @@ public class MonsterCtrl : MonoBehaviour
         if(monCanvas != null)
         {
             monCanvas.transform.localScale = Vector3.one * (distance / 10f); // 10은 임의의 값으로 조절 가능
+        }
+
+        //중복 피해 방지 플래그가 켜지면
+        if(damageApplied)
+        {
+            StartCoroutine(DamageApplyCount());
         }
     }
 
@@ -91,11 +97,10 @@ public class MonsterCtrl : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other) //공격 판정 범위에 콜리더가 들어왔을 때
+    //일정 시간 뒤에 중복 피해 방지 플래그 끄는 코루틴
+    public IEnumerator DamageApplyCount()
     {
-        if(other.tag == "Player") //플레이어면 데미지 주기
-        {
-            PlayerValue.Instance.PlayerTakeDamage(mon.attackPower);
-        }
+        yield return new WaitForSeconds(1.0f);
+        damageApplied = false;
     }
 }

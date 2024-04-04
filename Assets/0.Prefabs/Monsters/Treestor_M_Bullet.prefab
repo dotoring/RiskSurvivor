@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 911288151763775247}
   m_Layer: 10
   m_Name: Treestor_M_Bullet
-  m_TagString: Untagged
+  m_TagString: MonsterAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,6 +78,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLifeTime: 10
   damage: 0
+  impactEffect: {fileID: 0}
+  bulletType: 0
 --- !u!1 &5524845362893146769
 GameObject:
   m_ObjectHideFlags: 0

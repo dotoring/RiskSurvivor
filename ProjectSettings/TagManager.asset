@@ -8,6 +8,8 @@ TagManager:
   - Monster
   - MapSensor
   - PickUpItem
+  - MonsterAttack
+  - PlayerProjectile
   layers:
   - Default
   - TransparentFX

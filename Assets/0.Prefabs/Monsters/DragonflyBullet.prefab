@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8032024039716585097}
   m_Layer: 10
   m_Name: DragonflyBullet
-  m_TagString: Untagged
+  m_TagString: MonsterAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

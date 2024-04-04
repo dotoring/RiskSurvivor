@@ -639,10 +639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e5fd72cef6380b45b04f0dd7afb910b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  player: {fileID: 0}
-  playerTr: {fileID: 0}
-  gameMgr: {fileID: 0}
   attackHitBox: {fileID: 3053032102638681424}
   attackEffect: {fileID: 2883172121179335735}
   attackSound: {fileID: 6964377270915683966}
@@ -651,6 +647,7 @@ MonoBehaviour:
   HpUI: {fileID: 8423345674571651752}
   HpBar: {fileID: 7834784428808425941}
   mon: {fileID: 3053032102638681425}
+  damageApplied: 0
 --- !u!114 &3053032102638681425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,13 +660,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d263ab40011694749804945dbdf398ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monBasicMaxHP: 240
-  monMaxHP: 240
+  monBasicMaxHP: 280
+  monMaxHP: 0
   monCurHP: 0
   moveSpeed: 3.2
   expGemPref: {fileID: 1343997948630602013, guid: d2a6260126150f346bb92d87aa0762a7, type: 3}
-  basicAttackPower: 25
-  attackPower: 25
+  basicAttackPower: 18
+  attackPower: 0
   attackTimeout: 2.5
   attackTimeoutDelta: 0
   attackRange: 2.5

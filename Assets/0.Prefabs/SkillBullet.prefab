@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 907254752531291039}
   - component: {fileID: 1043452114858149438}
   - component: {fileID: 1727317024869885542}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SkillBullet
-  m_TagString: Untagged
+  m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,9 +183,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4052032746881911346}
     m_Modifications:
+    - target: {fileID: 1271228929232120, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304853255759458, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326143473553058, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403900400991470, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1682904326955056, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1943049586886934, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
       propertyPath: m_Name
       value: ProtonMissileBlue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943049586886934, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4865487205730616, guid: a6ec7b9220605f5468c94619bc473e20, type: 3}
       propertyPath: m_RootOrder
