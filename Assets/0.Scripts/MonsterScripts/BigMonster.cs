@@ -9,6 +9,9 @@ public class BigMonster : Monster
     public GameObject missilePref;
     public GameObject spikePref;
     public GameObject chargeEffect;
+    public AudioSource chargeSound;
+    public AudioSource shootSound;
+    public AudioSource rageSound;
     public Transform monsterBulletShotPoint;
     public Transform monsterMissileShotPoint;
 
@@ -136,8 +139,6 @@ public class BigMonster : Monster
 
     public override void Shoot(Transform playerTr, Animator animator)
     {
-
-
         if (monStat == MonsterStat.RangeAttack)
         {
             shootTimeoutDelta = shootTimeout; //공격 대기시간 초기화
@@ -156,12 +157,14 @@ public class BigMonster : Monster
 
     public void ChargingStart() //원거리 공격 충전 이펙트(애니메이션 이벤트)
     {
+        chargeSound.Play();
         chargeEffect.SetActive(true);
     }
 
     public void Shooting() //사격 함수(애니메이션 이벤트)
     {
         chargeEffect.SetActive(false);
+        shootSound.Play();
         Vector3 shotDir = (target - monsterMissileShotPoint.position).normalized; //발사 목표지점 설정
         //총알 생성
         GameObject bullet = Instantiate(missilePref, monsterMissileShotPoint.position, Quaternion.LookRotation(Vector3.forward));
@@ -176,6 +179,7 @@ public class BigMonster : Monster
             animator.SetBool("IsMove", false); //움직임 정지
             animator.SetBool("IsWait", false); //대기 애니메이션 정지
             animator.SetTrigger("OnRage"); //공격 애니메이션 재생
+            rageSound.Play();
             waitTimeoutDelta = waitTimeout; //대기 시간 시작
         }
 

@@ -54,6 +54,8 @@ public class PlayerValue : MonoBehaviour
     public int leechingSeed;
     public int vampiricTooth;
     public float luckyShotRate;
+    public ItemSO rebirthSO;
+    public int ringOfDoom;
 
     [Header("UI Objects")]
     public Text levelTxt;
@@ -71,6 +73,7 @@ public class PlayerValue : MonoBehaviour
     
     //임시용
     ItemFunction itemFunction;
+    Inventory inventory;
 
     private void Awake()
     {
@@ -87,6 +90,7 @@ public class PlayerValue : MonoBehaviour
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         itemFunction = GetComponent<ItemFunction>();
         pickupSensor = GetComponentInChildren<RangeSensor>();
+        inventory = GetComponent<Inventory>();
 
         //============게임 시작시 스탯 초기화============
         //레벨 관련
@@ -287,15 +291,7 @@ public class PlayerValue : MonoBehaviour
         skillMaxCount += val;
     }
 
-    public void SetLeechingSeed(int val)
-    {
-        leechingSeed = val;
-    }
 
-    public void SetVampiricTooth(int val)
-    {
-        vampiricTooth = val;
-    }
 
     //=============데미지 계산================
     public float DamageCalc(float rate) //플레이어가 주는 데미지 계산(배율)
@@ -331,8 +327,18 @@ public class PlayerValue : MonoBehaviour
 
     public void PlayerTakeDamage(float dmg) //플레이어가 받는 데미지
     {
-        StartCoroutine(DamageEffectOn());
+        if(curHp > 0) //살아 있는 동안에만
+        {
+            StartCoroutine(DamageEffectOn());
+        }
+        if (curHp - dmg <= 0 && rebirthSO.quantity > 0) //부활 아이템 보유 중 치명적인 피해를 입으면
+        {
+            UseRebirth(); //부활 사용
+        }
+        else
+        {
             curHp -= dmg;
+        }
     }
 
     IEnumerator DamageEffectOn() //데미지 이펙트 키는 함수
@@ -377,12 +383,22 @@ public class PlayerValue : MonoBehaviour
         itemFunction.GenFireRoad(pref, quantity);
     }
 
+    public void SetLeechingSeed(int val)
+    {
+        leechingSeed = val;
+    }
+
+    public void SetVampiricTooth(int val)
+    {
+        vampiricTooth = val;
+    }
+
     public void FocusOn(float val, int quantity)
     {
         itemFunction.FocusOn(val, quantity);
     }
 
-    public void LuckyShot(float val, int quantity)
+    public void SetLuckyShot(float val, int quantity)
     {
         if(quantity == 1)
         {
@@ -393,5 +409,22 @@ public class PlayerValue : MonoBehaviour
             //곱연산
             luckyShotRate = 1 - 1 / (1 + (val * quantity));
         }
+    }
+
+    public void SetRebirth(ItemSO item)
+    {
+        rebirthSO = item; //부활 아이템SO 가져오기
+    }
+
+    public void UseRebirth()
+    {
+        inventory.RemoveItem(rebirthSO); //인벤토리에서 부활 아이템 하나 제거
+        gameMgr.RefreshInventory(); //인벤토리 새로고침
+        curHp = maxHp; //체력 최대로 회복
+    }
+
+    public void SetRingOfDoom(int quantity)
+    {
+        ringOfDoom = quantity;
     }
 }

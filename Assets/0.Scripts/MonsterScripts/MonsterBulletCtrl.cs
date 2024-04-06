@@ -37,7 +37,7 @@ public class MonsterBulletCtrl : MonoBehaviour
             //폭발 이펙트 생성
             GameObject go = Instantiate(impactEffect, transform.position, Quaternion.identity);
             //폭발 데미지 설정
-            go.GetComponent<CheckPlayerInArea>().damage = damage;
+            go.GetComponent<CheckObjectInArea>().damage = damage;
             //2초 뒤 제거
             Destroy(go, 2.0f);
         }

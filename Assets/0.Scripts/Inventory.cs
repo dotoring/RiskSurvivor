@@ -24,6 +24,23 @@ public class Inventory : MonoBehaviour
         ApplyItemEffects(item);
     }
 
+    public void RemoveItem(ItemSO item)
+    {
+        foreach (ItemSO existingItem in itemList) //인벤토리에 존재하는 아이템인지 확인
+        {
+            if (existingItem == item)
+            {
+                existingItem.quantity--; //인벤토리에 존재하는 아이템 갯수 하나 감소
+                if(existingItem.quantity <= 0) //0개가 되면 리스트에서 제거
+                {
+                    itemList.Remove(existingItem);
+                }
+                ApplyItemEffects(item);
+                return;
+            }
+        }
+    }
+
     void ApplyItemEffects(ItemSO item)
     {
         switch(item.itemName)
@@ -77,7 +94,13 @@ public class Inventory : MonoBehaviour
                 PlayerValue.Instance.FocusOn(item.itemStat, item.quantity);
                 break;
             case "럭키샷":
-                PlayerValue.Instance.LuckyShot(item.itemStat, item.quantity);
+                PlayerValue.Instance.SetLuckyShot(item.itemStat, item.quantity);
+                break;
+            case "부활":
+                PlayerValue.Instance.SetRebirth(item);
+                break;
+            case "파멸의고리":
+                PlayerValue.Instance.SetRingOfDoom(item.quantity);
                 break;
         }
     }

@@ -14732,13 +14732,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5009151592086437075}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9056131cb3135b4ba50f0effee7ef46, type: 3}
+  m_Script: {fileID: 11500000, guid: 75f68cc416a4d6e498c48d53aa66a6c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLayer:
+  from: 1
+  ObjectLayer:
     serializedVersion: 2
     m_Bits: 64
   checkRadius: 1.4
+  damage: 0
 --- !u!1 &5009466199380976627
 GameObject:
   m_ObjectHideFlags: 0

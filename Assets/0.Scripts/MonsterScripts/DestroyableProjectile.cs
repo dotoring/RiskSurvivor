@@ -45,7 +45,7 @@ public class DestroyableProjectile : Monster
         if(other.tag == "Player" || other.tag == "Untagged") //충돌체가 플레이어의 발사체가 아닐경우
         {
             GameObject go = Instantiate(impactEffect, transform.position, Quaternion.identity);
-            go.GetComponent<CheckPlayerInArea>().damage = attackPower*4.0f;
+            go.GetComponent<CheckObjectInArea>().damage = attackPower*4.0f;
             Destroy(go, 2.0f);
             Destroy(gameObject);
         }

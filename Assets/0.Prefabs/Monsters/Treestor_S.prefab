@@ -518,6 +518,7 @@ MonoBehaviour:
   waitTimeout: 0
   waitTimeoutDelta: 0
   monStat: 0
+  explosionEffect: {fileID: 9008362183471164174, guid: 7529d946928b180439c38878a289a335, type: 3}
 --- !u!82 &3077413496271009246
 AudioSource:
   m_ObjectHideFlags: 0

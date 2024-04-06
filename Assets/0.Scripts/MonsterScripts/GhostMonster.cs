@@ -13,6 +13,15 @@ public class GhostMonster : Monster
     {
         if (monCurHP <= 0.0f && monStat != MonsterStat.Death)
         {
+            //도깨비불 아이템 보유시
+            if (PlayerValue.Instance.ringOfDoom >= 1)
+            {
+                if (explosionEffect != null)
+                {
+                    Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                }
+            }
+
             //경험치 보석 생성
             Instantiate(expGemPref, transform.position, Quaternion.identity);
             Destroy(gameObject);

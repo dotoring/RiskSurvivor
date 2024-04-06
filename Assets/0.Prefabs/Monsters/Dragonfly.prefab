@@ -554,6 +554,7 @@ MonoBehaviour:
   HpUI: {fileID: 8672499205787493865}
   HpBar: {fileID: 2890469915565985707}
   mon: {fileID: 2258931880207114184}
+  damageApplied: 0
 --- !u!114 &2258931880207114184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,6 +583,7 @@ MonoBehaviour:
   waitTimeout: 0
   waitTimeoutDelta: 0
   monStat: 0
+  explosionEffect: {fileID: 9008362183471164174, guid: 7529d946928b180439c38878a289a335, type: 3}
   bulletPref: {fileID: 7232395230282326410, guid: 94a29aa8bfe01364db883ffadf4ad244, type: 3}
   monsterShotPoint: {fileID: 7061414340260305717}
   bulletSpeed: 500

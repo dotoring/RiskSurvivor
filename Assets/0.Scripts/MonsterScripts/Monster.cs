@@ -37,6 +37,9 @@ public abstract class Monster : MonoBehaviour
 
     public MonsterStat monStat;
 
+    [Header("Player Item Effect")]
+    public GameObject explosionEffect;
+
 
     public virtual void Init()
     {
@@ -59,6 +62,15 @@ public abstract class Monster : MonoBehaviour
             monStat = MonsterStat.Death; //사망 상태로 변경
             gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            //도깨비불 아이템 보유시
+            if(PlayerValue.Instance.ringOfDoom >= 1)
+            {
+                if(explosionEffect != null)
+                {
+                    Instantiate(explosionEffect, transform.position, Quaternion.identity);
+                }
+            }
 
             //경험치 보석 생성
             Instantiate(expGemPref, transform.position, Quaternion.identity);

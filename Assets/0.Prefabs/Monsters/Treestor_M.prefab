@@ -676,6 +676,7 @@ MonoBehaviour:
   waitTimeout: 2
   waitTimeoutDelta: 0
   monStat: 0
+  explosionEffect: {fileID: 9008362183471164174, guid: 7529d946928b180439c38878a289a335, type: 3}
   bulletPref: {fileID: 911288151763775245, guid: 92f70aa1a445e6c4a8ce55613d37c10b, type: 3}
   chargeEffect: {fileID: 8179053961586034962}
   monsterShotPoint: {fileID: 111526312084868456}

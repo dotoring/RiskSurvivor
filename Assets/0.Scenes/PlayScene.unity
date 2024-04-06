@@ -7085,6 +7085,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb3f45674e986f04187bf0803cbf3d05, type: 2}
   - {fileID: 11400000, guid: e5ac535fab532a645ad2a608908bfdb4, type: 2}
   - {fileID: 11400000, guid: d214e966a8b4a9e4484cca6fb9ca75d7, type: 2}
+  - {fileID: 11400000, guid: d26a00431217d3e49901edbd3b0d4a3f, type: 2}
+  - {fileID: 11400000, guid: 62ac83bd7ba1e324bbcd0bafbd5dac62, type: 2}
   - {fileID: 11400000, guid: 2d96bd5be59b7524983d9139e4ae770e, type: 2}
   - {fileID: 11400000, guid: 0c2f8e67e3b68f44d9118cf69f02391e, type: 2}
   - {fileID: 11400000, guid: f69d2da48f4f9dc4eb0b2c90cb1c6214, type: 2}
@@ -15444,6 +15446,8 @@ MonoBehaviour:
   leechingSeed: 0
   vampiricTooth: 0
   luckyShotRate: 0
+  rebirthSO: {fileID: 0}
+  ringOfDoom: 0
   levelTxt: {fileID: 160760194}
   expBar: {fileID: 1469091821}
   hpTxt: {fileID: 182676112}
