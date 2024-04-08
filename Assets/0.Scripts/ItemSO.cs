@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ItemGrade
+{
+    nomal,
+    epic,
+    legend
+}
+
 [CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
 public class ItemSO : ScriptableObject
 {
@@ -13,4 +20,5 @@ public class ItemSO : ScriptableObject
 
     public int quantity; //아이템 갯수
     public GameObject itemPrefab; //아이템 프리팹
+    public ItemGrade itemGrade;
 }

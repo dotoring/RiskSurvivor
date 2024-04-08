@@ -7,7 +7,7 @@ public class MissileCtrl : FunctionItemClass
 {
     Transform closestMonster; //가장 가까운 몬스터 위치
 
-    public float damage; //데미지
+    public float damageRate; //데미지
     public float trackingRange; //추적 범위
     public float moveSpeed; //이동 속도
 
@@ -22,8 +22,6 @@ public class MissileCtrl : FunctionItemClass
     {
         gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         StartCoroutine("Tracking");
-
-        damage += ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
     }
 
     IEnumerator Tracking()
@@ -84,7 +82,7 @@ public class MissileCtrl : FunctionItemClass
         StartCoroutine(Impact()); //폭발
         if (other.tag == "Monster")
         {
-            other.GetComponent<MonsterCtrl>().Damaged(damage);
+            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
         }
     }
 }

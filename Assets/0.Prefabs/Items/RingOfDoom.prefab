@@ -9814,6 +9814,7 @@ MonoBehaviour:
   radiusBasic: 1.6
   radiusIncrease: 0.4
   scaleIncreaseRate: 0.25
+  lifeTime: 1
 --- !u!114 &6076088567147200722
 MonoBehaviour:
   m_ObjectHideFlags: 0

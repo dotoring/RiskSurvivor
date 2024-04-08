@@ -102,6 +102,9 @@ public class Inventory : MonoBehaviour
             case "ÆÄ¸êÀÇ°í¸®":
                 PlayerValue.Instance.SetRingOfDoom(item.quantity);
                 break;
+            case "±êÅÐ":
+                PlayerValue.Instance.IncreaseJumpCount((int)item.itemStat);
+                break;
         }
     }
 }

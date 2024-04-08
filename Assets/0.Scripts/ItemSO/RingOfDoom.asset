@@ -20,3 +20,4 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: cb5c2c3c463c24362a010caf2f3ad5b9, type: 3}
   quantity: 0
   itemPrefab: {fileID: 0}
+  itemGrade: 2

@@ -8,6 +8,7 @@ public class RingOfDoom : MonoBehaviour
     public float radiusBasic;
     public float radiusIncrease;
     public float scaleIncreaseRate;
+    public float lifeTime;
 
     void Start()
     {
@@ -23,5 +24,14 @@ public class RingOfDoom : MonoBehaviour
         Vector3 newScale = currentScale + (PlayerValue.Instance.ringOfDoom - 1) * Vector3.one * scaleIncreaseRate;
         //새로운 스케일 값 설정
         transform.localScale = newScale;
+    }
+
+    private void Update()
+    {
+        lifeTime -= Time.deltaTime;
+        if( lifeTime < 0 )
+        {
+            Destroy(gameObject);
+        }
     }
 }

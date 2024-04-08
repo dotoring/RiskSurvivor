@@ -7,7 +7,7 @@ public class SatelliteCtrl : FunctionItemClass
 {
     Transform playerTr;
 
-    public float damage; //데미지
+    public float damageRate; //데미지
     public float spinSpeed; //회전 속도
     public AudioSource hitSound; //타격 사운드
 
@@ -28,8 +28,7 @@ public class SatelliteCtrl : FunctionItemClass
         if (other.tag == "Monster")
         {
             hitSound.Play();
-            float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
-            other.GetComponent<MonsterCtrl>().Damaged(dmg);
+            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
         }
     }
 }

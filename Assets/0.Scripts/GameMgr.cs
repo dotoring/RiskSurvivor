@@ -33,6 +33,8 @@ public class GameMgr : MonoBehaviour
     public GameObject itemSelectPanel;
     public GameObject itemSelectList;
     public GameObject itemSelectNode;
+    public ItemSO selectedItem;
+    public Button itemDecideBtn;
 
     public GameObject inventoryItemList;
     public GameObject inventoryItemNode;
@@ -95,6 +97,13 @@ public class GameMgr : MonoBehaviour
         menuBtn2.onClick.AddListener(() =>
         {
             SceneManager.LoadScene("MainMenuScene");
+        });
+        itemDecideBtn.onClick.AddListener(() =>
+        {
+            if(selectedItem != null)
+            {
+                ItemSelect(selectedItem);
+            }
         });
     }
 
@@ -175,16 +184,70 @@ public class GameMgr : MonoBehaviour
 
         for (int i = 0; i < 3;) //중복 없이 아이템 3개 뽑기
         {
-            int ran = Random.Range(0, items.Length);
-            if (temp.Contains(ran))
+            int ran;
+            //아이템 등급 정하기
+            int grade = Random.Range(1, 101);
+            Debug.Log(grade);
+            if(grade <= 75) //일반
             {
-                continue;
+                Debug.Log("일반");
+                while(true) //일반 아이템을 뽑을 때까지 반복
+                {
+                    ran = Random.Range(0, items.Length);
+                    if (items[ran].itemGrade == ItemGrade.nomal) //일반 아이템이면 통과
+                    {
+                        if (temp.Contains(ran)) //중복이면 다시
+                        {
+                            continue;
+                        }
+                        else //중복되지 않은 아이템이면 통과
+                        {
+                            break;
+                        }
+                    }
+                }
             }
-            else
+            else if(grade > 95) //전설
             {
-                temp[i] = ran;
-                i++;
+                Debug.Log("전설");
+                while (true) //전설 아이템을 뽑을 때까지 반복
+                {
+                    ran = Random.Range(0, items.Length);
+                    if (items[ran].itemGrade == ItemGrade.legend) //전설 아이템이면 통과
+                    {
+                        if (temp.Contains(ran)) //중복이면 다시
+                        {
+                            continue;
+                        }
+                        else //중복되지 않은 아이템이면 통과
+                        {
+                            break;
+                        }
+                    }
+                }
             }
+            else //에픽
+            {
+                Debug.Log("에픽");
+                while (true) //에픽 아이템을 뽑을 때까지 반복
+                {
+                    ran = Random.Range(0, items.Length);
+                    if (items[ran].itemGrade == ItemGrade.epic) //에픽 아이템이면 통과
+                    {
+                        if (temp.Contains(ran)) //중복이면 다시
+                        {
+                            continue;
+                        }
+                        else //중복되지 않은 아이템이면 통과
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            temp[i] = ran;
+            i++;
         }
 
         for (int i = 0; i < 3; i++) //선택 아이템 3개 띄우기
@@ -204,6 +267,14 @@ public class GameMgr : MonoBehaviour
         itemSelectPanel.SetActive(false); //아이템 선택창 비활성화
 
         RefreshInventory(); //보유 아이템 창 새로고침
+    }
+
+    public void ItemSelect(ItemSO item)
+    {
+        inventory.AddItem(item); //인벤토리에 아이템 추가
+        ItemSelectPopDown(); //아이템 선택창 비활성화
+        GamePlay(); //게임 다시진행
+        selectedItem = null;
     }
 
     public void RefreshInventory() //보유 아이템 창 새로고침 함수

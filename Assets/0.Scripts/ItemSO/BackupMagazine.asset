@@ -19,3 +19,4 @@ MonoBehaviour:
   itemIcon: {fileID: 0}
   quantity: 0
   itemPrefab: {fileID: 0}
+  itemGrade: 1

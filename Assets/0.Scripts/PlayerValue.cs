@@ -331,9 +331,17 @@ public class PlayerValue : MonoBehaviour
         {
             StartCoroutine(DamageEffectOn());
         }
-        if (curHp - dmg <= 0 && rebirthSO.quantity > 0) //부활 아이템 보유 중 치명적인 피해를 입으면
+
+        if (curHp - dmg <= 0 && rebirthSO != null) //부활 아이템 보유 중 치명적인 피해를 입으면
         {
-            UseRebirth(); //부활 사용
+            if(rebirthSO.quantity > 0) //부활 아이템이 남아 있다면
+            {
+                UseRebirth(); //부활 사용
+            }
+            else
+            {
+                curHp -= dmg;
+            }
         }
         else
         {

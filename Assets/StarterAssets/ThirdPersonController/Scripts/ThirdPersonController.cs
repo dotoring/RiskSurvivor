@@ -93,11 +93,12 @@ namespace StarterAssets
         public Image skillImage;
         public GameObject skillBulletPref;
 
+        public int jumpCount;
+
         //게임매니져
         GameMgr gameMgr;
         public CinemachineVirtualCamera virtualCamera;
         public CinemachineComponentBase componentBase;
-        bool cameraZoom;
         public GameObject sprintEffect;
 
         // cinemachine
@@ -361,6 +362,7 @@ namespace StarterAssets
         {
             if (Grounded)
             {
+                jumpCount = PlayerValue.Instance.jumpCount;
                 // reset the fall timeout timer
                 _fallTimeoutDelta = FallTimeout;
 
@@ -398,6 +400,20 @@ namespace StarterAssets
             }
             else
             {
+                if (_input.jump && jumpCount > 0)
+                {
+                    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+
+                    // update animator if using character
+                    if (_hasAnimator)
+                    {
+                        _animator.SetBool(_animIDJump, true);
+                    }
+
+                    jumpCount--;
+                }
+
                 // reset the jump timeout timer
                 _jumpTimeoutDelta = JumpTimeout;
 
