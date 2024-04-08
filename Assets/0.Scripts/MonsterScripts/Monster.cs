@@ -40,13 +40,12 @@ public abstract class Monster : MonoBehaviour
     [Header("Player Item Effect")]
     public GameObject explosionEffect;
 
-
     public virtual void Init()
     {
         GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
         monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
         monCurHP = monMaxHP;
-        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (gameMgr.playTime / 60));
+        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (int)(gameMgr.playTime / 60));
         monStat = MonsterStat.Spawn;
     }
 

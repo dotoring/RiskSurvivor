@@ -7102,7 +7102,8 @@ MonoBehaviour:
   smallMonsterPref: {fileID: 3307342852813294447, guid: a45e3485881ca6442bde9a22d66bbe0d, type: 3}
   mediumMonsterPref: {fileID: 3053032102638681433, guid: 503cfde602712a24b92a3334a53c382e, type: 3}
   flyMonsterPref: {fileID: 4824106080319659785, guid: 3011610de5f3d934e8bd61b6ee09297d, type: 3}
-  GhostGroupPref: {fileID: 6278764058264179250, guid: 6de2bc8941aa0b6459cbda83859cedaf, type: 3}
+  ghostGroupPref: {fileID: 4824106080319659785, guid: 3011610de5f3d934e8bd61b6ee09297d, type: 3}
+  bossMonsterPref: {fileID: 8005194529676142364, guid: e9fac31bdf2b35048bb1f9f370a639da, type: 3}
   monstersTr: []
   smallMonsterPool: []
   mediumMonsterPool: []

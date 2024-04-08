@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -43,7 +44,8 @@ public class GameMgr : MonoBehaviour
     public GameObject smallMonsterPref;
     public GameObject mediumMonsterPref;
     public GameObject flyMonsterPref;
-    public GameObject GhostGroupPref;
+    public GameObject ghostGroupPref;
+    public GameObject bossMonsterPref;
     public List<Transform> monstersTr = new List<Transform>(); //몬스터들의 위치 리스트(추적용)
     //오브젝트 풀
     public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
@@ -459,11 +461,32 @@ public class GameMgr : MonoBehaviour
                 //맵 밖에서 스폰되도록 맵 크기만큼 곱하기
                 spawnPos = spawnPos.normalized * 125;
 
-                GameObject monster = Instantiate(GhostGroupPref);
+                GameObject monster = Instantiate(ghostGroupPref);
                 monster.transform.position = spawnPos;
             }
 
             yield return new WaitForSeconds(60.0f); //스폰 쿨타임
         }
+    }
+
+    IEnumerator BossMonsterSpawn()
+    {
+        NavMeshHit hit;
+        Vector3 randomPosition = Vector3.zero;
+        //플레이어 반경 30이내의 랜덤위치 설정
+        Vector3 randPos = Random.insideUnitSphere * 100.0f;
+
+        //랜덤 위치에서 가장 가까운 정상 지형 찾기
+        if (NavMesh.SamplePosition(randPos, out hit, 100.0f, NavMesh.AllAreas))
+        {
+            randomPosition = hit.position;
+        }
+
+        GameObject monster = Instantiate(bossMonsterPref); //몬스터 스폰
+        monster.transform.position = randomPosition; //몬스터 스폰 위치 조정
+        flyMonsterPool.Add(monster);
+        monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
+
+        yield return null;
     }
 }

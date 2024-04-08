@@ -76,13 +76,15 @@ public class MissileCtrl : FunctionItemClass
         yield break;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        StopCoroutine("Tracking"); //추적 중지
+        StopCoroutine("Tracking"); //추적 중지(안하면 폭발 이펙트도 따라감)
         StartCoroutine(Impact()); //폭발
-        if (other.tag == "Monster")
+
+        //충돌 대상이 몬스터면 피해주기
+        if (collision.gameObject.tag == "Monster")
         {
-            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
+            collision.gameObject.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate); //몬스터에게 피해주기
         }
     }
 }

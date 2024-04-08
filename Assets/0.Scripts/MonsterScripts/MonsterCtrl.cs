@@ -21,6 +21,7 @@ public class MonsterCtrl : MonoBehaviour
     public Monster mon;
 
     public bool damageApplied = false;
+    bool levelUpFlag = true;
 
     void Start()
     {
@@ -40,7 +41,21 @@ public class MonsterCtrl : MonoBehaviour
     void Update()
     {
         mon.Action(playerTr, animator, gameMgr);
-        if(mon.monStat == MonsterStat.Death)
+        
+        if((int)gameMgr.playTime % 60 == 0 && levelUpFlag == false) //1분마다 몬스터 레벨업에 따른 스탯 증가
+        {
+            mon.monMaxHP += mon.monBasicMaxHP * 0.3f;
+            mon.monCurHP += mon.monBasicMaxHP * 0.3f;
+
+            mon.attackPower += mon.basicAttackPower * 0.2f;
+            levelUpFlag = true;
+        }
+        else if ((int)gameMgr.playTime % 60 >= 1)
+        {
+            levelUpFlag = false;
+        }
+
+        if(mon.monStat == MonsterStat.Death) //죽으면 hpUI끄기
         {
             HpUI.SetActive(false);
         }
