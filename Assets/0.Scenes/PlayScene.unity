@@ -1444,7 +1444,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2218,8 +2218,8 @@ RectTransform:
   m_Father: {fileID: 448853058}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4183,7 +4183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &840847511
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7016,6 +7016,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbf759b0db6f3e4d900b0977949f737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ignoreRay:
+    serializedVersion: 2
+    m_Bits: 12292
 --- !u!1 &1449808209 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5109143172312601744, guid: 10772fe33d761ab4faa109f268d64bf1, type: 3}
@@ -7063,6 +7066,7 @@ MonoBehaviour:
   playTime: 0
   timeText: {fileID: 372232235}
   playerRagdoll: {fileID: 1997727217310795417, guid: 21907abc6c29c294393ab7c52804c138, type: 3}
+  endTime: 1
   isPaused: 0
   pausePanel: {fileID: 840847510}
   continueBtn: {fileID: 3001719527154022856}
@@ -7102,7 +7106,7 @@ MonoBehaviour:
   smallMonsterPref: {fileID: 3307342852813294447, guid: a45e3485881ca6442bde9a22d66bbe0d, type: 3}
   mediumMonsterPref: {fileID: 3053032102638681433, guid: 503cfde602712a24b92a3334a53c382e, type: 3}
   flyMonsterPref: {fileID: 4824106080319659785, guid: 3011610de5f3d934e8bd61b6ee09297d, type: 3}
-  ghostGroupPref: {fileID: 4824106080319659785, guid: 3011610de5f3d934e8bd61b6ee09297d, type: 3}
+  ghostGroupPref: {fileID: 6278764058264179250, guid: 6de2bc8941aa0b6459cbda83859cedaf, type: 3}
   bossMonsterPref: {fileID: 8005194529676142364, guid: e9fac31bdf2b35048bb1f9f370a639da, type: 3}
   monstersTr: []
   smallMonsterPool: []

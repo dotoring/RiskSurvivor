@@ -221,4 +221,13 @@ public class BigMonster : Monster
             waitTimeoutDelta -= Time.deltaTime; //대기 시간 감소
         }
     }
+
+    public override void Death(Animator animator, GameMgr gameMgr)
+    {
+        base.Death(animator, gameMgr);
+        if(monStat == MonsterStat.Death)
+        {
+            gameMgr.KillAllEnemy();
+        }
+    }
 }

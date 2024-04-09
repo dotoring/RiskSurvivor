@@ -16,6 +16,7 @@ public class GameMgr : MonoBehaviour
     GameObject player;
     public GameObject playerRagdoll;
     bool isGameOver = false;
+    public int endTime;
 
     [Header("Pause")]
     public bool isPaused = false; //ThirdPersonController에서 카메라 움직임 정지용
@@ -78,6 +79,7 @@ public class GameMgr : MonoBehaviour
         StartCoroutine(MediumMonsterSpawn());
         StartCoroutine(FlyMonsterSpawn());
         StartCoroutine(GhostGroupSpawn());
+        StartCoroutine(BossMonsterSpawn());
 
         continueBtn.onClick.AddListener(() =>
         {
@@ -111,7 +113,7 @@ public class GameMgr : MonoBehaviour
 
     void Update()
     {
-        if(!isGameOver)
+        if(!isGameOver && playTime < 60* endTime)
         {
             playTime += Time.deltaTime;
         }
@@ -123,12 +125,10 @@ public class GameMgr : MonoBehaviour
             pausePanel.SetActive(true);
         }
 
-        if(playTime >= 60*10)
-        {
-            GamePause();
-            resultText.text = "이김";
-            gameoverPanel.SetActive(true);
-        }
+        //if(playTime >= 60*5)
+        //{
+        //    StartCoroutine(BossMonsterSpawn());
+        //}
 
         if (PlayerValue.Instance.curHp <= 0 && !isGameOver)
         {
@@ -189,10 +189,8 @@ public class GameMgr : MonoBehaviour
             int ran;
             //아이템 등급 정하기
             int grade = Random.Range(1, 101);
-            Debug.Log(grade);
             if(grade <= 75) //일반
             {
-                Debug.Log("일반");
                 while(true) //일반 아이템을 뽑을 때까지 반복
                 {
                     ran = Random.Range(0, items.Length);
@@ -211,7 +209,6 @@ public class GameMgr : MonoBehaviour
             }
             else if(grade > 95) //전설
             {
-                Debug.Log("전설");
                 while (true) //전설 아이템을 뽑을 때까지 반복
                 {
                     ran = Random.Range(0, items.Length);
@@ -230,7 +227,6 @@ public class GameMgr : MonoBehaviour
             }
             else //에픽
             {
-                Debug.Log("에픽");
                 while (true) //에픽 아이템을 뽑을 때까지 반복
                 {
                     ran = Random.Range(0, items.Length);
@@ -471,6 +467,8 @@ public class GameMgr : MonoBehaviour
 
     IEnumerator BossMonsterSpawn()
     {
+        yield return new WaitForSeconds(60.0f * endTime); //첫 스폰 쿨타임
+
         NavMeshHit hit;
         Vector3 randomPosition = Vector3.zero;
         //플레이어 반경 30이내의 랜덤위치 설정
@@ -488,5 +486,23 @@ public class GameMgr : MonoBehaviour
         monstersTr.Add(monster.transform); //몬스터 위치 리스트에 추가
 
         yield return null;
+    }
+
+    public void KillAllEnemy()
+    {
+        StopAllCoroutines();
+
+        foreach (Transform t in monstersTr)
+        {
+            t.GetComponent<MonsterCtrl>().mon.monCurHP = 0;
+            //Destroy(t.gameObject);
+        }
+    }
+
+    public void Ending()
+    {
+        GamePause();
+        resultText.text = "이김";
+        gameoverPanel.SetActive(true);
     }
 }

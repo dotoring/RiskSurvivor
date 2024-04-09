@@ -1631,7 +1631,7 @@ MonoBehaviour:
   monMaxHP: 0
   monCurHP: 0
   moveSpeed: 2
-  expGemPref: {fileID: 0}
+  expGemPref: {fileID: 3678365993647369286, guid: e1f01d7859b421f4a8fe817eecc145f7, type: 3}
   basicAttackPower: 20
   attackPower: 0
   attackTimeout: 10

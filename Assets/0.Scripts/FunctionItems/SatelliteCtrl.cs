@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 public class SatelliteCtrl : FunctionItemClass
 {
@@ -27,8 +28,21 @@ public class SatelliteCtrl : FunctionItemClass
     {
         if (other.tag == "Monster")
         {
-            hitSound.Play();
-            other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
+            if (other.GetComponent<MonsterCtrl>() != null) //부위 단일 개체일 경우
+            {
+                hitSound.Play();
+                other.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
+            }
+            if (other.GetComponent<MonsterColliderParts>() != null) //부위별로 충돌체가 있는 경우
+            {
+                //해당 몬스터의 부위를 통해 몬스터컨트롤 가져오기
+                MonsterCtrl mc = other.GetComponent<MonsterColliderParts>().monsterCtrl;
+                if (!mc.damageApplied)
+                {
+                    hitSound.Play();
+                    mc.GetComponent<MonsterCtrl>().Damaged(PlayerValue.Instance.attackDamage * damageRate);
+                }
+            }
         }
     }
 }
