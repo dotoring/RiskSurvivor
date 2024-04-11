@@ -18,6 +18,8 @@ public class BigMonster : Monster
     public float rageTimeout; //몬스터 분노 공격 주기
     [HideInInspector] public float rageTimeoutDelta;
     public float rotSpeed;
+
+    public bool isLookAtPlayer = false;
     Vector3 target;
 
     public override void Init()
@@ -34,7 +36,7 @@ public class BigMonster : Monster
         target = playerTr.position; //목표점 지정
         target.y += 1.0f; //플레이어 목표점 키에 맞춰 수정
 
-        if (monStat != MonsterStat.Death) //죽은 상태 제외
+        if (monStat != MonsterStat.Death && isLookAtPlayer == true) //죽은 상태 제외
         {
             //transform.LookAt(playerTr); //플레이어가 있는 방향 항상 바라보기
 
@@ -92,6 +94,7 @@ public class BigMonster : Monster
     {
         if (monStat == MonsterStat.MeleeAttack) //공격 대기시간이 끝나면 공격
         {
+            isLookAtPlayer = true;
             animator.SetBool("IsMove", false); //움직임 정지
             animator.SetBool("IsWait", false); //대기 애니메이션 정지
 
@@ -121,6 +124,7 @@ public class BigMonster : Monster
             bullet.GetComponent<MonsterBulletCtrl>().damage = attackPower; //데미지 설정
             bullet.GetComponent<Rigidbody>().AddForce(shotDir * 800); //총알 발사
         }
+        isLookAtPlayer = false;
     }
 
     public override void Move(Transform playerTr, Animator animator)
@@ -130,10 +134,17 @@ public class BigMonster : Monster
             animator.SetBool("IsMove", true); //움직이는 애니메이션 재생
             animator.SetBool("IsWait", false); //대기 애니메이션 정지
 
-            Vector3 moveDir = playerTr.position - this.transform.position;
-            moveDir.y = 0.0f;
-            Vector3 moveVec = moveDir.normalized;
-            transform.Translate(moveVec * moveSpeed * Time.deltaTime, Space.World); //플레이어가 있는 방향으로 움직이기(월드 좌표계사용)
+            //Vector3 moveDir = playerTr.position - this.transform.position;
+            //moveDir.y = 0.0f;
+            //Vector3 moveVec = moveDir.normalized;
+            //transform.Translate(moveVec * moveSpeed * Time.deltaTime, Space.World); //플레이어가 있는 방향으로 움직이기(월드 좌표계사용)
+
+            agent.isStopped = false;
+            agent.SetDestination(playerTr.position); //네비게이션을 이용한 이동
+        }
+        else
+        {
+            agent.isStopped = true; //관성 움직임 제어
         }
     }
 
@@ -141,6 +152,8 @@ public class BigMonster : Monster
     {
         if (monStat == MonsterStat.RangeAttack)
         {
+            isLookAtPlayer = true;
+
             shootTimeoutDelta = shootTimeout; //공격 대기시간 초기화
 
             animator.SetBool("IsMove", false); //움직임 정지
@@ -168,7 +181,9 @@ public class BigMonster : Monster
         Vector3 shotDir = (target - monsterMissileShotPoint.position).normalized; //발사 목표지점 설정
         //총알 생성
         GameObject bullet = Instantiate(missilePref, monsterMissileShotPoint.position, Quaternion.LookRotation(Vector3.forward));
-        bullet.GetComponent<DestroyableProjectile>().attackPower = attackPower; //데미지 설정
+        bullet.GetComponent<DestroyableProjectile>().basicAttackPower = basicAttackPower; //데미지 설정
+
+        isLookAtPlayer = false;
     }
 
     public void Rage(Transform playerTr, Animator animator)

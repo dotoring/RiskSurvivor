@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DestroyableProjectile : Monster
 {
+    [Header("for this monster")]
     public GameObject impactEffect;
 
     public override void Action(Transform playerTr, Animator animator, GameMgr gameMgr)

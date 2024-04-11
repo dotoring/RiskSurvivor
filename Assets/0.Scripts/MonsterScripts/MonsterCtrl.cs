@@ -42,7 +42,7 @@ public class MonsterCtrl : MonoBehaviour
     {
         mon.Action(playerTr, animator, gameMgr);
         
-        if((int)gameMgr.playTime % 60 == 0 && levelUpFlag == false) //1분마다 몬스터 레벨업에 따른 스탯 증가
+        if((int)gameMgr.playTime % gameMgr.monsterLevelUpTime == 0 && levelUpFlag == false) //몬스터 레벨업 주기마다 스탯 증가
         {
             mon.monMaxHP += mon.monBasicMaxHP * 0.3f;
             mon.monCurHP += mon.monBasicMaxHP * 0.3f;
@@ -50,7 +50,7 @@ public class MonsterCtrl : MonoBehaviour
             mon.attackPower += mon.basicAttackPower * 0.2f;
             levelUpFlag = true;
         }
-        else if ((int)gameMgr.playTime % 60 >= 1)
+        else if ((int)gameMgr.playTime % gameMgr.monsterLevelUpTime >= 1)
         {
             levelUpFlag = false;
         }

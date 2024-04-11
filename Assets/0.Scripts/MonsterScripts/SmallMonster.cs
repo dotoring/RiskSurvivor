@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SmallMonster : Monster
 {
@@ -62,12 +63,14 @@ public override void CheckState(Transform playerTr)
         if (monStat == MonsterStat.Move && !isAttack) //공격하는 동안에 이동x
         {
             animator.SetBool("IsMove", true); //움직이는 애니메이션 재생
-            transform.LookAt(playerTr); //플레이어가 있는 방향 바라보기
+            //transform.LookAt(playerTr); //플레이어가 있는 방향 바라보기
 
-            Vector3 moveDir = playerTr.position - this.transform.position;
-            moveDir.y = 0.0f;
-            Vector3 moveVec = moveDir.normalized;
-            transform.Translate(moveVec * moveSpeed * Time.deltaTime, Space.World); //플레이어가 있는 방향으로 움직이기(월드 좌표계사용)
+            //Vector3 moveDir = playerTr.position - this.transform.position;
+            //moveDir.y = 0.0f;
+            //Vector3 moveVec = moveDir.normalized;
+            //transform.Translate(moveVec * moveSpeed * Time.deltaTime, Space.World); //플레이어가 있는 방향으로 움직이기(월드 좌표계사용)
+
+            agent.SetDestination(playerTr.position); //네비게이션을 이용한 이동
         }
     }
 

@@ -52,6 +52,9 @@ public class GameMgr : MonoBehaviour
     public List<GameObject> smallMonsterPool = new List<GameObject>(); //몬스터 풀
     public List<GameObject> mediumMonsterPool = new List<GameObject>(); //몬스터 풀
     public List<GameObject> flyMonsterPool = new List<GameObject>(); //몬스터 풀
+    [Tooltip("Seconds")]
+    public int monsterLevelUpTime;
+
     public Inventory inventory;
 
     private void Awake()

@@ -454,6 +454,7 @@ namespace StarterAssets
             {
                 if (_input.shot)
                 {
+                    _input.sprint = false; //사격 중 달리기 제한
                     _animator.SetBool("Shoot", true);
                     //사격 방향 바라보기
                     this.transform.eulerAngles =

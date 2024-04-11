@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.InputSystem.Android;
 
 public enum MonsterStat
 {
@@ -36,6 +38,8 @@ public abstract class Monster : MonoBehaviour
     [HideInInspector] public float waitTimeoutDelta;
 
     public MonsterStat monStat;
+    public NavMeshAgent agent; //네비게이션을 위해
+
 
     [Header("Player Item Effect")]
     public GameObject explosionEffect;
@@ -43,10 +47,18 @@ public abstract class Monster : MonoBehaviour
     public virtual void Init()
     {
         GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
+        //시간별 몬스터 최대 체력 조절
+        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime)); 
         monCurHP = monMaxHP;
-        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (int)(gameMgr.playTime / 60));
+        //시간별 몬스터 공격력 조절
+        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime)); 
         monStat = MonsterStat.Spawn;
+
+        if(agent != null)
+        {
+            agent.speed = moveSpeed;
+            agent.stoppingDistance = attackRange;
+        }
     }
 
     public abstract void CheckState(Transform playerTr);
@@ -61,6 +73,11 @@ public abstract class Monster : MonoBehaviour
             monStat = MonsterStat.Death; //사망 상태로 변경
             gameObject.GetComponent<Rigidbody>().useGravity = true; //중력 활성화
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+            if(agent != null) //관성에 의한 움직임 끄기
+            {
+                agent.isStopped = true;
+            }
 
             //도깨비불 아이템 보유시
             if(PlayerValue.Instance.ringOfDoom >= 1)
@@ -87,6 +104,11 @@ public abstract class Monster : MonoBehaviour
         monStat = MonsterStat.Spawn;
 
         gameObject.layer = LayerMask.NameToLayer("Monster");
+
+        if (agent != null) //움직임 켜기
+        {
+            agent.isStopped = false;
+        }
     }
 
     IEnumerator Disable()
