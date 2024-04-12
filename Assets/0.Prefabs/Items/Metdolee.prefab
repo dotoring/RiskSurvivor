@@ -5021,7 +5021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3476ce03dafc3ee41863f2383bd0d679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageRate: 1.5
+  damageRate: 2
   trackingRange: 30
   moveSpeed: 5
   bounceForce: 13

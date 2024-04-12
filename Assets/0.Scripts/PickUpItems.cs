@@ -20,6 +20,7 @@ public class PickUpItems : MonoBehaviour
             }
             else
             {
+                item.GetComponent<ExpGem>().GetExp();
                 Destroy(item);
             }
         }

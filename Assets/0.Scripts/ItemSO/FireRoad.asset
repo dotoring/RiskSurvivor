@@ -16,7 +16,7 @@ MonoBehaviour:
   itemStat: 0
   itemStatDesc: "\uB2EC\uB9AC\uAE30 \uC2DC \uC9C0\uBA74\uC744 \uBD88\uD0DC\uC6C1\uB2C8\uB2E4"
   itemDescription: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: e2ebe5c7a0ad1814b8780c852696b04c, type: 3}
   quantity: 1
   itemPrefab: {fileID: 5109143172312601744, guid: 10772fe33d761ab4faa109f268d64bf1, type: 3}
   itemGrade: 2

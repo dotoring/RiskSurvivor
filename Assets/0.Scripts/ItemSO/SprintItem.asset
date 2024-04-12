@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: SprintItem
   m_EditorClassIdentifier: 
   itemName: "\uB2EC\uB9AC\uAE30\uC18D\uB3C4 \uD15C"
-  itemStat: 0.1
-  itemStatDesc: "\uB2EC\uB9AC\uAE30 \uC18D\uB3C4 +10%"
+  itemStat: 0.2
+  itemStatDesc: "\uB2EC\uB9AC\uAE30 \uC18D\uB3C4 +20%"
   itemDescription: "\uD64D\uB2E4\uB2E5"
   itemIcon: {fileID: 21300000, guid: b7f1e51792a994d81a06bf1069c7204c, type: 3}
-  quantity: 0
+  quantity: 1
   itemPrefab: {fileID: 0}
+  itemGrade: 0

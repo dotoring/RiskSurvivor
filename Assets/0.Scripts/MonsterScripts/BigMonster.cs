@@ -170,8 +170,8 @@ public class BigMonster : Monster
 
     public void ChargingStart() //원거리 공격 충전 이펙트(애니메이션 이벤트)
     {
-        chargeSound.Play();
         chargeEffect.SetActive(true);
+        chargeSound.Play();
     }
 
     public void Shooting() //사격 함수(애니메이션 이벤트)

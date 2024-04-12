@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: HpRegenItem
   m_EditorClassIdentifier: 
   itemName: "\uCCB4\uB825\uC7AC\uC0DD \uD15C"
-  itemStat: 0.5
-  itemStatDesc: "\uCD08\uB2F9 \uC7AC\uB825\uC7AC\uC0DD +0.5"
+  itemStat: 1
+  itemStatDesc: "\uCD08\uB2F9 \uC7AC\uB825\uC7AC\uC0DD +1"
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: f649c3166229440c88381809584e4d57, type: 3}
-  quantity: 0
+  quantity: 1
   itemPrefab: {fileID: 0}
+  itemGrade: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FocusOn
   m_EditorClassIdentifier: 
   itemName: "\uC9D1\uC911"
-  itemStat: 0.3
-  itemStatDesc: "\uC6C0\uC9C1\uC774\uC9C0 \uC54A\uC73C\uBA74 \uD53C\uD574\uB7C9 +30%
+  itemStat: 0.5
+  itemStatDesc: "\uC6C0\uC9C1\uC774\uC9C0 \uC54A\uC73C\uBA74 \uD53C\uD574\uB7C9 +50%
     \uC99D\uAC00"
   itemDescription: 
   itemIcon: {fileID: 21300000, guid: fe05ae89fb079451e8ed4ff06dfc30f7, type: 3}

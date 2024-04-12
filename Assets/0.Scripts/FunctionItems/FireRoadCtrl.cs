@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireRoadCtrl : FunctionItemClass
 {
-    public float damage; //데미지
+    public float damageRate; //데미지 비율
     public int quantity;
     public float lifeTime; //지속시간
     float lifeTimeDelta;
@@ -36,12 +36,10 @@ public class FireRoadCtrl : FunctionItemClass
     {
         if (other.tag == "Monster")
         {
+            //데미지 설정 (플레이어 공격력 * 배율 * 갯수)
+            float dmg = PlayerValue.Instance.attackDamage * damageRate * quantity;
             if (other.GetComponent<MonsterCtrl>() != null) //부위 단일 개체일 경우
             {
-                //시간에 따른 데미지 증가
-                float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
-                //갯수에 따른 데미지 증가
-                dmg *= 1.0f + (0.3f * quantity);
                 //지속피해 주기
                 other.GetComponent<MonsterCtrl>().Damaged(dmg * Time.deltaTime);
             }
@@ -51,10 +49,6 @@ public class FireRoadCtrl : FunctionItemClass
                 MonsterCtrl mc = other.GetComponent<MonsterColliderParts>().monsterCtrl;
                 if (!mc.damageApplied)
                 {
-                    //시간에 따른 데미지 증가
-                    float dmg = damage + ((damage * 0.2f) * (int)(gameMgr.playTime / 60));
-                    //갯수에 따른 데미지 증가
-                    dmg *= 1.0f + (0.3f * quantity);
                     //지속피해 주기
                     mc.GetComponent<MonsterCtrl>().Damaged(dmg * Time.deltaTime);
                 }

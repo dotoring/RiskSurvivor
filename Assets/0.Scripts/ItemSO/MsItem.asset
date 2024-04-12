@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: MsItem
   m_EditorClassIdentifier: 
   itemName: "\uC774\uB3D9\uC18D\uB3C4 \uD15C"
-  itemStat: 0.1
-  itemStatDesc: "\uC774\uB3D9\uC18D\uB3C4 +10%"
+  itemStat: 0.12
+  itemStatDesc: "\uC774\uB3D9\uC18D\uB3C4 +12%"
   itemDescription: "\uCD98\uC7A3"
   itemIcon: {fileID: 21300000, guid: b0eaceae37924462985f7a7a98ae4dcd, type: 3}
-  quantity: 0
+  quantity: 1
   itemPrefab: {fileID: 0}
+  itemGrade: 0

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SprintMushroom
   m_EditorClassIdentifier: 
   itemName: "\uC9C8\uBFDC\uBC84\uC12F"
-  itemStat: 2
-  itemStatDesc: "\uB2EC\uB9AC\uB294 \uB3D9\uC548 \uCCB4\uB825\uD68C\uBCF5 +2"
+  itemStat: 5
+  itemStatDesc: "\uB2EC\uB9AC\uB294 \uB3D9\uC548 \uCCB4\uB825\uD68C\uBCF5 +5"
   itemDescription: "\uADF8\uB54C \uADF8\uACF3 \uADF8\uB9DB"
   itemIcon: {fileID: 21300000, guid: 24921a047274a43818da47f8c7b4cc93, type: 3}
   quantity: 1

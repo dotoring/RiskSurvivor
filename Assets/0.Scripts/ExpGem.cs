@@ -6,8 +6,13 @@ public class ExpGem : MonoBehaviour
 {
     public int exp;
 
-    private void OnDestroy()
+    public void GetExp()
     {
         PlayerValue.Instance.GainExp(exp);
     }
+
+    //private void OnDestroy()
+    //{
+    //    PlayerValue.Instance.GainExp(exp);
+    //}
 }

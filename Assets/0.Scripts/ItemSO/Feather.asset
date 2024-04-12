@@ -16,7 +16,7 @@ MonoBehaviour:
   itemStat: 1
   itemStatDesc: "\uC810\uD504 \uD69F\uC218 +1"
   itemDescription: 
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 1ffd742735ad5a14b94f9b25e8aaf9e2, type: 3}
   quantity: 1
   itemPrefab: {fileID: 0}
   itemGrade: 1

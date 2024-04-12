@@ -1658,6 +1658,7 @@ MonoBehaviour:
   rageTimeout: 20
   rageTimeoutDelta: 0
   rotSpeed: 3
+  isLookAtPlayer: 0
 --- !u!195 &3620979957943421516
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2212,7 +2213,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -7971768305988111274, guid: 52bc1fcfc48f91c48b075690e7f7740c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1408855bfe82ccc4da2b60c0d6be3919, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
