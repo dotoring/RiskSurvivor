@@ -46,12 +46,7 @@ public abstract class Monster : MonoBehaviour
 
     public virtual void Init()
     {
-        GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        //시간별 몬스터 최대 체력 조절
-        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime)); 
-        monCurHP = monMaxHP;
-        //시간별 몬스터 공격력 조절
-        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime)); 
+        SetMonsterStat();
         monStat = MonsterStat.Spawn;
 
         if(agent != null)
@@ -97,10 +92,7 @@ public abstract class Monster : MonoBehaviour
     }
     public virtual void Respawn()
     {
-        GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
-        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / 60)); //시간별 몬스터 최대 체력 조절
-        monCurHP = monMaxHP;
-        attackPower = attackPower + ((attackPower * 0.2f) * (gameMgr.playTime / 180));
+        SetMonsterStat();
         monStat = MonsterStat.Spawn;
 
         gameObject.layer = LayerMask.NameToLayer("Monster");
@@ -119,4 +111,14 @@ public abstract class Monster : MonoBehaviour
     }
 
     public abstract void Action(Transform playerTr, Animator animator, GameMgr gameMgr);
+
+    public void SetMonsterStat()
+    {
+        GameMgr gameMgr = GameObject.Find("GameMgr").GetComponent<GameMgr>();
+        //시간별 몬스터 최대 체력 조절
+        monMaxHP = monBasicMaxHP + ((monBasicMaxHP * 0.3f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime));
+        monCurHP = monMaxHP;
+        //시간별 몬스터 공격력 조절
+        attackPower = basicAttackPower + ((basicAttackPower * 0.2f) * (int)(gameMgr.playTime / gameMgr.monsterLevelUpTime));
+    }
 }

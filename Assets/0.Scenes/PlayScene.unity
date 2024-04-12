@@ -7251,7 +7251,7 @@ MonoBehaviour:
   playTime: 0
   timeText: {fileID: 372232235}
   playerRagdoll: {fileID: 1997727217310795417, guid: 21907abc6c29c294393ab7c52804c138, type: 3}
-  endTime: 1
+  endTime: 10
   isPaused: 0
   pausePanel: {fileID: 840847510}
   continueBtn: {fileID: 3001719527154022856}
@@ -7298,7 +7298,7 @@ MonoBehaviour:
   mediumMonsterPool: []
   flyMonsterPool: []
   monsterLevelUpTime: 30
-  inventory: {fileID: 0}
+  inventory: {fileID: 6982812148096674568}
 --- !u!4 &1454535296
 Transform:
   m_ObjectHideFlags: 0
@@ -13339,7 +13339,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070925443182831296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.625, z: -6}
+  m_LocalPosition: {x: 0, y: 7.075, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14391,7 +14391,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4416926083184077763}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11.55, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16673,7 +16673,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8944336655272558271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 13.625, z: -6}
+  m_LocalPosition: {x: 0, y: 7.075, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
